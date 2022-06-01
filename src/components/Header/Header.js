@@ -1,22 +1,33 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
+import { version } from "styled-components";
 import useScout from "../../hooks/riot-hook";
 import * as S from "./styled"
 
 const Header = () =>{
+    const {  getSummoner, getVersion, version, getMasteries, scoutState
+    , championState, getChampionInfo } = useScout()
 
-    const {  getSummoner } = useScout()
+
+
+
     const [searchSummoner, setSearchSummoner] = useState()
 
-    const findSummoner = () => {
-        
-        return getSummoner(searchSummoner)
-  
-    }
+    const findSummoner = () => {     
+         getSummoner(searchSummoner)
+         getVersion()
 
+    }
+    useEffect(()=>{
+        if(scoutState.hasUser){
+            getMasteries(scoutState.id)
+        }
+
+    },[scoutState])
 
     return(
         <S.Wrapper>
+            <span>{version}</span>
         <S.Form>
         <input type="text" placeholder="Pesquise o nome invocador"
         onChange={(event)=> setSearchSummoner(event.target.value)}
