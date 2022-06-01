@@ -1,11 +1,12 @@
-import { ResetCSS } from "./global/resetCSS";
+
 import Header from "./components/Header";
+import Profile from "./components/Profile";
 
 function App() {
   return (
     <>
-    <ResetCSS/>
     <Header/>
+    <Profile/>
     </>
   );
 }

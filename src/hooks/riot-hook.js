@@ -2,10 +2,10 @@ import { useContext } from "react";
 import {RiotContext} from "../providers/riot-provider"
 
 const useScout = () => {
-const { scoutState } = useContext(RiotContext);
+const { scoutState, getSummoner } = useContext(RiotContext);
 
 
-return { scoutState }
+return { scoutState, getSummoner }
 
 }
 export default useScout
