@@ -30,7 +30,7 @@ html {
  */
 body {
   margin: 0;
-  font-family: roboto,sanss-serif;
+  font-family: 'Oswald', sans-serif;
 }
 /**
  * Render the main element consistently in IE.
