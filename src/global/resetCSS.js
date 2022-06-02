@@ -31,6 +31,7 @@ html {
 body {
   margin: 0;
   font-family: 'Oswald', sans-serif;
+  background-color:#ccc;
 }
 /**
  * Render the main element consistently in IE.

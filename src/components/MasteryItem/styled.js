@@ -18,9 +18,7 @@ align-items:center;
 background-color:purple;
 height:144px;
 border-radius:8px;
-img{
-    border-radius:50%;
-}
+
 span{
     color:white;
 }

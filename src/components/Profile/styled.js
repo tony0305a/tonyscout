@@ -6,6 +6,8 @@ display:flex;
 align-items:center;
 justify-content:space-around;
 border:1px solid #ccc;
+background-color:white;
+border-radius:8px;
 `;
 
 export const SummonerInfo = styled.div`

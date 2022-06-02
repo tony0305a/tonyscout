@@ -13,10 +13,13 @@ input{
     display:flex;
     flex-grow:2;
     width:360px;
-    margin-left:8px;
+    background-color:white;
+    padding-left:4px;
 }
 button{
-    margin-left:8px;
-    padding:8px;
+    padding:4px;
+    background-color:purple;
+    padding-left:4px;
+    color:white;
 }
 `;
