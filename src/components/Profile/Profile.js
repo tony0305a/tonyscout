@@ -21,6 +21,7 @@ const Profile = () => {
                         <img src={profileIcon} width="112" />
                         <span>{scoutState.summonerLevel}</span>
                         <p>{scoutState.id}</p>
+                        <p>{scoutState.puuid}</p>
                     </S.SummonerInfo>
                     <S.Mast>
                         <Masteries />

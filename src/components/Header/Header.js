@@ -6,7 +6,7 @@ import * as S from "./styled"
 
 const Header = () => {
     const { getSummoner, getVersion, version, getMasteries, scoutState
-        , championState, getChampionInfo, rankedState, getRanked } = useScout()
+        , championState, getChampionInfo, rankedState, getRanked, getMatches } = useScout()
 
 
 
@@ -14,14 +14,17 @@ const Header = () => {
     const [searchSummoner, setSearchSummoner] = useState()
 
     const findSummoner = () => {
-        getSummoner(searchSummoner)
         getVersion()
+        getSummoner(searchSummoner)
+        
 
     }
     useEffect(() => {
         if (scoutState.hasUser) {
+            getVersion()
             getMasteries(scoutState.id)
             getRanked(scoutState.id)
+            getMatches(scoutState.puuid)
         }
 
     }, [scoutState])

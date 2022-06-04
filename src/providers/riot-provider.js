@@ -1,5 +1,6 @@
 import React, { createContext, useState, useCallback } from "react";
 import api from "../services/api";
+import matchApi from "../services/matchs-api";
 
 export const RiotContext = createContext({
     loading: false,
@@ -25,7 +26,10 @@ const RiotProvider = ({ children }) => {
         searchCompleted: false,
         ranked: undefined,
     })
-
+    const [matchState, setMatchState] = useState({
+        searchCompleted:false,
+        matches:[]
+    })
     const getSummoner = (name) => {
         api.get(`lol/summoner/v4/summoners/by-name/${name}?api_key=RGAPI-3ff69f05-592c-43e4-b1d8-b6a1b5159f56`)
             .then((respose) => setScoutState({
@@ -65,19 +69,27 @@ const RiotProvider = ({ children }) => {
             }))
     }
 
-
-
+    const getMatches = (puuid) => {
+        matchApi.get(`lol/match/v5/matches/by-puuid/${puuid}/ids?start=0&count=20&api_key=RGAPI-3ff69f05-592c-43e4-b1d8-b6a1b5159f56`)
+        .then((response)=>setMatchState({
+            searchCompleted:true,
+            matches:response.data
+        }))
+    }
     const contextValue = {
         scoutState,
         version,
         masteriesState,
         championState,
         rankedState,
+        matchState,
+        setMatchState,
         getSummoner: useCallback((name) => getSummoner(name), []),
         getVersion: useCallback(() => getVersion(), []),
         getChampionInfo: useCallback(() => getChampionInfo(), []),
         getMasteries: useCallback((id) => getMasteries(id), []),
         getRanked: useCallback((encryptedSummonerId) => getRanked(encryptedSummonerId), []),
+        getMatches: useCallback((puuid) => getMatches(puuid), []),
     }
 
     return (

@@ -146,18 +146,18 @@ const Ranked = () => {
                                 </S.WinRate>
 
                             </S.FlexData>
-                        </S.Flex>) 
-                        : 
-                        (
-                        <S.Flex>
-                            <h1>Flex</h1>
-                            <S.EmblemAndData>
-                            <img src={emblemFlex} width="185"/>
-                            <S.TierAndPdl>
-                                <span>Unranked</span>
-                            </S.TierAndPdl>
-                            </S.EmblemAndData>    
-                        </S.Flex>)}
+                        </S.Flex>)
+                            :
+                            (
+                                <S.Flex>
+                                    <h1>Flex</h1>
+                                    <S.EmblemAndData>
+                                        <img src={emblemFlex} width="185" />
+                                        <S.TierAndPdl>
+                                            <span>Unranked</span>
+                                        </S.TierAndPdl>
+                                    </S.EmblemAndData>
+                                </S.Flex>)}
 
 
                     </S.WrapperColumn>
