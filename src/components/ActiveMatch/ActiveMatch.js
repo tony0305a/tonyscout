@@ -7,6 +7,18 @@ const ActiveMatch = ({
   queue,
   startTime,
   player1,
+  player1Icon,
+  player1Summonerspell1,
+  player1Summonerspell2,
+  player1Rune1,
+  player1Rune2,
+  player1Rune3,
+  player1Rune4,
+  player1Rune5,
+  player1Rune6,
+  player1Rune7,
+  player1Rune8,
+  player1Rune9,
   player2,
   player3,
   player4,
@@ -26,8 +38,7 @@ const ActiveMatch = ({
   player8ChamPicture,
   player9ChamPicture,
   player10ChamPicture,
-  player1Summonerspell1,
-  player1Summonerspell2,
+
   ss2,
 }) => {
   return (
@@ -42,10 +53,34 @@ const ActiveMatch = ({
       <S.Teams>
         <S.Blueside>
           <S.IndividualData>
+            <S.PlayerInfo>
             <span>{player1}</span>
+            <img src={player1Icon} width="28"/>
+            </S.PlayerInfo>
+              <S.HeroAndSummoner>
             <img src={player1ChamPicture} width="28"/>
+            <div>
             <img src={player1Summonerspell1} width="14"/>
             <img src={player1Summonerspell2} width="14"/>
+            </div>
+            </S.HeroAndSummoner>
+          <S.Runes>
+            <div>
+            <img src={player1Rune1} width="14"/>
+            <img src={player1Rune2} width="14"/>
+            <img src={player1Rune3} width="14"/>
+            <img src={player1Rune4} width="14"/>
+            </div>
+            <div>
+            <img src={player1Rune5} width="14"/>
+            <img src={player1Rune6} width="14"/>
+            </div>
+            <div>
+            <img src={player1Rune7} width="14"/>
+            <img src={player1Rune8} width="14"/>
+            <img src={player1Rune9} width="14"/>
+            </div>
+            </S.Runes>
           </S.IndividualData>
           <span>{player2}</span>
           <span>{player3}</span>

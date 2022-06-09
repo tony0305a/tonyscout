@@ -14,9 +14,12 @@ const Profile = () => {
     version,
     getChampionInfo,
     championState,
+    getRanked,
+    rankedState,
   } = useScout();
   const [renderActiveMatch, setRenderActiveMatch] = useState(false);
   const [champion, setChampion] = useState();
+  const [partElo, setPartElo] = useState()
   const [summonerSpell, setSummonerSpell] = useState();
   const [runes, setRunes] = useState();
   const [activeInfo, setActiveInfo] = useState(false);
@@ -41,13 +44,12 @@ const Profile = () => {
       }
     }
 
-
     fetch(
       `http://ddragon.leagueoflegends.com/cdn/${version}/data/pt_BR/summoner.json`
     )
       .then((res) => res.text())
       .then((x) => setSummonerSpell(JSON.parse(x)));
-    
+
     fetch(
       `http://ddragon.leagueoflegends.com/cdn/${version}/data/pt_BR/runesReforged.json`
     )
@@ -77,26 +79,48 @@ const Profile = () => {
       }
     }
   };
-  const getRunes = (style,id) =>{
-    for(var i in runes){
-      if(runes[i].id == style){
-        var main = runes[i].slots
-        for(var n in main){
-            var pick = main[n].runes
-            for(var o in pick){
-              if(pick[o].id == id){
-                return pick[o].icon
-              }
+  const getRunes = (style, id) => {
+    for (var i in runes) {
+      if (runes[i].id == style) {
+        var main = runes[i].slots;
+        for (var n in main) {
+          var pick = main[n].runes;
+          for (var o in pick) {
+            if (pick[o].id == id) {
+              return pick[o].icon;
             }
+          }
         }
       }
     }
+  };
+  const getMods = (id) => {
+    if (id == 5005) {
+      return "StatModsAttackSpeedIcon.png";
+    } else if (id == 5008) {
+      return "StatModsAdaptiveForceIcon.png";
+    } else if (id == 5002) {
+      return "StatModsArmorIcon.png";
+    } else if (id == 5001) {
+      return "StatModsHealthScalingIcon.png";
+    } else if (id == 5003) {
+      return "StatModsMagicResIcon.MagicResist_Fix.png";
+    } else if (id == 5007) {
+      return "StatModsCDRScalingIcon.png";
+    }
+  };
+
+  const getPartElo = (id) => {
+    api.get(`lol/league/v4/entries/by-summoner/${id}?api_key=RGAPI-3ff69f05-592c-43e4-b1d8-b6a1b5159f56`)
+    .then((res)=>setPartElo(res.data))
+  }
+  const getElo = () => {
+    console.log(partElo)
   }
 
-  console.log(getHeroInfo(266));
-
   const call = () => {
-    console.log(getRunes(8100,8112))
+    getPartElo(activeInfo.data.participants[0].summonerId)
+    getElo()
   };
 
   return (
@@ -146,6 +170,40 @@ const Profile = () => {
           player1Summonerspell2={`http://ddragon.leagueoflegends.com/cdn/${version}/img/spell/${getSS1(
             activeInfo.data.participants[0].spell2Id
           )}`}
+          player1Rune1={`http://ddragon.leagueoflegends.com/cdn/img/${getRunes(
+            activeInfo.data.participants[0].perks.perkStyle,
+            activeInfo.data.participants[0].perks.perkIds[0]
+          )}`}
+          player1Rune2={`http://ddragon.leagueoflegends.com/cdn/img/${getRunes(
+            activeInfo.data.participants[0].perks.perkStyle,
+            activeInfo.data.participants[0].perks.perkIds[1]
+          )}`}
+          player1Rune3={`http://ddragon.leagueoflegends.com/cdn/img/${getRunes(
+            activeInfo.data.participants[0].perks.perkStyle,
+            activeInfo.data.participants[0].perks.perkIds[2]
+          )}`}
+          player1Rune4={`http://ddragon.leagueoflegends.com/cdn/img/${getRunes(
+            activeInfo.data.participants[0].perks.perkStyle,
+            activeInfo.data.participants[0].perks.perkIds[3]
+          )}`}
+          player1Rune5={`http://ddragon.leagueoflegends.com/cdn/img/${getRunes(
+            activeInfo.data.participants[0].perks.perkSubStyle,
+            activeInfo.data.participants[0].perks.perkIds[4]
+          )}`}
+          player1Rune6={`http://ddragon.leagueoflegends.com/cdn/img/${getRunes(
+            activeInfo.data.participants[0].perks.perkSubStyle,
+            activeInfo.data.participants[0].perks.perkIds[5]
+          )}`}
+          player1Rune7={`http://ddragon.leagueoflegends.com/cdn/img/perk-images/StatMods/${getMods(
+            activeInfo.data.participants[0].perks.perkIds[6]
+          )}`}
+          player1Rune8={`http://ddragon.leagueoflegends.com/cdn/img/perk-images/StatMods/${getMods(
+            activeInfo.data.participants[0].perks.perkIds[7]
+          )}`}
+          player1Rune9={`http://ddragon.leagueoflegends.com/cdn/img/perk-images/StatMods/${getMods(
+            activeInfo.data.participants[0].perks.perkIds[8]
+          )}`}
+          player1Icon={`http://ddragon.leagueoflegends.com/cdn/12.11.1/img/profileicon/${activeInfo.data.participants[0].profileIconId}.png`}
         ></ActiveMatch>
       ) : (
         <>

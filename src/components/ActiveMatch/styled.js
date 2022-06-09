@@ -32,6 +32,20 @@ flex-direction:column;
 export const IndividualData= styled.div`
 display:flex;
 justify-content:center;
-align-items:center
+align-items:center;
 
+`;
+export const PlayerInfo = styled.div`
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+`;
+export const HeroAndSummoner = styled.div`
+display:flex;
+flex-direction:column;
+`;
+export const Runes = styled.div`
+display:flex;
+flex-direction:column;
 `;
