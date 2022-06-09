@@ -27,6 +27,13 @@ span{
 img{
     border-radius:50%;
 }
+button{
+    margin-top:4px;
+    color:white;
+    background-color:purple;
+    padding:4px;
+    border-radius:8px;
+}
 
 `;
 export const Mast = styled.div`
@@ -34,4 +41,8 @@ display:flex;
 flex-wrap:wrap;
 width:980px;
 
+`;
+export const MatchWrapper = styled.div`
+display:flex;
+flex-direction:column;
 `;

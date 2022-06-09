@@ -76,6 +76,8 @@ const RiotProvider = ({ children }) => {
             matches:response.data
         }))
     }
+
+
     const contextValue = {
         scoutState,
         version,

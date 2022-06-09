@@ -31,7 +31,7 @@ const Header = () => {
 
     return (
         <S.Wrapper>
-            <span>{version}</span>
+            <span>Patch {version}</span>
             <S.Form>
                 <input type="text" placeholder="Pesquise o nome invocador"
                     onChange={(event) => setSearchSummoner(event.target.value)}
