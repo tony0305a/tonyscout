@@ -46,3 +46,11 @@ export const MatchWrapper = styled.div`
 display:flex;
 flex-direction:column;
 `;
+export const ProfileAndMatch = styled.div`
+display:flex;
+flex-direction:column;
+`;
+export const ProfileAndMatchAndRanked = styled.div`
+display:flex;
+flex-direction:column;
+`;

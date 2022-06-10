@@ -1,100 +1,214 @@
-import React from "react";
 import * as S from "./styled";
-import ReactTimeAgo from "react-time-ago";
-import en from "javascript-time-ago/locale/en.json";
+import React, { useState } from "react";
+import { useEffect } from "react";
+import useScout from "../../hooks/riot-hook";
+import api from "../../services/api";
+import ActiveMatchPlayer from "../ActiveMatchPlayer/ActiveMatchPlayer";
 
-const ActiveMatch = ({
-  queue,
-  startTime,
-  player1,
-  player1Icon,
-  player1Summonerspell1,
-  player1Summonerspell2,
-  player1Rune1,
-  player1Rune2,
-  player1Rune3,
-  player1Rune4,
-  player1Rune5,
-  player1Rune6,
-  player1Rune7,
-  player1Rune8,
-  player1Rune9,
-  player2,
-  player3,
-  player4,
-  player5,
-  player6,
-  player7,
-  player8,
-  player9,
-  player10,
-  player1ChamPicture,
-  player2ChamPicture,
-  player3ChamPicture,
-  player4ChamPicture,
-  player5ChamPicture,
-  player6ChamPicture,
-  player7ChamPicture,
-  player8ChamPicture,
-  player9ChamPicture,
-  player10ChamPicture,
+const ActiveMatch = () => {
+  const {
+    scoutState,
+    getMasteries,
+    masteriesState,
+    version,
+    getChampionInfo,
+    championState,
+    getRanked,
+    rankedState,
+  } = useScout();
 
-  ss2,
-}) => {
+  const [renderActiveMatch, setRenderActiveMatch] = useState(false);
+  const [partElo, setPartElo] = useState([]);
+  const [mapBuild, setMapBuild] = useState();
+  const [summonerSpell, setSummonerSpell] = useState();
+  const [runes, setRunes] = useState();
+  const [activeInfo, setActiveInfo] = useState(false);
+  const [gameQueue, setGameQueue] = useState();
+
+  useEffect(() => {
+    setPartElo([]);
+    async function activeMatch(id) {
+      try {
+        const match = await api.get(
+          `lol/spectator/v4/active-games/by-summoner/${id}?api_key=RGAPI-3ff69f05-592c-43e4-b1d8-b6a1b5159f56`
+        );
+        console.log(match);
+        setActiveInfo(match);
+        setRenderActiveMatch(true);
+      } catch (error) {
+        console.log("Sem partida ativa");
+        setRenderActiveMatch(false);
+        setActiveInfo();
+        getChampionInfo();
+      }
+    }
+
+    fetch(
+      `http://ddragon.leagueoflegends.com/cdn/${version}/data/pt_BR/summoner.json`
+    )
+      .then((res) => res.text())
+      .then((x) => setSummonerSpell(JSON.parse(x)));
+
+    fetch(
+      `http://ddragon.leagueoflegends.com/cdn/${version}/data/pt_BR/runesReforged.json`
+    )
+      .then((res) => res.text())
+      .then((x) => setRunes(JSON.parse(x)));
+
+    activeMatch(scoutState.id);
+  }, [scoutState]);
+
+  useEffect(() => {
+    if (activeInfo != undefined) {
+      const getPartElo = (id) => {
+        api
+          .get(
+            `lol/league/v4/entries/by-summoner/${id}?api_key=RGAPI-3ff69f05-592c-43e4-b1d8-b6a1b5159f56`
+          )
+          .then((res) => setPartElo((prevState) => [...prevState, res.data]));
+      };
+      if (activeInfo.data != undefined) {
+        for (var i in activeInfo.data.participants) {
+          setMapBuild(activeInfo.data.participants);
+          getPartElo(activeInfo.data.participants[i].summonerId);
+        }
+      }
+    }
+  }, [activeInfo]);
+
+  const getHeroInfo = (id) => {
+    try {
+      var info = championState.data;
+      for (var i in info) {
+        if (info[i].key == id) {
+          return info[i].image.full;
+        }
+      }
+    } catch (error) {
+      console.log(`deu ruim ${error}`);
+    }
+  };
+  const getSS1 = (id) => {
+    var info = summonerSpell.data;
+    for (var i in info) {
+      if (info[i].key == id) {
+        return info[i].image.full;
+      }
+    }
+  };
+  const getRunes = (style, id) => {
+    for (var i in runes) {
+      if (runes[i].id == style) {
+        var main = runes[i].slots;
+        for (var n in main) {
+          var pick = main[n].runes;
+          for (var o in pick) {
+            if (pick[o].id == id) {
+              return pick[o].icon;
+            }
+          }
+        }
+      }
+    }
+  };
+  const getMods = (id) => {
+    if (id == 5005) {
+      return "StatModsAttackSpeedIcon.png";
+    } else if (id == 5008) {
+      return "StatModsAdaptiveForceIcon.png";
+    } else if (id == 5002) {
+      return "StatModsArmorIcon.png";
+    } else if (id == 5001) {
+      return "StatModsHealthScalingIcon.png";
+    } else if (id == 5003) {
+      return "StatModsMagicResIcon.MagicResist_Fix.png";
+    } else if (id == 5007) {
+      return "StatModsCDRScalingIcon.png";
+    }
+  };
+
+  const getElo = (id, queue) => {
+    for (var i in partElo) {
+      if(partElo[i][queue] != undefined){
+      if (partElo[i][queue].summonerId == id) {
+
+          return `${partElo[i][queue].queueType} ${partElo[i][queue].tier}
+            ${partElo[i][queue].rank}  ${partElo[i][queue].leaguePoints} pdls`
+
+        //  return `${partElo[i][queue].queueType} ${partElo[i][queue].tier} ${partElo[i][queue].rank} ${partElo[i][queue].leaguePoints} `;
+        }
+      
+
+    }
+  };
+}
+  const call = () => {
+    activeInfo.data.participants.map((item) => {
+      console.log(item);
+    });
+  };
+
   return (
     <S.Wrapper>
-      <S.Metadata>
-        <span>{queue}</span>
-        <span>
-          started:{" "}
-          <ReactTimeAgo date={startTime} locale="pt-BR" timeStyle="round" />
-        </span>
-      </S.Metadata>
-      <S.Teams>
-        <S.Blueside>
-          <S.IndividualData>
-            <S.PlayerInfo>
-            <span>{player1}</span>
-            <img src={player1Icon} width="28"/>
-            </S.PlayerInfo>
-              <S.HeroAndSummoner>
-            <img src={player1ChamPicture} width="28"/>
-            <div>
-            <img src={player1Summonerspell1} width="14"/>
-            <img src={player1Summonerspell2} width="14"/>
-            </div>
-            </S.HeroAndSummoner>
-          <S.Runes>
-            <div>
-            <img src={player1Rune1} width="14"/>
-            <img src={player1Rune2} width="14"/>
-            <img src={player1Rune3} width="14"/>
-            <img src={player1Rune4} width="14"/>
-            </div>
-            <div>
-            <img src={player1Rune5} width="14"/>
-            <img src={player1Rune6} width="14"/>
-            </div>
-            <div>
-            <img src={player1Rune7} width="14"/>
-            <img src={player1Rune8} width="14"/>
-            <img src={player1Rune9} width="14"/>
-            </div>
-            </S.Runes>
-          </S.IndividualData>
-          <span>{player2}</span>
-          <span>{player3}</span>
-          <span>{player4}</span>
-          <span>{player5}</span>
-        </S.Blueside>
-        <S.Redside>
-          <span>{player6}</span>
-          <span>{player7}</span>
-          <span>{player8}</span>
-          <span>{player9}</span>
-          <span>{player10}</span>
-        </S.Redside>
-      </S.Teams>
+
+      {renderActiveMatch ? (
+        <>
+          {activeInfo.data.participants.sort().map((item) => (
+            <ActiveMatchPlayer
+              summonerName={item.summonerName}
+              summonerIcon={`http://ddragon.leagueoflegends.com/cdn/${version}/img/profileicon/${item.profileIconId}.png`}
+              championImage={`http://ddragon.leagueoflegends.com/cdn/${version}/img/champion/${getHeroInfo(
+                item.championId
+              )}`}
+              summonerSpell1={`http://ddragon.leagueoflegends.com/cdn/${version}/img/spell/${getSS1(
+                item.spell1Id
+              )}`}
+              summonerSpell2={`http://ddragon.leagueoflegends.com/cdn/${version}/img/spell/${getSS1(
+                item.spell2Id
+              )}`}
+              primaryRune1={`http://ddragon.leagueoflegends.com/cdn/img/${getRunes(
+                item.perks.perkStyle,
+                item.perks.perkIds[0]
+              )}`}
+              primaryRune2={`http://ddragon.leagueoflegends.com/cdn/img/${getRunes(
+                item.perks.perkStyle,
+                item.perks.perkIds[1]
+              )}`}
+              primaryRune3={`http://ddragon.leagueoflegends.com/cdn/img/${getRunes(
+                item.perks.perkStyle,
+                item.perks.perkIds[2]
+              )}`}
+              primaryRune4={`http://ddragon.leagueoflegends.com/cdn/img/${getRunes(
+                item.perks.perkStyle,
+                item.perks.perkIds[3]
+              )}`}
+              secondaryRune1={`http://ddragon.leagueoflegends.com/cdn/img/${getRunes(
+                item.perks.perkSubStyle,
+                item.perks.perkIds[4]
+              )}`}
+              secondaryRune2={`http://ddragon.leagueoflegends.com/cdn/img/${getRunes(
+                item.perks.perkSubStyle,
+                item.perks.perkIds[5]
+              )}`}
+              statMod1={`http://ddragon.leagueoflegends.com/cdn/img/perk-images/StatMods/${getMods(
+                item.perks.perkIds[6]
+              )}`}
+              statMod2={`http://ddragon.leagueoflegends.com/cdn/img/perk-images/StatMods/${getMods(
+                item.perks.perkIds[7]
+              )}`}
+              statMod3={`http://ddragon.leagueoflegends.com/cdn/img/perk-images/StatMods/${getMods(
+                item.perks.perkIds[8]
+              )}`}
+              elo={getElo(item.summonerId,0)}
+              elo2={getElo(item.summonerId,1)}
+            ></ActiveMatchPlayer>
+          ))}
+        </>
+      ) : (
+        <S.Wrapper>
+      
+        </S.Wrapper>
+      )}
     </S.Wrapper>
   );
 };

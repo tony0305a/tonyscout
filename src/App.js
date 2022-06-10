@@ -12,7 +12,6 @@ function App() {
       <Header />
       <Profile />
       <S.Wrapper>
-      <Ranked />
       <Matches/>
       </S.Wrapper>
     </>
