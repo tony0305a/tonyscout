@@ -54,3 +54,7 @@ export const ProfileAndMatchAndRanked = styled.div`
 display:flex;
 flex-direction:column;
 `;
+export const RankedAndMatches = styled.div`
+display:flex;
+
+`;

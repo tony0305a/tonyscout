@@ -6,7 +6,7 @@ background-color:purple;
 border:1px solid white;
 border-radius:4px;
 align-items:center;
-width:640px;
+width:50%;
 height:100px;
 span{
     color:white;

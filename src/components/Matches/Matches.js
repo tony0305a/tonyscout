@@ -6,7 +6,49 @@ import * as S from "./styled";
 const Matches = () => {
   const { matchState, setMatchState, getVersion, version, scoutState } =
     useScout();
-    /*
+  const [matchData, setMatchData] = useState();
+  const [champion, setChampion] = useState();
+  const [queue, setQueue] = useState();
+  const [renderMatchs, setRenderMatchs] = useState(false)
+
+  useEffect(() => {
+    setMatchData([])
+    setRenderMatchs(false)
+    const getMatchData = (matchId) => {
+      try{
+        matchApi
+        .get(
+          `lol/match/v5/matches/${matchId}?api_key=RGAPI-3ff69f05-592c-43e4-b1d8-b6a1b5159f56`
+        )
+        .then((response) =>
+          setMatchData((prevState) => [...prevState, response.data])
+        );
+        setRenderMatchs(true)
+      } catch (error){
+        setRenderMatchs(false)
+      }
+
+    };
+
+    fetch(
+      `http://ddragon.leagueoflegends.com/cdn/12.10.1/data/pt_BR/champion.json`
+    )
+      .then((response) => response.text())
+      .then((x) => setChampion(JSON.parse(x)));
+    fetch("https://static.developer.riotgames.com/docs/lol/queues.json")
+      .then((response) => response.text())
+      .then((x) => setQueue(JSON.parse(x)));
+
+
+      matchState.matches.map((item) => {
+         getMatchData(item)
+
+    })
+
+
+  }, [scoutState]);
+
+  /*
   const [matchData, setMatchData] = useState([
     {
       metadata: { gameId: "0" },
@@ -89,33 +131,15 @@ const Matches = () => {
       },
     },
   ]);
-  const [champion, setChampion] = useState();
-  const [queue, setQueue] = useState();
+
 
   getVersion();
-  fetch(
-    `http://ddragon.leagueoflegends.com/cdn/12.10.1/data/pt_BR/champion.json`
-  )
-    .then((response) => response.text())
-    .then((x) => setChampion(JSON.parse(x)));
-  fetch("https://static.developer.riotgames.com/docs/lol/queues.json")
-    .then((response) => response.text())
-    .then((x) => setQueue(JSON.parse(x)));
 
-  const getMatchData = (matchId) => {
-    matchApi
-      .get(
-        `lol/match/v5/matches/${matchId}?api_key=RGAPI-3ff69f05-592c-43e4-b1d8-b6a1b5159f56`
-      )
-      .then((response) =>
-        setMatchData((prevState) => [...prevState, response.data])
-      );
-  };
+
+
   useEffect(() => {
     /*
-        matchState.matches.map((item) => {
-            getMatchData(item)
-        })
+
 
   }, [matchState]);
   
@@ -151,8 +175,27 @@ const Matches = () => {
     }
   };
   */
+  const call = () =>{
+    console.log(matchData)
+  }
+
   return (
     <S.Wrapper>
+      <span>Partida</span>
+      <button onClick={call}>call</button>
+      {renderMatchs?(
+      <>
+      {matchData.data.map((item)=>(
+      <Matchitem
+      id={item.metadata.gameId}
+      >
+      
+      </Matchitem>
+      ))}
+      </>
+      ):(
+      <><p>Sem partidas</p></>
+      )}
     </S.Wrapper>
   );
 };

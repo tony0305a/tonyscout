@@ -48,8 +48,8 @@ const RiotProvider = ({ children }) => {
             .then((response) => response.text()).then((x) => setVersion(JSON.parse(x)[0]))
     }
 
-    const getChampionInfo = () => {
-        fetch('http://ddragon.leagueoflegends.com/cdn/12.10.1/data/pt_BR/champion.json')
+    const getChampionInfo = (version) => {
+        fetch(`http://ddragon.leagueoflegends.com/cdn/${version}/data/pt_BR/champion.json`)
             .then((response) => response.text()).then((x) => setChampionState(JSON.parse(x)))
     }
 
@@ -87,7 +87,7 @@ const RiotProvider = ({ children }) => {
         matchState,
         setMatchState,
         getSummoner: useCallback((name) => getSummoner(name), []),
-        getVersion: useCallback(() => getVersion(), []),
+        getVersion: useCallback((version) => getVersion(version), []),
         getChampionInfo: useCallback(() => getChampionInfo(), []),
         getMasteries: useCallback((id) => getMasteries(id), []),
         getRanked: useCallback((encryptedSummonerId) => getRanked(encryptedSummonerId), []),

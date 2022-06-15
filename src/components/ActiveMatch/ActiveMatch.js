@@ -18,13 +18,9 @@ import EmblemChallenger from "../../imgs/Emblem_Challenger.png";
 const ActiveMatch = () => {
   const {
     scoutState,
-    getMasteries,
-    masteriesState,
     version,
     getChampionInfo,
     championState,
-    getRanked,
-    rankedState,
   } = useScout();
 
   const [renderActiveMatch, setRenderActiveMatch] = useState(false);
@@ -49,7 +45,7 @@ const ActiveMatch = () => {
         console.log("Sem partida ativa");
         setRenderActiveMatch(false);
         setActiveInfo();
-        getChampionInfo();
+        getChampionInfo(version);
       }
     }
 
