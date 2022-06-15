@@ -43,7 +43,7 @@ const Profile = () => {
           </>
         ) : (
           <>
-            <span>Sem invocador</span>
+            <span>Sem invocador</span> 
           </>
         )}
 
