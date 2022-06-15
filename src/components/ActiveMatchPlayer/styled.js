@@ -3,10 +3,10 @@ import styled from "styled-components"
 export const Wrapper = styled.div`
 display:flex;
 background-color:purple;
-width:50%;
 border:1px solid white;
 border-radius:4px;
 align-items:center;
+width:640px;
 height:100px;
 span{
     color:white;
@@ -48,5 +48,8 @@ div{
 `;
 export const Elo = styled.div`
 display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
 
 `;

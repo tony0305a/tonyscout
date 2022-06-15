@@ -17,7 +17,13 @@ const ActiveMatchPlayer = ({
   statMod2,
   statMod3,
   elo,
+  eloQueue,
+  eloRank,
+  eloPdl,
   elo2,
+  elo2Queue,
+  elo2Rank,
+  elo2Pdl,
 }) => {
   return (
     <S.Wrapper>
@@ -53,7 +59,16 @@ const ActiveMatchPlayer = ({
         </div>
       </S.Runes>
       <S.Elo>
-        <span>{elo}</span>
+      <span>{eloQueue}</span>
+        <img src={elo} width="32"/>
+        <span>{eloRank}</span>
+        <span>{eloPdl}</span>
+      </S.Elo>
+      <S.Elo>
+      <span>{elo2Queue}</span>
+        <img src={elo2} width="32"/>
+        <span>{elo2Rank}</span>
+        <span>{elo2Pdl}</span>
       </S.Elo>
     </S.Wrapper>
   );
