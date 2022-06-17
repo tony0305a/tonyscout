@@ -209,7 +209,7 @@ const Matchitem = ({
           ))}
         </S.ColunmParticipants>
       </S.UpperLine>
-      <S.Line>
+      <S.LowerLine>
         <S.ColunmMetadata>
           <span>{result}</span>
           <span>{gameLength}</span>
@@ -224,7 +224,7 @@ const Matchitem = ({
             <img src={item6} width="36" height="36" />
           </S.Line>
         </S.ColunmBuild>
-      </S.Line>
+      </S.LowerLine>
     </S.Wrapper>
   );
 };

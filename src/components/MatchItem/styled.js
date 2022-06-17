@@ -75,6 +75,10 @@ export const UpperLine = styled.div`
   display: flex;
   height: 80px;
 `;
+export const LowerLine = styled.div`
+  display: flex;
+  width:370px;
+`;
 
 export const MatchParticipantsWrapper = styled.div`
   display: flex;
@@ -87,5 +91,8 @@ export const MatchParticipantsWrapper = styled.div`
     width: 150px;
     cursor: pointer;
     margin-left: 4px;
+    &:hover{
+        color:purple;
+    }
   }
 `;
