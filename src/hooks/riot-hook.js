@@ -20,8 +20,7 @@ const useScout = () => {
     getMatchData,
     cleanMatchData,
     setRender,
-    renderState
-    
+    renderState,
   } = useContext(RiotContext);
 
   return {
@@ -42,7 +41,7 @@ const useScout = () => {
     matchDataState,
     cleanMatchData,
     setRender,
-    renderState,    
+    renderState,
   };
 };
 export default useScout;

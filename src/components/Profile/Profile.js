@@ -16,6 +16,7 @@ const Profile = () => {
     matchState,
     championState,
     cleanMatchData,
+    matchDataState,
   } = useScout();
  
   const profileIcon = `http://ddragon.leagueoflegends.com/cdn/${version}/img/profileicon/${scoutState.profileIconId}.png`;
@@ -57,7 +58,7 @@ const Profile = () => {
   }
 
   const analisar = () => {
-
+    console.log(matchDataState)
   }
 
   return (
@@ -70,8 +71,6 @@ const Profile = () => {
               <span>{scoutState.name}</span>
               <img src={profileIcon} width="112" />
               <span>{scoutState.summonerLevel}</span>
-              <p>{scoutState.id}</p>
-              <p>{scoutState.puuid}</p>
               {renderActiveMatch?(<><button onClick={renderMatch} >Partida Ativa</button></>):(<></>)}
               <button onClick={analisar} >Analisar</button>
     
