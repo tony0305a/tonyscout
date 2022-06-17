@@ -3,7 +3,7 @@ import styled from "styled-components"
 export const Wrapper = styled.div`
 display:flex;
 border:1px solid black;
-height:200px;
+height:100px;
 justify-content:center;
 align-items:flex-start;
 `;
@@ -39,8 +39,14 @@ align-items:center;
 export const BlueSide = styled.div`
 display:flex;
 flex-direction:column;
+span{
+    width:104px;
+}
 `;
 export const RedSide = styled.div`
 display:flex;
 flex-direction:column;
+span{
+    width:104px;
+}
 `;

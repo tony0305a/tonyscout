@@ -1,14 +1,12 @@
 import React from "react";
-import { useState } from "react";
 import * as S from "./styled"
 import TimeAgo from "javascript-time-ago";
 import ReactTimeAgo from "react-time-ago";
 import en from 'javascript-time-ago/locale/en.json'
-import useScout from "../../hooks/riot-hook";
 TimeAgo.addLocale(en)
 
 const Matchitem = ({id,gameMode,creationTime,champPic,player1,player2,player3,player4,player5,
-    player6,player7,player8,player9,player10,kills,deaths,assists}) => {
+    player6,player7,player8,player9,player10,kills,deaths,assists,SS1,SS2}) => {
 
 
 
@@ -17,7 +15,7 @@ const Matchitem = ({id,gameMode,creationTime,champPic,player1,player2,player3,pl
             <S.Metadata>
             <span>{id}</span>
             <span>{gameMode}</span>
-            <ReactTimeAgo date={creationTime} locale="pt-BR" timeStyle="round"/>
+           <ReactTimeAgo date={creationTime} locale="pt-BR" timeStyle="round"/>
             </S.Metadata>
 
 
@@ -25,6 +23,8 @@ const Matchitem = ({id,gameMode,creationTime,champPic,player1,player2,player3,pl
             <S.Individual>
             <img src={champPic}/>
             <span>{kills} /{deaths}/{assists}</span>
+            <img src={SS1}/>
+            <img src={SS2}/>
             </S.Individual>
             
             <S.Sides>

@@ -12,10 +12,12 @@ const Profile = () => {
   const {
     scoutState,
     version,
-
+    getMatchData,
+    matchState,
     championState,
+    cleanMatchData,
   } = useScout();
-
+ 
   const profileIcon = `http://ddragon.leagueoflegends.com/cdn/${version}/img/profileicon/${scoutState.profileIconId}.png`;
   const [activeInfo, setActiveInfo] = useState(false);
   const [renderActiveMatch, setRenderActiveMatch] = useState(false);
@@ -31,15 +33,31 @@ const Profile = () => {
       } catch (error) {
         console.log("Sem partida ativa");
         setRenderActiveMatch(false);
+        throw error
       }
     }
 
-    activeMatch(scoutState.id);
-  },[scoutState])
 
+
+
+    activeMatch(scoutState.id);
+  },[])
+
+  useEffect(()=>{
+
+
+    return function ComeUp(){
+      cleanMatchData()
+    }
+
+  },[matchState])
 
   const renderMatch = () =>{
       setRenderMatch(true)
+  }
+
+  const analisar = () => {
+
   }
 
   return (
@@ -55,6 +73,7 @@ const Profile = () => {
               <p>{scoutState.id}</p>
               <p>{scoutState.puuid}</p>
               {renderActiveMatch?(<><button onClick={renderMatch} >Partida Ativa</button></>):(<></>)}
+              <button onClick={analisar} >Analisar</button>
     
             </S.SummonerInfo>
             <S.Mast>

@@ -1,148 +1,74 @@
-import React, { useEffect, useState } from "react";
+import React, { useLayoutEffect } from "react";
+import { useState } from "react";
+import { useEffect } from "react";
+import { getTTFB } from "web-vitals";
 import useScout from "../../hooks/riot-hook";
 import matchApi from "../../services/matchs-api";
 import Matchitem from "../MatchItem/Matchitem";
-import * as S from "./styled";
+
 const Matches = () => {
-  const { matchState, setMatchState, getVersion, version, scoutState } =
-    useScout();
-  const [matchData, setMatchData] = useState();
+  const {
+    scoutState,
+    matchDataState,
+    cleanMatchData,
+    matchState,
+    version,
+    renderState,
+    setRender,
+  } = useScout();
   const [champion, setChampion] = useState();
   const [queue, setQueue] = useState();
-  const [renderMatchs, setRenderMatchs] = useState(false)
+  const [summonerSpell, setSummonerSpell] = useState();
+  const [runes, setRunes] = useState();
+
+    useLayoutEffect(()=>{
+      return () => {
+      }
+    },[scoutState])
 
   useEffect(() => {
-    setMatchData([])
-    setRenderMatchs(false)
-    const getMatchData = (matchId) => {
-      try{
-        matchApi
-        .get(
-          `lol/match/v5/matches/${matchId}?api_key=RGAPI-3ff69f05-592c-43e4-b1d8-b6a1b5159f56`
-        )
-        .then((response) =>
-          setMatchData((prevState) => [...prevState, response.data])
-        );
-        setRenderMatchs(true)
-      } catch (error){
-        setRenderMatchs(false)
-      }
-
+    //mount
+    console.log("montou");
+    console.log("fez alguma coisa");
+    //unmount
+    return function CleanUp() {
+      console.log("desmontou");
     };
+  }, []);
 
-    fetch(
-      `http://ddragon.leagueoflegends.com/cdn/12.10.1/data/pt_BR/champion.json`
-    )
-      .then((response) => response.text())
-      .then((x) => setChampion(JSON.parse(x)));
-    fetch("https://static.developer.riotgames.com/docs/lol/queues.json")
-      .then((response) => response.text())
-      .then((x) => setQueue(JSON.parse(x)));
+  useEffect(()=>{
+    fetch(`http://ddragon.leagueoflegends.com/cdn/${version}/data/pt_BR/champion.json`)
+    .then((response) => response.text())
+    .then((x) => setChampion(JSON.parse(x)))
+    setRender(true)
 
+    return function cleanUp(){
+   //   cleanMatchData()
+    }
+  },[matchState])
 
-      matchState.matches.map((item) => {
-         getMatchData(item)
+  useEffect(() => {
+    console.log("att scoutState");
 
-    })
-
-
+    return function cleanUp() {
+      console.log("cleanUp scoutState");
+    };
   }, [scoutState]);
 
-  /*
-  const [matchData, setMatchData] = useState([
-    {
-      metadata: { gameId: "0" },
-      info: {
-        queueId: "0",
-        gameCreation: "0",
-        participants: [
-          {
-            kills: "0",
-            deaths: "0",
-            assists: "0",
-            championId: "0",
-            summonerId: scoutState.id,
-          },
-          {
-            kills: "0",
-            deaths: "0",
-            assists: "0",
-            championId: "0",
-            summonerId: scoutState.id,
-          },
-          {
-            kills: "0",
-            deaths: "0",
-            assists: "0",
-            championId: "0",
-            summonerId: scoutState.id,
-          },
-          {
-            kills: "0",
-            deaths: "0",
-            assists: "0",
-            championId: "0",
-            summonerId: scoutState.id,
-          },
-          {
-            kills: "0",
-            deaths: "0",
-            assists: "0",
-            championId: "0",
-            summonerId: scoutState.id,
-          },
-          {
-            kills: "0",
-            deaths: "0",
-            assists: "0",
-            championId: "0",
-            summonerId: scoutState.id,
-          },
-          {
-            kills: "0",
-            deaths: "0",
-            assists: "0",
-            championId: "0",
-            summonerId: scoutState.id,
-          },
-          {
-            kills: "0",
-            deaths: "0",
-            assists: "0",
-            championId: "0",
-            summonerId: scoutState.id,
-          },
-          {
-            kills: "0",
-            deaths: "0",
-            assists: "0",
-            championId: "0",
-            summonerId: scoutState.id,
-          },
-          {
-            kills: "0",
-            deaths: "0",
-            assists: "0",
-            championId: "0",
-            summonerId: scoutState.id,
-          },
-        ],
-        gameMode: "0",
-      },
-    },
-  ]);
+  const call = () => {
+    matchDataState.map((item) => {
+      console.log(item);
+      console.log(getIndex(item));
+    });
+  };
+  const getIndex = (item) => {
+    for (var i in item.info.participants) {
+      if (item.info.participants[i].summonerId == scoutState.id) {
+        return i;
+      }
+    }
+  };
 
-
-  getVersion();
-
-
-
-  useEffect(() => {
-    /*
-
-
-  }, [matchState]);
-  
   const getChampName = (cid) => {
     var hero = champion.data;
     for (var i in hero) {
@@ -160,43 +86,38 @@ const Matches = () => {
     }
   };
 
-  const check = () => {
-    matchData.map((item) => {
-      console.log(item.info.participants[0].championId);
-    });
-    console.log(matchData);
-  };
-
-  const getIndex = (item) => {
-    for (var i in item.info.participants) {
-      if (item.info.participants[i].summonerId == scoutState.id) {
-        return i;
-      }
-    }
-  };
-  */
-  const call = () =>{
-    console.log(matchData)
+  if(matchDataState == undefined){
+    return <><p>Loading...</p>      <button onClick={call}>Call</button></>
   }
 
   return (
-    <S.Wrapper>
-      <span>Partida</span>
-      <button onClick={call}>call</button>
-      {renderMatchs?(
-      <>
-      {matchData.data.map((item)=>(
-      <Matchitem
-      id={item.metadata.gameId}
-      >
-      
-      </Matchitem>
-      ))}
-      </>
-      ):(
-      <><p>Sem partidas</p></>
+    <>
+
+      {scoutState.hasUser ? (
+        <>
+          {renderState ? (
+            <>
+              {matchDataState.map((item) => (
+                <Matchitem
+                  creationTime={item.info.gameCreation}
+                  gameMode={getQueue(item.info.queueId)}
+                  id={item.metadata.matchId}
+                  champPic={`http://ddragon.leagueoflegends.com/cdn/${version}/img/champion/${getChampName(
+                    item.info.participants[getIndex(item)].championId
+                  )}`}
+                ></Matchitem>
+              ))}
+            </>
+          ) : (
+            <>
+              <p>nada</p>
+            </>
+          )}
+        </>
+      ) : (
+        <></>
       )}
-    </S.Wrapper>
+    </>
   );
 };
 export default Matches;

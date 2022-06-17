@@ -30,6 +30,8 @@ const RiotProvider = ({ children }) => {
         searchCompleted:false,
         matches:[]
     })
+    const [matchDataState, setMatchDataState] = useState([])
+    const [renderState, setRenderState] = useState(Boolean)
     const getSummoner = (name) => {
         api.get(`lol/summoner/v4/summoners/by-name/${name}?api_key=RGAPI-3ff69f05-592c-43e4-b1d8-b6a1b5159f56`)
             .then((respose) => setScoutState({
@@ -77,6 +79,16 @@ const RiotProvider = ({ children }) => {
         }))
     }
 
+    const getMatchData = (id) =>{
+        matchApi.get(`lol/match/v5/matches/${id}?api_key=RGAPI-3ff69f05-592c-43e4-b1d8-b6a1b5159f56`)
+        .then((response)=>setMatchDataState((prevState)=>([...prevState,response.data])))
+    }
+    const cleanMatchData = () => {
+        setMatchDataState([])
+    }
+    const setRender = (bool) => {
+        setRenderState(bool)
+    }
 
     const contextValue = {
         scoutState,
@@ -85,13 +97,18 @@ const RiotProvider = ({ children }) => {
         championState,
         rankedState,
         matchState,
-        setMatchState,
+        matchDataState,
+        renderState,
         getSummoner: useCallback((name) => getSummoner(name), []),
         getVersion: useCallback((version) => getVersion(version), []),
         getChampionInfo: useCallback(() => getChampionInfo(), []),
+        cleanMatchData: useCallback(() => cleanMatchData(), []),
         getMasteries: useCallback((id) => getMasteries(id), []),
         getRanked: useCallback((encryptedSummonerId) => getRanked(encryptedSummonerId), []),
         getMatches: useCallback((puuid) => getMatches(puuid), []),
+        getMatchData: useCallback((id) => getMatchData(id), []),
+        setRender: useCallback((bool) => setRender(bool), []),
+        
     }
 
     return (
