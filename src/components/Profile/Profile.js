@@ -7,6 +7,7 @@ import Masteries from "../Masteries/Masteries";
 import * as S from "./styled";
 import Ranked from "../Ranked/Ranked";
 import Matches from "../Matches/Matches";
+import Analyzer from "../Analyzer/Analyzer";
 
 const Profile = () => {
   const {
@@ -18,13 +19,13 @@ const Profile = () => {
     cleanMatchData,
     matchDataState,
   } = useScout();
- 
+
   const profileIcon = `http://ddragon.leagueoflegends.com/cdn/${version}/img/profileicon/${scoutState.profileIconId}.png`;
   const [activeInfo, setActiveInfo] = useState(false);
-  const [renderActiveMatch, setRenderActiveMatch] = useState(false);
-  const [renderMatchs, setRenderMatch] = useState(false)
-  useEffect(()=>{
-    setRenderMatch(false)
+  const [renderActiveMatch, setRenderActiveMatch] = useState(true);
+  const [renderMatchs, setRenderMatch] = useState(false);
+  useEffect(() => {
+    setRenderMatch(false);
     async function activeMatch(id) {
       try {
         const match = await api.get(
@@ -34,68 +35,72 @@ const Profile = () => {
       } catch (error) {
         console.log("Sem partida ativa");
         setRenderActiveMatch(false);
-        throw error
+        throw error;
       }
     }
 
-
-
-
     activeMatch(scoutState.id);
-  },[])
+  }, []);
 
-  useEffect(()=>{
+  useEffect(() => {
+    return function ComeUp() {
+      cleanMatchData();
+    };
+  }, [matchState]);
 
-
-    return function ComeUp(){
-      cleanMatchData()
-    }
-
-  },[matchState])
-
-  const renderMatch = () =>{
-      setRenderMatch(true)
-  }
+  const renderMatch = () => {
+    setRenderMatch(true);
+  };
 
   const analisar = () => {
-    console.log(matchDataState)
-  }
+    console.log(matchDataState);
+  };
 
   return (
     <S.ProfileAndMatchAndRanked>
-    <S.ProfileAndMatch>
-      <S.Wrapper>
-        {scoutState.hasUser ? (
-          <>
-            <S.SummonerInfo>
-              <span>{scoutState.name}</span>
-              <img src={profileIcon} width="112" />
-              <span>{scoutState.summonerLevel}</span>
-              {renderActiveMatch?(<><button onClick={renderMatch} >Partida Ativa</button></>):(<></>)}
-              <button onClick={analisar} >Analisar</button>
-    
-            </S.SummonerInfo>
-            <S.Mast>
-              <Masteries />
-            </S.Mast>
-          </>
-        ) : (
-          <>
-            <span>Sem invocador</span> 
-          </>
-        )}
-
-      </S.Wrapper>
-      <>
-      {renderMatchs?(<><ActiveMatch /></>):(<></>)}
-      </>
-
-    </S.ProfileAndMatch>
-    <S.RankedAndMatches>
-    <Ranked/>
-    <Matches/>
-    </S.RankedAndMatches>
-
+      <S.ProfileAndMatch>
+        <S.Wrapper>
+          {scoutState.hasUser ? (
+            <>
+              <S.SummonerInfo>
+                <span>{scoutState.name}</span>
+                <img src={profileIcon} width="112" />
+                <span>{scoutState.summonerLevel}</span>
+                <span>{scoutState.id}</span>
+                {renderActiveMatch ? (
+                  <>
+                    <button onClick={renderMatch}>Partida Ativa</button>
+                  </>
+                ) : (
+                  <></>
+                )}
+                <button onClick={analisar}>Analisar</button>
+              </S.SummonerInfo>
+              <S.Mast>
+                <Masteries />
+              </S.Mast>
+            </>
+          ) : (
+            <>
+              <span>Sem invocador</span>
+            </>
+          )}
+        </S.Wrapper>
+        <>
+          {renderMatchs ? (
+            <>
+              <ActiveMatch />
+            </>
+          ) : (
+            <></>
+          )}
+        </>
+      </S.ProfileAndMatch>
+      <S.RankedAndMatches>
+        <Ranked />
+        <Analyzer />
+        <Matches />
+      </S.RankedAndMatches>
     </S.ProfileAndMatchAndRanked>
   );
 };
