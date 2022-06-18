@@ -2,14 +2,34 @@ import React, { useEffect, useState } from "react";
 import useScout from "../../hooks/riot-hook";
 import { M } from "../MasteryItem/styled";
 import * as S from "./styled";
-import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
-import { Doughnut } from "react-chartjs-2";
+import { Doughnut, Radar } from "react-chartjs-2";
+import {
+  Chart as ChartJS,
+  RadialLinearScale,
+  PointElement,
+  LineElement,
+  Filler,
+  Tooltip,
+  Legend,
+} from "chart.js";
 
-ChartJS.register(ArcElement, Tooltip, Legend);
+ChartJS.register(
+  RadialLinearScale,
+  PointElement,
+  LineElement,
+  Filler,
+  Tooltip,
+  Legend
+);
 
 const Analyzer = () => {
   const { matchDataState, scoutState, renderState, setRender } = useScout();
   const [graph, setGraph] = useState([]);
+  const [renderTop, setRenderTop] = useState(false);
+  const [renderJungle, setRenderJungle] = useState(false);
+  const [renderMid, setRenderMid] = useState(false);
+  const [renderCarry, setRenderCarry] = useState(false);
+  const [renderUtility, setRenderUtility] = useState(false);
 
   const getIndex = (item) => {
     for (var i in item.info.participants) {
@@ -284,32 +304,151 @@ const Analyzer = () => {
     setGraph(getChallenges());
   }, [matchDataState]);
 
-  const data = {
-    labels: ["Solo", "Fight", "Utility"],
+  const dataTop = {
+    labels: [
+      "Fight",
+      "Lane",
+      "Carry",
+      "Utility",
+      "Tank",
+      "Farm",
+      "Split",
+    ],
     datasets: [
       {
-        label: "# of Votes",
-        data: graph,
-        backgroundColor: [
-          "rgba(255, 0, 0, 1)",
-          "rgba(3, 0, 253, 1)",
-          "rgba(0, 140, 25, 1)",
-          "rgba(115, 15, 92, 1)",
-          "rgba(153, 102, 255, 0.2)",
-          "rgba(255, 159, 64, 0.2)",
-        ],
-        borderColor: [
-          "rgba(255, 99, 132, 1)",
-          "rgba(54, 162, 235, 1)",
-          "rgba(255, 206, 86, 1)",
-          "rgba(75, 192, 192, 1)",
-          "rgba(153, 102, 255, 1)",
-          "rgba(255, 159, 64, 1)",
-        ],
+        label: "Top Perfomace",
+        //           top    farm jungle carry utility fight mid split
+        data: [30, 30, 10, 10, 10, 10, 10],
+        borderColor: "rgba(128, 0, 128, 1)",
         borderWidth: 1,
       },
     ],
   };
+  const dataJungle = {
+    labels: [
+      "Fight",
+      "Farm",
+      "Invade",
+      "Utility",
+      "Objectives",
+      "Steal",
+      "Gank",
+    ],
+    datasets: [
+      {
+        label: "Jungle Peformace",
+        //           top    farm jungle carry utility fight mid split
+        data: [30, 30, 10, 10, 10, 10, 10],
+        borderColor: "rgba(128, 0, 128, 1)",
+        borderWidth: 1,
+      },
+    ],
+  };
+  const dataMid = {
+    labels: [
+      "Fight",
+      "Lane",
+      "Carry",
+      "Utility",
+      "Roaming",
+      "Farm",
+      "Split",
+    ],
+    datasets: [
+      {
+        label: "Mid Peformace",
+        //           top    farm jungle carry utility fight mid split
+        data: [30, 30, 10, 10, 10, 10, 10],
+        borderColor: "rgba(128, 0, 128, 1)",
+        borderWidth: 1,
+      },
+    ],
+  };
+  const dataCarry = {
+    labels: [
+      "Fight",
+      "Lane",
+      "Carry",
+      "Utility",
+      "Open",
+      "Farm",
+      "Split",
+    ],
+    datasets: [
+      {
+        label: "Carry Peformace",
+        //           top    farm jungle carry utility fight mid split
+        data: [30, 30, 10, 10, 10, 10, 10],
+        borderColor: "rgba(128, 0, 128, 1)",
+        borderWidth: 1,
+      },
+    ],
+  };
+  const dataUtility = {
+    labels: [
+      "Top",
+      "Fight",
+      "Lane",
+      "Carry",
+      "Utility",
+      "Open",
+      "Farm",
+      "Split",
+    ],
+    datasets: [
+      {
+        label: "Utility Peformace",
+        //           top    farm jungle carry utility fight mid split
+        data: [30, 30, 10, 10, 10, 10, 10, 10],
+        borderColor: "rgba(128, 0, 128, 1)",
+        borderWidth: 1,
+      },
+    ],
+  };
+  const options = {
+    scale: {
+      ticks: {
+        display: true,
+        maxTicksLimit: 3,
+      },
+    },
+  };
+  const btnTop = () =>{
+    if(renderTop){
+      setRenderTop(false)
+    }else{
+      setRenderTop(true)
+    }
+  }
+  const btnJg = () =>{
+    if(renderJungle){
+      setRenderJungle(false)
+    }else{
+      setRenderJungle(true)
+    }
+  }
+  const btnMid = () =>{
+    if(renderMid){
+      setRenderMid(false)
+    }else{
+      setRenderMid(true)
+    }
+  }
+  const btnCarry = () =>{
+    if(renderCarry){
+      setRenderCarry(false)
+    }else{
+      setRenderCarry(true)
+    }
+  }
+  const btnUtility = () =>{
+    if(renderUtility){
+      setRenderUtility(false)
+    }else{
+      setRenderUtility(true)
+    }
+  }
+
   if (matchDataState == undefined) {
     return (
       <>
@@ -322,17 +461,31 @@ const Analyzer = () => {
       <span>Analyzer</span>
       <S.Roles>
         <button onClick={call}>Call</button>
+        <button onClick={btnTop} >Top</button>
+        <button onClick={btnJg} >Jungle</button>
+        <button onClick={btnMid} >Mid</button>
+        <button onClick={btnCarry} >Carry</button>
+        <button onClick={btnUtility} >Utility</button>
+      </S.Roles>
+      <S.Graph>
         <div
           style={{
             position: "relative",
             margin: "auto",
             width: "350px",
-            height: "100px",
           }}
         >
-          {renderState ? <Doughnut data={data} /> : <></>}
+          {renderState ? 
+          (<>
+          {renderTop?(<><Radar data={dataTop} options={options}/></>):(<></>)}
+          {renderJungle?(<><Radar data={dataJungle} options={options}/></>):(<></>)}
+          {renderMid?(<><Radar data={dataMid} options={options}/></>):(<></>)}
+          {renderCarry?(<><Radar data={dataCarry} options={options}/></>):(<></>)}
+          {renderUtility?(<><Radar data={dataUtility} options={options}/></>):(<></>)}
+          </>)
+          :(<></>)}
         </div>
-      </S.Roles>
+      </S.Graph>
     </S.Wrapper>
   );
 };

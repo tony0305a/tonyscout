@@ -67,6 +67,7 @@ const Profile = () => {
                 <img src={profileIcon} width="112" />
                 <span>{scoutState.summonerLevel}</span>
                 <span>{scoutState.id}</span>
+                <span>{scoutState.puuid}</span>
                 {renderActiveMatch ? (
                   <>
                     <button onClick={renderMatch}>Partida Ativa</button>

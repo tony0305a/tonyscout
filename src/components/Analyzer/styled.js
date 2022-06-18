@@ -6,7 +6,6 @@ export const Wrapper = styled.div`
   background-color: white;
   flex-direction: column;
   border-top-left-radius: 8px;
-  height: 400px;
   width: 500px;
   border-top-right-radius: 8px;
   span {
@@ -18,5 +17,9 @@ export const Wrapper = styled.div`
   }
 `;
 export const Roles = styled.div`
+  display: flex;
+  justify-content:space-around;
+`;
+export const Graph = styled.div`
   display: flex;
 `;
