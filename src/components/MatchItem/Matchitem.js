@@ -62,7 +62,6 @@ const Matchitem = ({
     fetch("https://static.developer.riotgames.com/docs/lol/queues.json")
       .then((response) => response.text())
       .then((x) => setQueue(JSON.parse(x)));
-    console.log("call de queues.json");
 
     return function cleanUp() {
       //   cleanMatchData()
@@ -71,7 +70,6 @@ const Matchitem = ({
       )
         .then((response) => response.text())
         .then((x) => setChampion(JSON.parse(x)));
-      console.log(champion);
     };
   }, [matchState]);
 

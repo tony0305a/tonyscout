@@ -91,7 +91,7 @@ const RiotProvider = ({ children }) => {
   const getMatches = (puuid) => {
     matchApi
       .get(
-        `lol/match/v5/matches/by-puuid/${puuid}/ids?start=0&count=50&api_key=RGAPI-3ff69f05-592c-43e4-b1d8-b6a1b5159f56`
+        `lol/match/v5/matches/by-puuid/${puuid}/ids?start=0&count=10&api_key=RGAPI-3ff69f05-592c-43e4-b1d8-b6a1b5159f56`
       )
       .then((response) =>
         setMatchState({

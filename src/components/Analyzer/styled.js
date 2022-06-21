@@ -23,3 +23,9 @@ export const Roles = styled.div`
 export const Graph = styled.div`
   display: flex;
 `;
+export const HardData = styled.div`
+display:flex;
+flex-direction:column;
+padding: 8px;
+
+`;
