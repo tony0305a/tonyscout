@@ -33,6 +33,9 @@ const Analyzer = () => {
   const [renderUtility, setRenderUtility] = useState(false);
   const [hardData, setHardData] = useState({
     soloQueues: 0,
+    kills:0,
+    deaths:0,
+    assists:0,
     // Lane
     earlyLaningPhaseGoldExpAdvantage: 0,
     junglerKillsEarlyJungle: 0,
@@ -116,7 +119,6 @@ const Analyzer = () => {
     perfectDragonSoulsTaken: 0,
     riftHeraldTakedowns: 0,
     soloBaronKills: 0,
-    takedownOnFirstTurret: 0,
     turretTakedowns: 0,
     turretsTakenWithRiftHerald: 0,
   });
@@ -160,6 +162,8 @@ const Analyzer = () => {
   };
   const getChallenges = () => {
     var soloQ = 0;
+    var kills = 0
+    var deaths = 0
     var earlyLaningPhaseGoldExpAdvantage = 0;
     var junglerKillsEarlyJungle = 0;
     var killAfterHiddenWithAlly = 0;
@@ -222,14 +226,30 @@ const Analyzer = () => {
     var teamElderDragonKills = 0;
     var damageDealtToBuildings = 0;
     //Farm
-  var  alliedJungleMonsterKills = 0
-  var  buffsStolen = 0
-  var  elderDragonMultikills = 0
-  var  enemyJungleMonsterKills = 0
-  var  initialBuffCount = 0
-  var  initialCrabCount = 0
-  var  jungleCsBefore10Minutes = 0
-  var  scuttleCrabKills = 0
+    var alliedJungleMonsterKills = 0;
+    var buffsStolen = 0;
+    var elderDragonMultikills = 0;
+    var enemyJungleMonsterKills = 0;
+    var initialBuffCount = 0;
+    var initialCrabCount = 0;
+    var jungleCsBefore10Minutes = 0;
+    var scuttleCrabKills = 0;
+    //Objectives
+    var baronTakedowns = 0;
+    var epicMonsterKillsNearEnemyJungler = 0;
+    var epicMonsterKillsWithin30SecondsOfSpawn = 0;
+    var epicMonsterSteals = 0;
+    var epicMonsterStolenWithoutSmite = 0;
+    var junglerTakedownsNearDamagedEpicMonster = 0;
+    var kTurretsDestroyedBeforePlatesFall = 0;
+    var multiTurretRiftHeraldCount = 0;
+    var outnumberedNexusKill = 0;
+    var perfectDragonSoulsTaken = 0;
+    var riftHeraldTakedowns = 0;
+    var soloBaronKills = 0;
+    var takedownOnFirstTurret = 0;
+    var turretTakedowns = 0;
+    var turretsTakenWithRiftHerald = 0;
 
     var eloMultiplaier = 0.94;
     matchDataState.map((item) => {
@@ -547,24 +567,29 @@ const Analyzer = () => {
             );
           }
           if (
-            item.info.participants[getIndex(item)].challenges.soloTurretsLategame != 0
+            item.info.participants[getIndex(item)].challenges
+              .soloTurretsLategame != 0
           ) {
             soloTurretsLategame += parseInt(
-              item.info.participants[getIndex(item)].challenges.soloTurretsLategame
+              item.info.participants[getIndex(item)].challenges
+                .soloTurretsLategame
             );
           }
           if (
-            item.info.participants[getIndex(item)].challenges.teamBaronKills != 0
+            item.info.participants[getIndex(item)].challenges.teamBaronKills !=
+            0
           ) {
             teamBaronKills += parseInt(
               item.info.participants[getIndex(item)].challenges.teamBaronKills
             );
           }
           if (
-            item.info.participants[getIndex(item)].challenges.teamElderDragonKills != 0
+            item.info.participants[getIndex(item)].challenges
+              .teamElderDragonKills != 0
           ) {
             teamElderDragonKills += parseInt(
-              item.info.participants[getIndex(item)].challenges.teamElderDragonKills
+              item.info.participants[getIndex(item)].challenges
+                .teamElderDragonKills
             );
           }
           if (
@@ -575,10 +600,12 @@ const Analyzer = () => {
             );
           }
           if (
-            item.info.participants[getIndex(item)].challenges.alliedJungleMonsterKills != 0
+            item.info.participants[getIndex(item)].challenges
+              .alliedJungleMonsterKills != 0
           ) {
             alliedJungleMonsterKills += parseInt(
-              item.info.participants[getIndex(item)].challenges.alliedJungleMonsterKills
+              item.info.participants[getIndex(item)].challenges
+                .alliedJungleMonsterKills
             );
           }
           if (
@@ -589,38 +616,172 @@ const Analyzer = () => {
             );
           }
           if (
-            item.info.participants[getIndex(item)].challenges.enemyJungleMonsterKills != 0
+            item.info.participants[getIndex(item)].challenges
+              .enemyJungleMonsterKills != 0
           ) {
             enemyJungleMonsterKills += parseInt(
-              item.info.participants[getIndex(item)].challenges.enemyJungleMonsterKills
+              item.info.participants[getIndex(item)].challenges
+                .enemyJungleMonsterKills
             );
           }
           if (
-            item.info.participants[getIndex(item)].challenges.initialBuffCount != 0
+            item.info.participants[getIndex(item)].challenges
+              .initialBuffCount != 0
           ) {
             initialBuffCount += parseInt(
               item.info.participants[getIndex(item)].challenges.initialBuffCount
             );
           }
           if (
-            item.info.participants[getIndex(item)].challenges.initialCrabCount != 0
+            item.info.participants[getIndex(item)].challenges
+              .initialCrabCount != 0
           ) {
             initialCrabCount += parseInt(
               item.info.participants[getIndex(item)].challenges.initialCrabCount
             );
           }
           if (
-            item.info.participants[getIndex(item)].challenges.jungleCsBefore10Minutes != 0
+            item.info.participants[getIndex(item)].challenges
+              .jungleCsBefore10Minutes != 0
           ) {
             jungleCsBefore10Minutes += parseInt(
-              item.info.participants[getIndex(item)].challenges.jungleCsBefore10Minutes
+              item.info.participants[getIndex(item)].challenges
+                .jungleCsBefore10Minutes
             );
           }
           if (
-            item.info.participants[getIndex(item)].challenges.scuttleCrabKills != 0
+            item.info.participants[getIndex(item)].challenges
+              .scuttleCrabKills != 0
           ) {
             scuttleCrabKills += parseInt(
               item.info.participants[getIndex(item)].challenges.scuttleCrabKills
+            );
+          }
+          if (
+            item.info.participants[getIndex(item)].challenges
+              .baronTakedowns != 0
+          ) {
+            baronTakedowns += parseInt(
+              item.info.participants[getIndex(item)].challenges.baronTakedowns
+            );
+          }
+          if (
+            item.info.participants[getIndex(item)].challenges
+              .epicMonsterKillsNearEnemyJungler != 0
+          ) {
+            epicMonsterKillsNearEnemyJungler += parseInt(
+              item.info.participants[getIndex(item)].challenges.epicMonsterKillsNearEnemyJungler
+            );
+          }
+          if (
+            item.info.participants[getIndex(item)].challenges
+              .epicMonsterKillsWithin30SecondsOfSpawn != 0
+          ) {
+            epicMonsterKillsWithin30SecondsOfSpawn += parseInt(
+              item.info.participants[getIndex(item)].challenges.epicMonsterKillsWithin30SecondsOfSpawn
+            );
+          }
+          if (
+            item.info.participants[getIndex(item)].challenges
+              .epicMonsterSteals != 0
+          ) {
+            epicMonsterSteals += parseInt(
+              item.info.participants[getIndex(item)].challenges.epicMonsterSteals
+            );
+          }
+          if (
+            item.info.participants[getIndex(item)].challenges
+              .epicMonsterStolenWithoutSmite != 0
+          ) {
+            epicMonsterStolenWithoutSmite += parseInt(
+              item.info.participants[getIndex(item)].challenges.epicMonsterStolenWithoutSmite
+            );
+          }
+          if (
+            item.info.participants[getIndex(item)].challenges
+              .junglerTakedownsNearDamagedEpicMonster != 0
+          ) {
+            junglerTakedownsNearDamagedEpicMonster += parseInt(
+              item.info.participants[getIndex(item)].challenges.junglerTakedownsNearDamagedEpicMonster
+            );
+          }
+          if (
+            item.info.participants[getIndex(item)].challenges
+              .kTurretsDestroyedBeforePlatesFall != 0
+          ) {
+            kTurretsDestroyedBeforePlatesFall += parseInt(
+              item.info.participants[getIndex(item)].challenges.kTurretsDestroyedBeforePlatesFall
+            );
+          }
+          if (
+            item.info.participants[getIndex(item)].challenges
+              .multiTurretRiftHeraldCount != 0
+          ) {
+            multiTurretRiftHeraldCount += parseInt(
+              item.info.participants[getIndex(item)].challenges.multiTurretRiftHeraldCount
+            );
+          }
+          if (
+            item.info.participants[getIndex(item)].challenges
+              .outnumberedNexusKill != 0
+          ) {
+            outnumberedNexusKill += parseInt(
+              item.info.participants[getIndex(item)].challenges.outnumberedNexusKill
+            );
+          }
+          if (
+            item.info.participants[getIndex(item)].challenges
+              .perfectDragonSoulsTaken != 0
+          ) {
+            perfectDragonSoulsTaken += parseInt(
+              item.info.participants[getIndex(item)].challenges.perfectDragonSoulsTaken
+            );
+          }
+          if (
+            item.info.participants[getIndex(item)].challenges
+              .soloBaronKills != 0
+          ) {
+            soloBaronKills += parseInt(
+              item.info.participants[getIndex(item)].challenges.soloBaronKills
+            );
+          }
+        
+          if (
+            item.info.participants[getIndex(item)].challenges
+              .takedownOnFirstTurret != 0
+          ) {
+            takedownOnFirstTurret += parseInt(
+              item.info.participants[getIndex(item)].challenges.takedownOnFirstTurret
+            );
+          }
+          if (
+            item.info.participants[getIndex(item)].challenges
+              .turretTakedowns != 0
+          ) {
+            turretTakedowns += parseInt(
+              item.info.participants[getIndex(item)].challenges.turretTakedowns
+            );
+          }
+          if (
+            item.info.participants[getIndex(item)].challenges
+              .turretsTakenWithRiftHerald != 0
+          ) {
+            turretsTakenWithRiftHerald += parseInt(
+              item.info.participants[getIndex(item)].challenges.turretsTakenWithRiftHerald
+            );
+          }
+          if (
+            item.info.participants[getIndex(item)].kills != 0
+          ) {
+            kills += parseInt(
+              item.info.participants[getIndex(item)].kills
+            );
+          }
+          if (
+            item.info.participants[getIndex(item)].deaths != 0
+          ) {
+            deaths += parseInt(
+              item.info.participants[getIndex(item)].deaths
             );
           }
         }
@@ -664,82 +825,185 @@ const Analyzer = () => {
       }
     }
 
+
+      var buildLaneSoloKills = 0
+      var buildLaneTurrent = 0
+      var buildLaneFarm = 0
+      var buildLaneMultiKills = 0
+      var buildLaneFirstTurrent = 0
+      var buildLaneTakedownsFirstXMinutes = 0
+      var buildLanePlates = 0
+      var buildLaneKda = 0
+      var buildLaneOutNumbered = 0
+      var buildLaneKillsAfterHide = 0
+
+
+      if((soloKills/soloQ) >= 1){
+        buildLaneSoloKills = 1
+      } else {
+        buildLaneSoloKills = soloKills / soloQ
+      }
+      if(((killsNearEnemyTurret + killsUnderOwnTurret)/soloQ) >= 1){
+        buildLaneTurrent = 1
+      } else {
+        buildLaneTurrent = (killsNearEnemyTurret + killsUnderOwnTurret)/soloQ
+      }
+      if(((laneMinionsFirst10Minutes/soloQ)/100)>= 1){
+        buildLaneFarm = 1
+      } else { 
+         buildLaneFarm = ((laneMinionsFirst10Minutes/soloQ)/100)
+      }
+      if(((multikills + multikillsAfterAggressiveFlash)/soloQ) >= 1){
+        buildLaneMultiKills = 1
+      } else {
+        buildLaneMultiKills = (multikills + multikillsAfterAggressiveFlash)/soloQ
+      }
+      if(takedownOnFirstTurret/10 >=1){
+        buildLaneFirstTurrent = 1
+      } else {
+        buildLaneFirstTurrent = takedownOnFirstTurret/10
+      }
+      if(takedownsFirstXMinutes/10 >=1){
+        buildLaneTakedownsFirstXMinutes = 1
+      } else {
+        buildLaneTakedownsFirstXMinutes = takedownsFirstXMinutes/10
+      }
+      if(turretPlatesTaken/100 >=1){
+        buildLanePlates = 1
+      } else {
+        buildLanePlates = turretPlatesTaken/100
+      }
+      if(((kills + assists)/soloQ)/10 >= 1){
+        buildLaneKda = 1
+      } else {
+        buildLaneKda = ((kills + assists)/soloQ)/100
+      }
+      if(((outnumberedKills)/soloQ) >= 1){
+        buildLaneOutNumbered = 1
+      } else {
+        buildLaneOutNumbered = ((outnumberedKills)/soloQ)
+      }
+      if(((killAfterHiddenWithAlly)/(soloQ*2)) >= 1){
+        buildLaneKillsAfterHide = 1
+      } else {
+        buildLaneKillsAfterHide = (killAfterHiddenWithAlly)/(soloQ*2)
+      }
+
+   //   console.log(buildLaneSoloKills)
+      console.log(buildLaneMultiKills)
+
+      var finalLane = buildLaneSoloKills + buildLaneTurrent + buildLaneFarm + buildLaneMultiKills + buildLaneFirstTurrent + buildLaneTakedownsFirstXMinutes + buildLanePlates + buildLaneKda + buildLaneOutNumbered + buildLaneKillsAfterHide
+      console.log(buildLaneSoloKills)
+      console.log(buildLaneTurrent)
+      console.log(buildLaneFarm)
+      console.log(buildLaneMultiKills)
+      console.log(buildLaneFirstTurrent)
+      console.log(buildLaneTakedownsFirstXMinutes)
+      console.log(buildLanePlates)
+      console.log(buildLaneKda)
+      console.log(buildLaneOutNumbered)
+      console.log(buildLaneKillsAfterHide)
+
+
+
+      console.log(finalLane)
+
     var Lane =
-      earlyLaningPhaseGoldExpAdvantage / (soloQ * eloMultiplaier) +
-      junglerKillsEarlyJungle / (soloQ * eloMultiplaier) +
-      killAfterHiddenWithAlly / (soloQ * eloMultiplaier) +
-      killsNearEnemyTurret / (soloQ * eloMultiplaier) +
-      killsOnLanersEarlyJungleAsJungler / (soloQ * eloMultiplaier) +
-      killsUnderOwnTurret / (soloQ * eloMultiplaier) +
-      (laneMinionsFirst10Minutes/1.653) / (soloQ * eloMultiplaier) +
-      laningPhaseGoldExpAdvantage / (soloQ * eloMultiplaier) +
-      maxCsAdvantageOnLaneOpponent / (soloQ * eloMultiplaier) -
-      maxKillDeficit / (soloQ * eloMultiplaier) +
-      maxLevelLeadLaneOpponent / (soloQ * eloMultiplaier) +
-      multikills / (soloQ * eloMultiplaier) +
-      multikillsAfterAggressiveFlash / (soloQ * eloMultiplaier) +
-      outnumberedKills / (soloQ * eloMultiplaier) +
-      quickFirstTurret / (soloQ * eloMultiplaier) +
-      quickSoloKills / (soloQ * eloMultiplaier) +
-      takedownOnFirstTurret / (soloQ * eloMultiplaier) +
-      takedownsAfterGainingLevelAdvantage / (soloQ * eloMultiplaier) +
-      takedownsBeforeJungleMinionSpawn / (soloQ * eloMultiplaier) +
-      takedownsFirstXMinutes / (soloQ * eloMultiplaier) +
-      turretPlatesTaken / (soloQ * eloMultiplaier);
+    buildLaneSoloKills 
+    /*
+      earlyLaningPhaseGoldExpAdvantage  +
+      junglerKillsEarlyJungle  +
+      killAfterHiddenWithAlly  +
+      killsNearEnemyTurret  +
+      killsOnLanersEarlyJungleAsJungler  +
+      killsUnderOwnTurret  +
+      laneMinionsFirst10Minutes / 1000  +
+      laningPhaseGoldExpAdvantage  +
+      maxCsAdvantageOnLaneOpponent  -
+      maxKillDeficit  +
+      maxLevelLeadLaneOpponent  +
+      multikills  +
+      multikillsAfterAggressiveFlash  +
+      outnumberedKills  +
+      quickFirstTurret  +
+      quickSoloKills  +
+      takedownOnFirstTurret  +
+      takedownsAfterGainingLevelAdvantage  +
+      takedownsBeforeJungleMinionSpawn  +
+      takedownsFirstXMinutes  +
+      turretPlatesTaken ;
+      */
     var Damage =
-      damagePerMinute / (soloQ * eloMultiplaier) +
+      (damagePerMinute/100) / (soloQ * eloMultiplaier) +
       damageTakenOnTeamPercentage / (soloQ * eloMultiplaier) +
       teamDamagePercentage / (soloQ * eloMultiplaier) +
-      (totalDamageDealtToChampions/1.40) / (soloQ * eloMultiplaier) +
-      totalDamageTaken / (soloQ * eloMultiplaier) +
-      totalHeal / (soloQ * eloMultiplaier);
+      totalDamageDealtToChampions / 10000 / (soloQ * eloMultiplaier) +
+      (totalDamageTaken/10000) / (soloQ * eloMultiplaier) +
+      (totalHeal/10000) / (soloQ * eloMultiplaier);
 
     var Fight =
-      (enemyChampionImmobilizations/5) / (soloQ * eloMultiplaier) +
+      enemyChampionImmobilizations / 5 / (soloQ * eloMultiplaier) +
       fullTeamTakedown / (soloQ * eloMultiplaier) +
       highestCrowdControlScore / (soloQ * eloMultiplaier) +
       immobilizeAndKillWithAlly / (soloQ * eloMultiplaier) +
       killedChampTookFullTeamDamageSurvived / (soloQ * eloMultiplaier) +
       knockEnemyIntoTeamAndKill / (soloQ * eloMultiplaier) +
-      (pickKillWithAlly) / (soloQ * eloMultiplaier) +
+      pickKillWithAlly / (soloQ * eloMultiplaier) +
       survivedThreeImmobilizesInFight / (soloQ * eloMultiplaier) +
       tookLargeDamageSurvived / (soloQ * eloMultiplaier);
 
     var Utility =
       completeSupportQuestInTime / (soloQ * eloMultiplaier) +
       controlWardTimeCoverageInRiverOrEnemyHalf / (soloQ * eloMultiplaier) +
-      (controlWardsPlaced/10) / (soloQ * eloMultiplaier) +
-      (effectiveHealAndShielding/1000) /   (soloQ * eloMultiplaier) +
+      controlWardsPlaced  / (soloQ * eloMultiplaier) +
+      (effectiveHealAndShielding/1000)  / (soloQ * eloMultiplaier) +
       killParticipation / (soloQ * eloMultiplaier) +
       saveAllyFromDeath / (soloQ * eloMultiplaier) +
-      (stealthWardsPlaced/10) / (soloQ * eloMultiplaier) +
+      stealthWardsPlaced  / (soloQ * eloMultiplaier) +
       threeWardsOneSweeperCount / (soloQ * eloMultiplaier) +
       visionScoreAdvantageLaneOpponent / (soloQ * eloMultiplaier) +
-      (visionScorePerMinute/100) / (soloQ * eloMultiplaier) +
-      (assists/100) / (soloQ * eloMultiplaier) +
-      (visionScore/100) / (soloQ * eloMultiplaier);
-    var Split = 
-    soloKills  / (soloQ * eloMultiplaier) +
-    soloTurretsLategame  / (soloQ * eloMultiplaier) +
-    teamBaronKills  / (soloQ * eloMultiplaier) +
-    teamElderDragonKills  / (soloQ * eloMultiplaier) +
-    (damageDealtToBuildings/355)  / (soloQ * eloMultiplaier)
- 
+      visionScorePerMinute  / (soloQ * eloMultiplaier) +
+      assists / (soloQ * eloMultiplaier) +
+      visionScore / 50 / (soloQ * eloMultiplaier);
+    var Split =
+      soloKills / (soloQ * eloMultiplaier) +
+      soloTurretsLategame / (soloQ * eloMultiplaier) +
+      teamBaronKills / (soloQ * eloMultiplaier) +
+      teamElderDragonKills / (soloQ * eloMultiplaier) +
+      damageDealtToBuildings / 1000 / (soloQ * eloMultiplaier);
+
+    var Farm =
+      alliedJungleMonsterKills / 650 / (soloQ * eloMultiplaier) +
+      buffsStolen / (soloQ * eloMultiplaier) +
+      enemyJungleMonsterKills / 50 / (soloQ * eloMultiplaier) +
+      initialBuffCount / (soloQ * eloMultiplaier) +
+      initialCrabCount / (soloQ * eloMultiplaier) +
+      jungleCsBefore10Minutes / 1.162 / (soloQ * eloMultiplaier) +
+      scuttleCrabKills / (soloQ * eloMultiplaier) +
+      laneMinionsFirst10Minutes / 1.653 / (soloQ * eloMultiplaier);
+    var Objectives = 
+    baronTakedowns / (soloQ * eloMultiplaier) +
+    epicMonsterKillsNearEnemyJungler / (soloQ * eloMultiplaier) +
+    epicMonsterKillsWithin30SecondsOfSpawn / (soloQ * eloMultiplaier) +
+    epicMonsterSteals / (soloQ * eloMultiplaier) +
+    epicMonsterStolenWithoutSmite / (soloQ * eloMultiplaier) +
+    junglerTakedownsNearDamagedEpicMonster / (soloQ * eloMultiplaier) +
+    kTurretsDestroyedBeforePlatesFall / (soloQ * eloMultiplaier) +
+    multiTurretRiftHeraldCount / (soloQ * eloMultiplaier) +
+    outnumberedNexusKill / (soloQ * eloMultiplaier) +
+    perfectDragonSoulsTaken / (soloQ * eloMultiplaier) +
+    riftHeraldTakedowns / (soloQ * eloMultiplaier) +
+    soloBaronKills / (soloQ * eloMultiplaier) +
+    takedownOnFirstTurret / (soloQ * eloMultiplaier) +
+    turretTakedowns / (soloQ * eloMultiplaier) +
+    turretsTakenWithRiftHerald / (soloQ * eloMultiplaier)
     ;
-    var Farm = 
-    (alliedJungleMonsterKills/650) / (soloQ * eloMultiplaier) +
-    buffsStolen  / (soloQ * eloMultiplaier) +
-    (enemyJungleMonsterKills/50)  / (soloQ * eloMultiplaier) +
-    initialBuffCount  / (soloQ * eloMultiplaier) +
-    initialCrabCount  / (soloQ * eloMultiplaier) +
-    (jungleCsBefore10Minutes/1.162)  / (soloQ * eloMultiplaier) +
-    scuttleCrabKills  / (soloQ * eloMultiplaier) +
-    (laneMinionsFirst10Minutes/1.653) / (soloQ * eloMultiplaier) 
-    ;
-    var Objectives = 0;
 
     setHardData({
       soloQueues: soloQ,
+      kills:kills,
+      deaths:deaths,
+      assists:assists,
       // Lane
       earlyLaningPhaseGoldExpAdvantage: earlyLaningPhaseGoldExpAdvantage,
       junglerKillsEarlyJungle: junglerKillsEarlyJungle,
@@ -783,7 +1047,7 @@ const Analyzer = () => {
       //Utility
       completeSupportQuestInTime: completeSupportQuestInTime,
       controlWardTimeCoverageInRiverOrEnemyHalf:
-      controlWardTimeCoverageInRiverOrEnemyHalf.toFixed(0),
+        controlWardTimeCoverageInRiverOrEnemyHalf.toFixed(0),
       controlWardsPlaced: controlWardsPlaced,
       effectiveHealAndShielding: effectiveHealAndShielding.toFixed(0),
       killParticipation: killParticipation,
@@ -796,10 +1060,10 @@ const Analyzer = () => {
       visionScore: visionScore,
       //Split
       soloKills: soloKills,
-      soloTurretsLategame:soloTurretsLategame,
-      teamBaronKills:teamBaronKills,
-      teamElderDragonKills:teamElderDragonKills,
-      damageDealtToBuildings:damageDealtToBuildings,
+      soloTurretsLategame: soloTurretsLategame,
+      teamBaronKills: teamBaronKills,
+      teamElderDragonKills: teamElderDragonKills,
+      damageDealtToBuildings: damageDealtToBuildings,
       // Farm
       alliedJungleMonsterKills: alliedJungleMonsterKills,
       buffsStolen: buffsStolen,
@@ -808,24 +1072,41 @@ const Analyzer = () => {
       initialCrabCount: initialCrabCount,
       jungleCsBefore10Minutes: jungleCsBefore10Minutes,
       scuttleCrabKills: scuttleCrabKills,
+      //Objectives
+      baronTakedowns:baronTakedowns,
+      epicMonsterKillsNearEnemyJungler:epicMonsterKillsNearEnemyJungler,
+      epicMonsterKillsWithin30SecondsOfSpawn:epicMonsterKillsWithin30SecondsOfSpawn,
+      epicMonsterSteals:epicMonsterSteals,
+      epicMonsterStolenWithoutSmite:epicMonsterStolenWithoutSmite,
+      junglerTakedownsNearDamagedEpicMonster:junglerTakedownsNearDamagedEpicMonster,
+      kTurretsDestroyedBeforePlatesFall:kTurretsDestroyedBeforePlatesFall,
+      multiTurretRiftHeraldCount:multiTurretRiftHeraldCount,
+      outnumberedNexusKill:outnumberedKills,
+      perfectDragonSoulsTaken:perfectDragonSoulsTaken,
+      riftHeraldTakedowns:riftHeraldTakedowns,
+      soloBaronKills:soloBaronKills,
+      takedownOnFirstTurret:takedownOnFirstTurret,
+      turretTakedowns:turretTakedowns,
+      turretsTakenWithRiftHerald:turretsTakenWithRiftHerald,
     });
 
-    return [
-      (Lane/6.1).toFixed(0),
-      (Damage / 5300).toFixed(0),
-      (Fight / 3.355).toFixed(0),
-      (Utility / 1.65).toFixed(0),
-      (Split/2.6).toFixed(0),
-      (Farm/5.8).toFixed(0),
-      Objectives,
-    ];
+
+    return setGraph([
+      (Lane/( soloQ * eloMultiplaier)).toFixed(0),
+      (Damage).toFixed(0),
+      (Fight ).toFixed(0),
+      (Utility).toFixed(0),
+      (Split ).toFixed(0),
+      (Farm).toFixed(0),
+      Objectives.toFixed(0),
+    ]);
   };
   const call = () => {
     console.log(graph);
     console.log(hardData.maxCsAdvantageOnLaneOpponent);
   };
   useEffect(() => {
-    setGraph(getChallenges());
+    getChallenges();
   }, [matchDataState]);
 
   const dataTop = {
@@ -841,7 +1122,7 @@ const Analyzer = () => {
     datasets: [
       {
         label: "Top Perfomace",
-        data: [99, 99, 61, 26, 74, 99, 70],
+        data: graph,
         borderColor: "rgba(128, 0, 128, 1)",
         borderWidth: 1,
       },
@@ -881,10 +1162,14 @@ const Analyzer = () => {
   };
 
   const options = {
+    responsive: true,
     scale: {
+      suggestedMax:100,
+      suggestedMin:0,
       ticks: {
         display: true,
-        maxTicksLimit: 2,
+
+        maxTicksLimit: 2
       },
     },
   };
@@ -922,6 +1207,9 @@ const Analyzer = () => {
       <span>Hard Data</span>
       <S.HardData>
         <b>SoloQueues: {hardData.soloQueues}</b>
+        <b>kills: {hardData.kills}</b>
+        <b>deaths: {hardData.deaths}</b>
+        <b>assists: {hardData.assists}</b>
         <b>Lane</b>
         <p>
           earlyLaningPhaseGoldExpAdvantage:
@@ -1027,6 +1315,23 @@ const Analyzer = () => {
         <p>initialCrabCount:{hardData.initialCrabCount}</p>
         <p>jungleCsBefore10Minutes:{hardData.jungleCsBefore10Minutes}</p>
         <p>scuttleCrabKills:{hardData.scuttleCrabKills}</p>
+        <b>Objectives</b>
+        <p>baronTakedowns:{hardData.baronTakedowns}</p>
+        <p>epicMonsterKillsNearEnemyJungler:{hardData.epicMonsterKillsNearEnemyJungler}</p>
+        <p>epicMonsterKillsWithin30SecondsOfSpawn:{hardData.epicMonsterKillsWithin30SecondsOfSpawn}</p>
+        <p>epicMonsterSteals:{hardData.epicMonsterSteals}</p>
+        <p>epicMonsterStolenWithoutSmite:{hardData.epicMonsterStolenWithoutSmite}</p>
+        <p>junglerTakedownsNearDamagedEpicMonster:{hardData.junglerTakedownsNearDamagedEpicMonster}</p>
+        <p>kTurretsDestroyedBeforePlatesFall:{hardData.kTurretsDestroyedBeforePlatesFall}</p>
+        <p>multiTurretRiftHeraldCount:{hardData.multiTurretRiftHeraldCount}</p>
+        <p>outnumberedNexusKill:{hardData.outnumberedNexusKill}</p>
+        <p>perfectDragonSoulsTaken:{hardData.perfectDragonSoulsTaken}</p>
+        <p>riftHeraldTakedowns:{hardData.riftHeraldTakedowns}</p>
+        <p>soloBaronKills:{hardData.soloBaronKills}</p>
+        <p>takedownOnFirstTurret:{hardData.takedownOnFirstTurret}</p>
+        <p>turretTakedowns:{hardData.turretTakedowns}</p>
+        <p>turretsTakenWithRiftHerald:{hardData.turretsTakenWithRiftHerald}</p>
+
       </S.HardData>
       <span>Analyzer</span>
       <S.Roles>
