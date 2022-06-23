@@ -39,6 +39,7 @@ const Matchitem = ({
   passItem,
   result,
   gameLength,
+  farm,
 }) => {
   const { matchDataState, version, matchState, scoutState } = useScout();
   const [champion, setChampion] = useState();
@@ -194,7 +195,7 @@ const Matchitem = ({
           <span>
             {kills}/{deaths}/{assists}
           </span>
-          <span>{kda}::KDA</span>
+          <span>{farm}:CS</span>
         </S.ColunmScore>
         <S.ColunmParticipants>
           {passItem.info.participants.map((item) => (

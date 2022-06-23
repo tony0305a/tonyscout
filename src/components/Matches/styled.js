@@ -4,9 +4,14 @@ export const Wrapper = styled.div`
   display: flex;
   margin-top: 16px;
   width: 800px;
+  height:582px;
+  overflow:scroll;
   flex-wrap: wrap;
   border-radius: 8px;
   background-color: white;
+  &::-webkit-scrollbar{
+    display:none;
+}
 `;
 export const Header = styled.div`
   width: 100%;

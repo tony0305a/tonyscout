@@ -292,6 +292,7 @@ const Matches = () => {
                   ).toFixed(1)}
                   passItem={item}
                   result={getResult(item.info.participants[getIndex(item)].win)}
+                  farm={item.info.participants[getIndex(item)].totalMinionsKilled}
                 ></Matchitem>
               ))}
             </S.Wrapper>
