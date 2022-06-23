@@ -7,6 +7,7 @@ export const Wrapper = styled.div`
   flex-direction: column;
   border-top-left-radius: 8px;
   width: 500px;
+  height:400px;
   border-top-right-radius: 8px;
   span {
     background-color: purple;

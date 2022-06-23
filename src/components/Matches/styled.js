@@ -4,7 +4,7 @@ export const Wrapper = styled.div`
   display: flex;
   margin-top: 16px;
   width: 800px;
-  height:582px;
+  height:580px;
   overflow:scroll;
   flex-wrap: wrap;
   border-radius: 8px;

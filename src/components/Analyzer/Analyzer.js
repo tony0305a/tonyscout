@@ -31,6 +31,7 @@ const Analyzer = () => {
   const [renderMid, setRenderMid] = useState(false);
   const [renderCarry, setRenderCarry] = useState(false);
   const [renderUtility, setRenderUtility] = useState(false);
+  const [eloMultiplaier,setEloMultiplaier] = useState(0.2)
   const [hardData, setHardData] = useState({
     soloQueues: 0,
     kills: 0,
@@ -236,6 +237,7 @@ const Analyzer = () => {
     var scuttleCrabKills = 0;
     //Objectives
     var baronTakedowns = 0;
+    var dragonTakedowns = 0
     var epicMonsterKillsNearEnemyJungler = 0;
     var epicMonsterKillsWithin30SecondsOfSpawn = 0;
     var epicMonsterSteals = 0;
@@ -250,10 +252,14 @@ const Analyzer = () => {
     var takedownOnFirstTurret = 0;
     var turretTakedowns = 0;
     var turretsTakenWithRiftHerald = 0;
+    var neutralMinionsKilled = 0
+    var totalMinionsKilled = 0
+    var timePlayed = 0
 
-    var eloMultiplaier = 0.94;
+
     matchDataState.map((item) => {
       if (item.info.participants != undefined) {
+
         if (
           item.info.participants[getIndex(item)].challenges != undefined &&
           item.info.queueId === 420
@@ -268,7 +274,21 @@ const Analyzer = () => {
               item.info.participants[getIndex(item)].challenges
                 .junglerKillsEarlyJungle;
           }
-
+          if(item.info.participants[getIndex(item)].timePlayed){
+            timePlayed += parseInt(item.info.participants[getIndex(item)].timePlayed)
+          }
+          if(item.info.participants[getIndex(item)].neutralMinionsKilled){
+            neutralMinionsKilled += parseInt(item.info.participants[getIndex(item)].neutralMinionsKilled)
+          }
+          if(item.info.participants[getIndex(item)].totalMinionsKilled){
+            totalMinionsKilled += parseInt(item.info.participants[getIndex(item)].totalMinionsKilled)
+          }
+          if(item.info.participants[getIndex(item)].challenges.dragonTakedowns){
+            dragonTakedowns += parseInt(item.info.participants[getIndex(item)].challenges.dragonTakedowns)
+          }
+          if(item.info.participants[getIndex(item)].challenges.riftHeraldTakedowns){
+            riftHeraldTakedowns += parseInt(item.info.participants[getIndex(item)].challenges.riftHeraldTakedowns)
+          }
           killAfterHiddenWithAlly += parseInt(
             item.info.participants[getIndex(item)].challenges
               .killAfterHiddenWithAlly
@@ -795,36 +815,24 @@ const Analyzer = () => {
       if (sq.queueType != "RANKED_SOLO_5x5") {
         sq = rankedState.ranked[1];
       }
-      if (sq.tier === "IRON" && sq.rank <= 2) {
-        eloMultiplaier = 0.9;
-      } else if (sq.tier === "IRON" && sq.rank >= 3) {
-        eloMultiplaier = 0.94;
-      } else if (sq.tier === "BRONZE" && sq.rank <= 2) {
-        eloMultiplaier = 0.8;
-      } else if (sq.tier === "BRONZE" && sq.rank >= 3) {
-        eloMultiplaier = 0.84;
-      } else if (sq.tier === "SILVER" && sq.rank <= 2) {
-        eloMultiplaier = 0.7;
-      } else if (sq.tier === "SIVER" && sq.rank >= 3) {
-        eloMultiplaier = 0.74;
-      } else if (sq.tier === "GOLD" && sq.rank <= 2) {
-        eloMultiplaier = 0.6;
-      } else if (sq.tier === "GOLD" && sq.rank >= 3) {
-        eloMultiplaier = 0.64;
-      } else if (sq.tier === "PLATINUM" && sq.rank <= 2) {
-        eloMultiplaier = 0.5;
-      } else if (sq.tier === "PLATINUM" && sq.rank >= 3) {
-        eloMultiplaier = 0.54;
-      } else if (sq.tier === "DIAMOND" && sq.rank <= 2) {
-        eloMultiplaier = 0.4;
-      } else if (sq.tier === "DIAMOND" && sq.rank >= 3) {
-        eloMultiplaier = 0.44;
+      if (sq.tier === "IRON") {
+        setEloMultiplaier(0.2)
+      } else if (sq.tier === "BRONZE" ) {
+        setEloMultiplaier(0.3)
+      } else if (sq.tier === "SIVER") {
+        setEloMultiplaier(0.4)
+      } else if (sq.tier === "GOLD" ) {
+        setEloMultiplaier(0.5)
+      } else if (sq.tier === "PLATINUM" ) {
+        setEloMultiplaier(0.6)
+      } else if (sq.tier === "DIAMOND" ) {
+        setEloMultiplaier(0.7)
       } else if (sq.tier === "MASTER") {
-        eloMultiplaier = 0.3;
+        setEloMultiplaier(0.8)
       } else if (sq.tier === "GRANDMASTER") {
-        eloMultiplaier = 0.2;
+        setEloMultiplaier(0.9)
       } else if (sq.tier === "CHALLENGER") {
-        eloMultiplaier = 0.1;
+        setEloMultiplaier(1)
       }
     }
 
@@ -868,10 +876,11 @@ const Analyzer = () => {
     var buildSplitDamageDealtToBuildings = 0;
 
     var buildFarmXminCs = 0;
-    var buildFarmAlliedJungle = 0;
-    var buildFarmBuffsStolen = 0;
-    var buildFarmEnemyJungleMonsterKill = 0;
-    var buildFarmScuttleCrab = 0;
+    var buildFarmConstant = 0
+
+    var buildObjectivesTakedowns = 0
+    var buildObjectivesBuildings = 0
+    var buildObjectivesSteals = 0
 
     //Lane
     if (soloKills / soloQ >= 1) {
@@ -1065,6 +1074,27 @@ const Analyzer = () => {
       buildFarmXminCs =
         (laneMinionsFirst10Minutes + jungleCsBefore10Minutes) / soloQ / 14;
     }
+    if(((totalMinionsKilled + neutralMinionsKilled)/(timePlayed/60))>=5){
+      buildFarmConstant = 5
+    } else {
+      buildFarmConstant = ((totalMinionsKilled + neutralMinionsKilled)/(timePlayed/60))
+    }
+    if(((baronTakedowns+dragonTakedowns+riftHeraldTakedowns+soloBaronKills+perfectDragonSoulsTaken)/soloQ)>=3){
+      buildObjectivesTakedowns = 3
+    } else {
+        buildObjectivesTakedowns = ((baronTakedowns+dragonTakedowns+riftHeraldTakedowns+perfectDragonSoulsTaken)/soloQ)
+    }
+    if(((turretTakedowns + turretsTakenWithRiftHerald + kTurretsDestroyedBeforePlatesFall + outnumberedNexusKill+multiTurretRiftHeraldCount)/soloQ)>=6){
+      buildObjectivesBuildings = 6
+    } else {
+      buildObjectivesBuildings = ((turretTakedowns + turretsTakenWithRiftHerald + kTurretsDestroyedBeforePlatesFall + outnumberedNexusKill+multiTurretRiftHeraldCount)/soloQ)
+    }
+    if(((epicMonsterKillsNearEnemyJungler+epicMonsterSteals+epicMonsterStolenWithoutSmite)/soloQ)>=1){
+      buildObjectivesSteals = 1
+    } else {
+      buildObjectivesSteals = ((epicMonsterKillsNearEnemyJungler+epicMonsterSteals+epicMonsterStolenWithoutSmite)/soloQ)
+    }
+
     var finalLane =
       buildLaneSoloKills +
       buildLaneTurrent +
@@ -1104,107 +1134,38 @@ const Analyzer = () => {
       buildSplitTeamBarons +
       buildSplitDamageDealtToBuildings;
 
-    var finalFarm = buildFarmXminCs;
+    var finalFarm = buildFarmXminCs+ buildFarmConstant
+    ;
+    var finalObjectives =
+    buildObjectivesTakedowns+
+    buildObjectivesBuildings +
+    buildObjectivesSteals
 
-    console.log(buildFarmXminCs);
+    console.log(buildObjectivesTakedowns);
 
-    console.log(finalFarm);
+
+    console.log(finalObjectives);
 
     var Lane = finalLane;
-    /*
-      earlyLaningPhaseGoldExpAdvantage  +
-      junglerKillsEarlyJungle  +
-      killAfterHiddenWithAlly  +
-      killsNearEnemyTurret  +
-      killsOnLanersEarlyJungleAsJungler  +
-      killsUnderOwnTurret  +
-      laneMinionsFirst10Minutes / 1000  +
-      laningPhaseGoldExpAdvantage  +
-      maxCsAdvantageOnLaneOpponent  -
-      maxKillDeficit  +
-      maxLevelLeadLaneOpponent  +
-      multikills  +
-      multikillsAfterAggressiveFlash  +
-      outnumberedKills  +
-      quickFirstTurret  +
-      quickSoloKills  +
-      takedownOnFirstTurret  +
-      takedownsAfterGainingLevelAdvantage  +
-      takedownsBeforeJungleMinionSpawn  +
-      takedownsFirstXMinutes  +
-      turretPlatesTaken ;
-      */
-    var Damage =
-      damagePerMinute / 100 / (soloQ * eloMultiplaier) +
-      damageTakenOnTeamPercentage / (soloQ * eloMultiplaier) +
-      teamDamagePercentage / (soloQ * eloMultiplaier) +
-      totalDamageDealtToChampions / 10000 / (soloQ * eloMultiplaier) +
-      totalDamageTaken / 10000 / (soloQ * eloMultiplaier) +
-      totalHeal / 10000 / (soloQ * eloMultiplaier);
+
+
 
     var Fight = finalFight;
-    /*
-      enemyChampionImmobilizations / 5 / (soloQ * eloMultiplaier) +
-      fullTeamTakedown / (soloQ * eloMultiplaier) +
-      highestCrowdControlScore / (soloQ * eloMultiplaier) +
-      immobilizeAndKillWithAlly / (soloQ * eloMultiplaier) +
-      killedChampTookFullTeamDamageSurvived / (soloQ * eloMultiplaier) +
-      knockEnemyIntoTeamAndKill / (soloQ * eloMultiplaier) +
-      pickKillWithAlly / (soloQ * eloMultiplaier) +
-      survivedThreeImmobilizesInFight / (soloQ * eloMultiplaier) +
-      tookLargeDamageSurvived / (soloQ * eloMultiplaier);
-      */
+
     var Utility = finalUtility;
-    /*
-      completeSupportQuestInTime / (soloQ * eloMultiplaier) +
-      controlWardTimeCoverageInRiverOrEnemyHalf / (soloQ * eloMultiplaier) +
-      controlWardsPlaced / (soloQ * eloMultiplaier) +
-      effectiveHealAndShielding / 1000 / (soloQ * eloMultiplaier) +
-      killParticipation / (soloQ * eloMultiplaier) +
-      saveAllyFromDeath / (soloQ * eloMultiplaier) +
-      stealthWardsPlaced / (soloQ * eloMultiplaier) +
-      threeWardsOneSweeperCount / (soloQ * eloMultiplaier) +
-      visionScoreAdvantageLaneOpponent / (soloQ * eloMultiplaier) +
-      visionScorePerMinute / (soloQ * eloMultiplaier) +
-      assists / (soloQ * eloMultiplaier) +
-      visionScore / 50 / (soloQ * eloMultiplaier);
-      */
+
     var Split = finalSplit;
-    /*
-      soloKills / (soloQ * eloMultiplaier) +
-      soloTurretsLategame / (soloQ * eloMultiplaier) +
-      teamBaronKills / (soloQ * eloMultiplaier) +
-      teamElderDragonKills / (soloQ * eloMultiplaier) +
-      damageDealtToBuildings / 1000 / (soloQ * eloMultiplaier)
-      */
+
 
     var Farm =
-      alliedJungleMonsterKills / 650 / (soloQ * eloMultiplaier) +
-      buffsStolen / (soloQ * eloMultiplaier) +
-      enemyJungleMonsterKills / 50 / (soloQ * eloMultiplaier) +
-      initialBuffCount / (soloQ * eloMultiplaier) +
-      initialCrabCount / (soloQ * eloMultiplaier) +
-      jungleCsBefore10Minutes / 1.162 / (soloQ * eloMultiplaier) +
-      scuttleCrabKills / (soloQ * eloMultiplaier) +
-      laneMinionsFirst10Minutes / 1.653 / (soloQ * eloMultiplaier);
+    finalFarm
+
     var Objectives =
-      baronTakedowns / (soloQ * eloMultiplaier) +
-      epicMonsterKillsNearEnemyJungler / (soloQ * eloMultiplaier) +
-      epicMonsterKillsWithin30SecondsOfSpawn / (soloQ * eloMultiplaier) +
-      epicMonsterSteals / (soloQ * eloMultiplaier) +
-      epicMonsterStolenWithoutSmite / (soloQ * eloMultiplaier) +
-      junglerTakedownsNearDamagedEpicMonster / (soloQ * eloMultiplaier) +
-      kTurretsDestroyedBeforePlatesFall / (soloQ * eloMultiplaier) +
-      multiTurretRiftHeraldCount / (soloQ * eloMultiplaier) +
-      outnumberedNexusKill / (soloQ * eloMultiplaier) +
-      perfectDragonSoulsTaken / (soloQ * eloMultiplaier) +
-      riftHeraldTakedowns / (soloQ * eloMultiplaier) +
-      soloBaronKills / (soloQ * eloMultiplaier) +
-      takedownOnFirstTurret / (soloQ * eloMultiplaier) +
-      turretTakedowns / (soloQ * eloMultiplaier) +
-      turretsTakenWithRiftHerald / (soloQ * eloMultiplaier);
+    finalObjectives
+
     setHardData({
       soloQueues: soloQ,
+      timePlayed:timePlayed,
       kills: kills,
       deaths: deaths,
       assists: assists,
@@ -1275,8 +1236,11 @@ const Analyzer = () => {
       initialCrabCount: initialCrabCount,
       jungleCsBefore10Minutes: jungleCsBefore10Minutes,
       scuttleCrabKills: scuttleCrabKills,
+      neutralMinionsKilled:neutralMinionsKilled,
+      totalMinionsKilled:totalMinionsKilled,
       //Objectives
       baronTakedowns: baronTakedowns,
+      dragonTakedowns:dragonTakedowns,
       epicMonsterKillsNearEnemyJungler: epicMonsterKillsNearEnemyJungler,
       epicMonsterKillsWithin30SecondsOfSpawn:
         epicMonsterKillsWithin30SecondsOfSpawn,
@@ -1293,19 +1257,17 @@ const Analyzer = () => {
       turretTakedowns: turretTakedowns,
       turretsTakenWithRiftHerald: turretsTakenWithRiftHerald,
     });
-
     return setGraph([
-      Lane.toFixed(0),
-      Fight.toFixed(0),
-      Utility.toFixed(0),
-      Split.toFixed(0),
-      Farm.toFixed(0),
-      Objectives.toFixed(0),
+      ((Lane*10)*eloMultiplaier).toFixed(0),
+      ((Fight*10)*eloMultiplaier).toFixed(0),
+      ((Utility*10)*eloMultiplaier).toFixed(0),
+      ((Split*10)*eloMultiplaier).toFixed(0),
+      ((Farm*10)*eloMultiplaier).toFixed(0),
+      ((Objectives*10)*eloMultiplaier).toFixed(0),
     ]);
   };
   const call = () => {
     console.log(graph);
-    console.log(hardData.maxCsAdvantageOnLaneOpponent);
   };
   useEffect(() => {
     getChallenges();
@@ -1315,7 +1277,7 @@ const Analyzer = () => {
     labels: ["Lane", "Fight", "Utility", "Split", "Farm", "Objectives"],
     datasets: [
       {
-        label: "Top Perfomace",
+        label: "SoloQueue Perfomace",
         data: graph,
         borderColor: "rgba(128, 0, 128, 1)",
         borderWidth: 1,
@@ -1398,148 +1360,7 @@ const Analyzer = () => {
   }
   return (
     <S.Wrapper>
-      <span>Hard Data</span>
-      <S.HardData>
-        <b>SoloQueues: {hardData.soloQueues}</b>
-        <b>kills: {hardData.kills}</b>
-        <b>deaths: {hardData.deaths}</b>
-        <b>assists: {hardData.assists}</b>
-        <b>Lane</b>
-        <p>
-          earlyLaningPhaseGoldExpAdvantage:
-          {hardData.earlyLaningPhaseGoldExpAdvantage}
-        </p>
-        <p>junglerKillsEarlyJungle:{hardData.junglerKillsEarlyJungle}</p>
-        <p> killAfterHiddenWithAlly:{hardData.killAfterHiddenWithAlly}</p>
-        <p> killsNearEnemyTurret:{hardData.killsNearEnemyTurret}</p>
-        <p>
-          killsOnLanersEarlyJungleAsJungler:
-          {hardData.killsOnLanersEarlyJungleAsJungler}
-        </p>
-        <p> killsUnderOwnTurret:{hardData.killsUnderOwnTurret}</p>
-        <p> laneMinionsFirst10Minutes:{hardData.laneMinionsFirst10Minutes}</p>
-        <p>
-          laningPhaseGoldExpAdvantage:{hardData.laningPhaseGoldExpAdvantage}
-        </p>
-        <p>
-          maxCsAdvantageOnLaneOpponent:{hardData.maxCsAdvantageOnLaneOpponent}
-        </p>
-        <p> maxKillDeficit:{hardData.maxKillDeficit}</p>
-        <p> maxLevelLeadLaneOpponent:{hardData.maxLevelLeadLaneOpponent}</p>
 
-        <p> multikills:{hardData.multikills}</p>
-        <p>
-          multikillsAfterAggressiveFlash:
-          {hardData.multikillsAfterAggressiveFlash}
-        </p>
-        <p> outnumberedKills:{hardData.outnumberedKills}</p>
-        <p> quickFirstTurret:{hardData.quickFirstTurret}</p>
-        <p> quickSoloKills:{hardData.quickSoloKills}</p>
-        <p> takedownOnFirstTurret:{hardData.takedownOnFirstTurret}</p>
-        <p>
-          takedownsAfterGainingLevelAdvantage:
-          {hardData.takedownsAfterGainingLevelAdvantage}
-        </p>
-        <p>
-          takedownsBeforeJungleMinionSpawn:
-          {hardData.takedownsBeforeJungleMinionSpawn}
-        </p>
-        <p> takedownsFirstXMinutes:{hardData.takedownsFirstXMinutes}</p>
-        <p> turretPlatesTaken:{hardData.turretPlatesTaken}</p>
-        <b>Damage</b>
-        <p>damagePerMinute: {hardData.damagePerMinute}</p>
-        <p>
-          damageTakenOnTeamPercentage: {hardData.damageTakenOnTeamPercentage}
-        </p>
-        <p>teamDamagePercentage: {hardData.teamDamagePercentage}</p>
-        <p>
-          totalDamageDealtToChampions: {hardData.totalDamageDealtToChampions}
-        </p>
-        <p>totalDamageTaken: {hardData.totalDamageTaken}</p>
-        <p>totalHeal: {hardData.totalHeal}</p>
-        <b>Fight</b>
-        <p>
-          enemyChampionImmobilizations:{hardData.enemyChampionImmobilizations}
-        </p>
-        <p>fullTeamTakedown:{hardData.fullTeamTakedown}</p>
-        <p>highestCrowdControlScore:{hardData.highestCrowdControlScore}</p>
-        <p>immobilizeAndKillWithAlly:{hardData.immobilizeAndKillWithAlly}</p>
-        <p>
-          killedChampTookFullTeamDamageSurvived:
-          {hardData.killedChampTookFullTeamDamageSurvived}
-        </p>
-        <p>knockEnemyIntoTeamAndKill:{hardData.knockEnemyIntoTeamAndKill}</p>
-        <p>pickKillWithAlly:{hardData.pickKillWithAlly}</p>
-        <p>
-          survivedThreeImmobilizesInFight:
-          {hardData.survivedThreeImmobilizesInFight}
-        </p>
-        <p>tookLargeDamageSurvived:{hardData.tookLargeDamageSurvived}</p>
-        <b>Utility</b>
-        <p>completeSupportQuestInTime:{hardData.completeSupportQuestInTime}</p>
-        <p>
-          controlWardTimeCoverageInRiverOrEnemyHalf:
-          {hardData.controlWardTimeCoverageInRiverOrEnemyHalf}
-        </p>
-        <p>controlWardsPlaced:{hardData.controlWardsPlaced}</p>
-        <p>effectiveHealAndShielding:{hardData.effectiveHealAndShielding}</p>
-        <p>killParticipation:{hardData.killParticipation}</p>
-        <p>saveAllyFromDeath:{hardData.saveAllyFromDeath}</p>
-        <p>stealthWardsPlaced:{hardData.stealthWardsPlaced}</p>
-        <p>threeWardsOneSweeperCount:{hardData.threeWardsOneSweeperCount}</p>
-        <p>
-          visionScoreAdvantageLaneOpponent:
-          {hardData.visionScoreAdvantageLaneOpponent}
-        </p>
-        <p>visionScorePerMinute:{hardData.visionScorePerMinute}</p>
-        <p>assists:{hardData.assists}</p>
-        <p>visionScore:{hardData.visionScore}</p>
-        <b>Split</b>
-        <p>soloKills:{hardData.soloKills}</p>
-        <p>soloTurretsLategame:{hardData.soloTurretsLategame}</p>
-        <p>teamBaronKills:{hardData.teamBaronKills}</p>
-        <p>teamElderDragonKills:{hardData.teamElderDragonKills}</p>
-        <p>damageDealtToBuildings:{hardData.damageDealtToBuildings}</p>
-        <b>Farm</b>
-        <p> laneMinionsFirst10Minutes:{hardData.laneMinionsFirst10Minutes}</p>
-        <p>alliedJungleMonsterKills:{hardData.alliedJungleMonsterKills}</p>
-        <p>buffsStolen:{hardData.buffsStolen}</p>
-        <p>enemyJungleMonsterKills:{hardData.enemyJungleMonsterKills}</p>
-        <p>initialBuffCount:{hardData.initialBuffCount}</p>
-        <p>initialCrabCount:{hardData.initialCrabCount}</p>
-        <p>jungleCsBefore10Minutes:{hardData.jungleCsBefore10Minutes}</p>
-        <p>scuttleCrabKills:{hardData.scuttleCrabKills}</p>
-        <b>Objectives</b>
-        <p>baronTakedowns:{hardData.baronTakedowns}</p>
-        <p>
-          epicMonsterKillsNearEnemyJungler:
-          {hardData.epicMonsterKillsNearEnemyJungler}
-        </p>
-        <p>
-          epicMonsterKillsWithin30SecondsOfSpawn:
-          {hardData.epicMonsterKillsWithin30SecondsOfSpawn}
-        </p>
-        <p>epicMonsterSteals:{hardData.epicMonsterSteals}</p>
-        <p>
-          epicMonsterStolenWithoutSmite:{hardData.epicMonsterStolenWithoutSmite}
-        </p>
-        <p>
-          junglerTakedownsNearDamagedEpicMonster:
-          {hardData.junglerTakedownsNearDamagedEpicMonster}
-        </p>
-        <p>
-          kTurretsDestroyedBeforePlatesFall:
-          {hardData.kTurretsDestroyedBeforePlatesFall}
-        </p>
-        <p>multiTurretRiftHeraldCount:{hardData.multiTurretRiftHeraldCount}</p>
-        <p>outnumberedNexusKill:{hardData.outnumberedNexusKill}</p>
-        <p>perfectDragonSoulsTaken:{hardData.perfectDragonSoulsTaken}</p>
-        <p>riftHeraldTakedowns:{hardData.riftHeraldTakedowns}</p>
-        <p>soloBaronKills:{hardData.soloBaronKills}</p>
-        <p>takedownOnFirstTurret:{hardData.takedownOnFirstTurret}</p>
-        <p>turretTakedowns:{hardData.turretTakedowns}</p>
-        <p>turretsTakenWithRiftHerald:{hardData.turretsTakenWithRiftHerald}</p>
-      </S.HardData>
       <span>Analyzer</span>
       <S.Roles>
         <button onClick={call}>Call</button>
