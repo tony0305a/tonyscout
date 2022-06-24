@@ -5,6 +5,7 @@ display:flex;
 justify-content:space-around;
 background-color:purple;
 margin-bottom:8px;
+width:100%;
 a{
     margin:8px;
     color:white;

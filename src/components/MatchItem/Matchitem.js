@@ -5,6 +5,7 @@ import ReactTimeAgo from "react-time-ago";
 import en from "javascript-time-ago/locale/en.json";
 import MatchitemParticipants from "./MatchitemParticipants";
 import useScout from "../../hooks/riot-hook";
+import { M } from "../MasteryItem/styled";
 TimeAgo.addLocale(en);
 
 const Matchitem = ({
@@ -35,11 +36,11 @@ const Matchitem = ({
   item5,
   item6,
   color,
-  kda,
   passItem,
   result,
   gameLength,
   farm,
+  farm1,
 }) => {
   const { matchDataState, version, matchState, scoutState } = useScout();
   const [champion, setChampion] = useState();
@@ -153,6 +154,10 @@ const Matchitem = ({
     return <p>Loading...</p>;
   }
 
+  var decimalTime = (gameLength / 60).toFixed(2)
+  var clockTime = (''+decimalTime).replace('.',':')
+
+
   return (
     <S.Wrapper style={{ backgroundColor: color }}>
       <S.UpperLine>
@@ -195,7 +200,7 @@ const Matchitem = ({
           <span>
             {kills}/{deaths}/{assists}
           </span>
-          <span>{farm}:CS</span>
+          <span>{farm+farm1}:CS</span>
         </S.ColunmScore>
         <S.ColunmParticipants>
           {passItem.info.participants.map((item) => (
@@ -211,7 +216,7 @@ const Matchitem = ({
       <S.LowerLine>
         <S.ColunmMetadata>
           <span>{result}</span>
-          <span>{gameLength}</span>
+          <span>{clockTime}</span>
         </S.ColunmMetadata>
         <S.ColunmBuild>
           <S.Line>

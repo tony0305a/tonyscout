@@ -31,6 +31,7 @@ const RiotProvider = ({ children }) => {
   });
   const [matchDataState, setMatchDataState] = useState([]);
   const [renderState, setRenderState] = useState(Boolean);
+  const [graphState, setGraphState] = useState([]);
   const getSummoner = (name) => {
     api
       .get(
@@ -55,11 +56,13 @@ const RiotProvider = ({ children }) => {
   };
 
   const getChampionInfo = (version) => {
+    if(version != undefined){
     fetch(
       `http://ddragon.leagueoflegends.com/cdn/${version}/data/pt_BR/champion.json`
     )
       .then((response) => response.text())
       .then((x) => setChampionState(JSON.parse(x)));
+    }
   };
 
   const getMasteries = (id) => {
@@ -116,6 +119,9 @@ const RiotProvider = ({ children }) => {
   const setRender = (bool) => {
     setRenderState(bool);
   };
+  const setGraphs = (array) =>{
+    setGraphState(array)
+  }
 
   const contextValue = {
     scoutState,
@@ -126,6 +132,7 @@ const RiotProvider = ({ children }) => {
     matchState,
     matchDataState,
     renderState,
+    graphState,
     getSummoner: useCallback((name) => getSummoner(name), []),
     getVersion: useCallback((version) => getVersion(version), []),
     getChampionInfo: useCallback(() => getChampionInfo(), []),
@@ -138,6 +145,7 @@ const RiotProvider = ({ children }) => {
     getMatches: useCallback((puuid) => getMatches(puuid), []),
     getMatchData: useCallback((id) => getMatchData(id), []),
     setRender: useCallback((bool) => setRender(bool), []),
+    setGraphs: useCallback((array) => setGraphs(array), []),
   };
 
   return (

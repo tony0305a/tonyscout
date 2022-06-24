@@ -21,6 +21,8 @@ const useScout = () => {
     cleanMatchData,
     setRender,
     renderState,
+    graphState,
+    setGraphs,
   } = useContext(RiotContext);
 
   return {
@@ -42,6 +44,8 @@ const useScout = () => {
     cleanMatchData,
     setRender,
     renderState,
+    setGraphs,
+    graphState
   };
 };
 export default useScout;

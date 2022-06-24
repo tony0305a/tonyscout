@@ -18,6 +18,7 @@ const Matches = () => {
     renderState,
     setRender,
     getChampionInfo,
+    getVersion,
   } = useScout();
   const [champion, setChampion] = useState();
   const [queue, setQueue] = useState();
@@ -30,15 +31,17 @@ const Matches = () => {
 
   useEffect(() => {
     //mount
-    console.log("montou");
-    console.log("fez alguma coisa");
+    getVersion()
     //unmount
     return function CleanUp() {
-      console.log("desmontou");
+      getVersion()
     };
   }, []);
 
   useEffect(() => {
+    if(version != undefined){
+
+    
     fetch(
       `http://ddragon.leagueoflegends.com/cdn/${version}/data/pt_BR/champion.json`
     )
@@ -60,19 +63,18 @@ const Matches = () => {
       .then((response) => response.text())
       .then((x) => setQueue(JSON.parse(x)));
     console.log("call de queues.json");
-
+    }
     setRender(true);
 
     return function cleanUp() {
       //   cleanMatchData()
+      getVersion()
     };
   }, [matchState]);
 
   useEffect(() => {
-    console.log("att scoutState");
 
     return function cleanUp() {
-      console.log("cleanUp scoutState");
       getChampionInfo(version);
     };
   }, [scoutState]);
@@ -188,7 +190,6 @@ const Matches = () => {
 
   return (
     <>
-      <button onClick={call}>call</button>
       {scoutState.hasUser ? (
         <>
           {renderState ? (
@@ -293,6 +294,8 @@ const Matches = () => {
                   passItem={item}
                   result={getResult(item.info.participants[getIndex(item)].win)}
                   farm={item.info.participants[getIndex(item)].totalMinionsKilled}
+                  farm1={item.info.participants[getIndex(item)].neutralMinionsKilled}
+                  gameLength={item.info.gameDuration}
                 ></Matchitem>
               ))}
             </S.Wrapper>

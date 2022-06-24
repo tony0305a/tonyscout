@@ -2,11 +2,11 @@ import styled from "styled-components";
 
 export const Wrapper = styled.div`
   display: flex;
-  margin-top: 16px;
   width: 800px;
   height:580px;
   overflow:scroll;
   flex-wrap: wrap;
+  margin:8px;
   border-radius: 8px;
   background-color: white;
   &::-webkit-scrollbar{
@@ -22,8 +22,6 @@ export const Header = styled.div`
   height: 40px;
   span {
     display: flex;
-    justify-content: center;
-    align-items: center;
     color: white;
   }
 `;

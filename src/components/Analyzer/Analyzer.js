@@ -3,35 +3,50 @@ import useScout from "../../hooks/riot-hook";
 import { M } from "../MasteryItem/styled";
 import * as S from "./styled";
 import { Radar } from "react-chartjs-2";
+import { Doughnut } from "react-chartjs-2";
+import { Bar } from "react-chartjs-2";
+
 import {
   Chart as ChartJS,
-  RadialLinearScale,
-  PointElement,
-  LineElement,
-  Filler,
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
   Tooltip,
   Legend,
-} from "chart.js";
-
-ChartJS.register(
   RadialLinearScale,
   PointElement,
   LineElement,
   Filler,
+  ArcElement,
+} from "chart.js";
+import { Flex } from "../Ranked/styled";
+
+ChartJS.register(
+  ArcElement,
+  RadialLinearScale,
+  PointElement,
+  LineElement,
+  Filler,
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
   Tooltip,
   Legend
 );
 
 const Analyzer = () => {
-  const { matchDataState, scoutState, renderState, setRender, rankedState } =
+  const { matchDataState, scoutState, renderState, setRender, rankedState, graphState, setGraphs } =
     useScout();
   const [graph, setGraph] = useState([]);
+  const [roles, setRoles] = useState([]);
   const [renderTop, setRenderTop] = useState(false);
   const [renderJungle, setRenderJungle] = useState(false);
   const [renderMid, setRenderMid] = useState(false);
   const [renderCarry, setRenderCarry] = useState(false);
   const [renderUtility, setRenderUtility] = useState(false);
-  const [eloMultiplaier,setEloMultiplaier] = useState(0.2)
+  const [eloMultiplaier, setEloMultiplaier] = useState(0.2);
   const [hardData, setHardData] = useState({
     soloQueues: 0,
     kills: 0,
@@ -137,8 +152,9 @@ const Analyzer = () => {
     var ad = 0;
     var sup = 0;
     matchDataState.map((item) => {
-      console.log(item.info.participants[getIndex(item)].individualPosition);
+      if(item.info.queueId == 420){
 
+      
       if (item.info.participants[getIndex(item)].individualPosition === "TOP") {
         top += 1;
       } else if (
@@ -158,8 +174,9 @@ const Analyzer = () => {
       ) {
         sup += 1;
       }
+    }
     });
-    return [top, jungle, mid, ad, sup];
+    setRoles([top, jungle, mid, ad, sup]);
   };
   const getChallenges = () => {
     var soloQ = 0;
@@ -237,7 +254,7 @@ const Analyzer = () => {
     var scuttleCrabKills = 0;
     //Objectives
     var baronTakedowns = 0;
-    var dragonTakedowns = 0
+    var dragonTakedowns = 0;
     var epicMonsterKillsNearEnemyJungler = 0;
     var epicMonsterKillsWithin30SecondsOfSpawn = 0;
     var epicMonsterSteals = 0;
@@ -252,14 +269,12 @@ const Analyzer = () => {
     var takedownOnFirstTurret = 0;
     var turretTakedowns = 0;
     var turretsTakenWithRiftHerald = 0;
-    var neutralMinionsKilled = 0
-    var totalMinionsKilled = 0
-    var timePlayed = 0
-
+    var neutralMinionsKilled = 0;
+    var totalMinionsKilled = 0;
+    var timePlayed = 0;
 
     matchDataState.map((item) => {
       if (item.info.participants != undefined) {
-
         if (
           item.info.participants[getIndex(item)].challenges != undefined &&
           item.info.queueId === 420
@@ -274,20 +289,36 @@ const Analyzer = () => {
               item.info.participants[getIndex(item)].challenges
                 .junglerKillsEarlyJungle;
           }
-          if(item.info.participants[getIndex(item)].timePlayed){
-            timePlayed += parseInt(item.info.participants[getIndex(item)].timePlayed)
+          if (item.info.participants[getIndex(item)].timePlayed) {
+            timePlayed += parseInt(
+              item.info.participants[getIndex(item)].timePlayed
+            );
           }
-          if(item.info.participants[getIndex(item)].neutralMinionsKilled){
-            neutralMinionsKilled += parseInt(item.info.participants[getIndex(item)].neutralMinionsKilled)
+          if (item.info.participants[getIndex(item)].neutralMinionsKilled) {
+            neutralMinionsKilled += parseInt(
+              item.info.participants[getIndex(item)].neutralMinionsKilled
+            );
           }
-          if(item.info.participants[getIndex(item)].totalMinionsKilled){
-            totalMinionsKilled += parseInt(item.info.participants[getIndex(item)].totalMinionsKilled)
+          if (item.info.participants[getIndex(item)].totalMinionsKilled) {
+            totalMinionsKilled += parseInt(
+              item.info.participants[getIndex(item)].totalMinionsKilled
+            );
           }
-          if(item.info.participants[getIndex(item)].challenges.dragonTakedowns){
-            dragonTakedowns += parseInt(item.info.participants[getIndex(item)].challenges.dragonTakedowns)
+          if (
+            item.info.participants[getIndex(item)].challenges.dragonTakedowns
+          ) {
+            dragonTakedowns += parseInt(
+              item.info.participants[getIndex(item)].challenges.dragonTakedowns
+            );
           }
-          if(item.info.participants[getIndex(item)].challenges.riftHeraldTakedowns){
-            riftHeraldTakedowns += parseInt(item.info.participants[getIndex(item)].challenges.riftHeraldTakedowns)
+          if (
+            item.info.participants[getIndex(item)].challenges
+              .riftHeraldTakedowns
+          ) {
+            riftHeraldTakedowns += parseInt(
+              item.info.participants[getIndex(item)].challenges
+                .riftHeraldTakedowns
+            );
           }
           killAfterHiddenWithAlly += parseInt(
             item.info.participants[getIndex(item)].challenges
@@ -816,23 +847,23 @@ const Analyzer = () => {
         sq = rankedState.ranked[1];
       }
       if (sq.tier === "IRON") {
-        setEloMultiplaier(0.2)
-      } else if (sq.tier === "BRONZE" ) {
-        setEloMultiplaier(0.3)
+        setEloMultiplaier(0.2);
+      } else if (sq.tier === "BRONZE") {
+        setEloMultiplaier(0.3);
       } else if (sq.tier === "SIVER") {
-        setEloMultiplaier(0.4)
-      } else if (sq.tier === "GOLD" ) {
-        setEloMultiplaier(0.5)
-      } else if (sq.tier === "PLATINUM" ) {
-        setEloMultiplaier(0.6)
-      } else if (sq.tier === "DIAMOND" ) {
-        setEloMultiplaier(0.7)
+        setEloMultiplaier(0.4);
+      } else if (sq.tier === "GOLD") {
+        setEloMultiplaier(0.5);
+      } else if (sq.tier === "PLATINUM") {
+        setEloMultiplaier(0.6);
+      } else if (sq.tier === "DIAMOND") {
+        setEloMultiplaier(0.7);
       } else if (sq.tier === "MASTER") {
-        setEloMultiplaier(0.8)
+        setEloMultiplaier(0.8);
       } else if (sq.tier === "GRANDMASTER") {
-        setEloMultiplaier(0.9)
+        setEloMultiplaier(0.9);
       } else if (sq.tier === "CHALLENGER") {
-        setEloMultiplaier(1)
+        setEloMultiplaier(1);
       }
     }
 
@@ -876,11 +907,11 @@ const Analyzer = () => {
     var buildSplitDamageDealtToBuildings = 0;
 
     var buildFarmXminCs = 0;
-    var buildFarmConstant = 0
+    var buildFarmConstant = 0;
 
-    var buildObjectivesTakedowns = 0
-    var buildObjectivesBuildings = 0
-    var buildObjectivesSteals = 0
+    var buildObjectivesTakedowns = 0;
+    var buildObjectivesBuildings = 0;
+    var buildObjectivesSteals = 0;
 
     //Lane
     if (soloKills / soloQ >= 1) {
@@ -1074,25 +1105,63 @@ const Analyzer = () => {
       buildFarmXminCs =
         (laneMinionsFirst10Minutes + jungleCsBefore10Minutes) / soloQ / 14;
     }
-    if(((totalMinionsKilled + neutralMinionsKilled)/(timePlayed/60))>=5){
-      buildFarmConstant = 5
+    if ((totalMinionsKilled + neutralMinionsKilled) / (timePlayed / 60) >= 5) {
+      buildFarmConstant = 5;
     } else {
-      buildFarmConstant = ((totalMinionsKilled + neutralMinionsKilled)/(timePlayed/60))
+      buildFarmConstant =
+        (totalMinionsKilled + neutralMinionsKilled) / (timePlayed / 60);
     }
-    if(((baronTakedowns+dragonTakedowns+riftHeraldTakedowns+soloBaronKills+perfectDragonSoulsTaken)/soloQ)>=3){
-      buildObjectivesTakedowns = 3
+    if (
+      (baronTakedowns +
+        dragonTakedowns +
+        riftHeraldTakedowns +
+        soloBaronKills +
+        perfectDragonSoulsTaken) /
+        soloQ >=
+      3
+    ) {
+      buildObjectivesTakedowns = 3;
     } else {
-        buildObjectivesTakedowns = ((baronTakedowns+dragonTakedowns+riftHeraldTakedowns+perfectDragonSoulsTaken)/soloQ)
+      buildObjectivesTakedowns =
+        (baronTakedowns +
+          dragonTakedowns +
+          riftHeraldTakedowns +
+          perfectDragonSoulsTaken) /
+        soloQ;
     }
-    if(((turretTakedowns + turretsTakenWithRiftHerald + kTurretsDestroyedBeforePlatesFall + outnumberedNexusKill+multiTurretRiftHeraldCount)/soloQ)>=6){
-      buildObjectivesBuildings = 6
+    if (
+      (turretTakedowns +
+        turretsTakenWithRiftHerald +
+        kTurretsDestroyedBeforePlatesFall +
+        outnumberedNexusKill +
+        multiTurretRiftHeraldCount) /
+        soloQ >=
+      6
+    ) {
+      buildObjectivesBuildings = 6;
     } else {
-      buildObjectivesBuildings = ((turretTakedowns + turretsTakenWithRiftHerald + kTurretsDestroyedBeforePlatesFall + outnumberedNexusKill+multiTurretRiftHeraldCount)/soloQ)
+      buildObjectivesBuildings =
+        (turretTakedowns +
+          turretsTakenWithRiftHerald +
+          kTurretsDestroyedBeforePlatesFall +
+          outnumberedNexusKill +
+          multiTurretRiftHeraldCount) /
+        soloQ;
     }
-    if(((epicMonsterKillsNearEnemyJungler+epicMonsterSteals+epicMonsterStolenWithoutSmite)/soloQ)>=1){
-      buildObjectivesSteals = 1
+    if (
+      (epicMonsterKillsNearEnemyJungler +
+        epicMonsterSteals +
+        epicMonsterStolenWithoutSmite) /
+        soloQ >=
+      1
+    ) {
+      buildObjectivesSteals = 1;
     } else {
-      buildObjectivesSteals = ((epicMonsterKillsNearEnemyJungler+epicMonsterSteals+epicMonsterStolenWithoutSmite)/soloQ)
+      buildObjectivesSteals =
+        (epicMonsterKillsNearEnemyJungler +
+          epicMonsterSteals +
+          epicMonsterStolenWithoutSmite) /
+        soloQ;
     }
 
     var finalLane =
@@ -1134,21 +1203,14 @@ const Analyzer = () => {
       buildSplitTeamBarons +
       buildSplitDamageDealtToBuildings;
 
-    var finalFarm = buildFarmXminCs+ buildFarmConstant
-    ;
+    var finalFarm = buildFarmXminCs + buildFarmConstant;
     var finalObjectives =
-    buildObjectivesTakedowns+
-    buildObjectivesBuildings +
-    buildObjectivesSteals
+      buildObjectivesTakedowns +
+      buildObjectivesBuildings +
+      buildObjectivesSteals;
 
-    console.log(buildObjectivesTakedowns);
-
-
-    console.log(finalObjectives);
 
     var Lane = finalLane;
-
-
 
     var Fight = finalFight;
 
@@ -1156,16 +1218,13 @@ const Analyzer = () => {
 
     var Split = finalSplit;
 
+    var Farm = finalFarm;
 
-    var Farm =
-    finalFarm
-
-    var Objectives =
-    finalObjectives
+    var Objectives = finalObjectives;
 
     setHardData({
       soloQueues: soloQ,
-      timePlayed:timePlayed,
+      timePlayed: timePlayed,
       kills: kills,
       deaths: deaths,
       assists: assists,
@@ -1236,11 +1295,11 @@ const Analyzer = () => {
       initialCrabCount: initialCrabCount,
       jungleCsBefore10Minutes: jungleCsBefore10Minutes,
       scuttleCrabKills: scuttleCrabKills,
-      neutralMinionsKilled:neutralMinionsKilled,
-      totalMinionsKilled:totalMinionsKilled,
+      neutralMinionsKilled: neutralMinionsKilled,
+      totalMinionsKilled: totalMinionsKilled,
       //Objectives
       baronTakedowns: baronTakedowns,
-      dragonTakedowns:dragonTakedowns,
+      dragonTakedowns: dragonTakedowns,
       epicMonsterKillsNearEnemyJungler: epicMonsterKillsNearEnemyJungler,
       epicMonsterKillsWithin30SecondsOfSpawn:
         epicMonsterKillsWithin30SecondsOfSpawn,
@@ -1258,60 +1317,60 @@ const Analyzer = () => {
       turretsTakenWithRiftHerald: turretsTakenWithRiftHerald,
     });
     return setGraph([
-      ((Lane*10)*eloMultiplaier).toFixed(0),
-      ((Fight*10)*eloMultiplaier).toFixed(0),
-      ((Utility*10)*eloMultiplaier).toFixed(0),
-      ((Split*10)*eloMultiplaier).toFixed(0),
-      ((Farm*10)*eloMultiplaier).toFixed(0),
-      ((Objectives*10)*eloMultiplaier).toFixed(0),
+      parseInt((Lane * 10 * eloMultiplaier).toFixed(0)),
+      parseInt((Fight * 10 * eloMultiplaier).toFixed(0)),
+      parseInt((Utility * 10 * eloMultiplaier).toFixed(0)),
+      parseInt((Split * 10 * eloMultiplaier).toFixed(0)),
+      parseInt((Farm * 10 * eloMultiplaier).toFixed(0)),
+      parseInt((Objectives * 10 * eloMultiplaier).toFixed(0)),
     ]);
   };
   const call = () => {
     console.log(graph);
+    console.log(roles);
   };
   useEffect(() => {
     getChallenges();
+    getRoles();
   }, [matchDataState]);
+  useEffect(()=>{
+    setGraphs(graph)
+    console.log(graphState)
+  },[graph])
 
   const dataTop = {
     labels: ["Lane", "Fight", "Utility", "Split", "Farm", "Objectives"],
     datasets: [
       {
-        label: "SoloQueue Perfomace",
+        label: "Solo/Duo Perfomace",
         data: graph,
         borderColor: "rgba(128, 0, 128, 1)",
+        backgroundColor:"rgba(128,0,128,0.4)",
         borderWidth: 1,
       },
     ],
   };
-  const dataJungle = {
-    labels: [
-      "Fight",
-      "Farm",
-      "Invade",
-      "Utility",
-      "Objectives",
-      "Steal",
-      "Gank",
-    ],
+  const dataRoles = {
+    labels: ["Top", "Jungle", "Mid", "Carry", "Utility"],
     datasets: [
       {
-        label: "Jungle Peformace",
-        //           top    farm jungle carry utility fight mid split
-        data: [30, 30, 10, 10, 10, 10, 10],
-        borderColor: "rgba(128, 0, 128, 1)",
-        borderWidth: 1,
-      },
-    ],
-  };
-  const dataMid = {
-    labels: ["Fight", "Lane", "Carry", "Utility", "Roaming", "Farm", "Split"],
-    datasets: [
-      {
-        label: "Mid Peformace",
-        //           top    farm jungle carry utility fight mid split
-        data: [30, 30, 10, 10, 10, 10, 10],
-        borderColor: "rgba(128, 0, 128, 1)",
+        label: "Roles",
+        data: roles,
+        backgroundColor: [
+          "rgba(255, 0, 0, 1)",
+          "rgba(0, 120, 0, 1)",
+          "rgba(0, 0, 255, 1)",
+          "rgba(255, 255, 0, 1)",
+          "rgba(128, 0, 128, 1)",
+        ],
+        borderColor: [
+          "rgba(255, 99, 132, 1)",
+          "rgba(54, 162, 235, 1)",
+          "rgba(255, 206, 86, 1)",
+          "rgba(75, 192, 192, 1)",
+          "rgba(153, 102, 255, 1)",
+          "rgba(255, 159, 64, 1)",
+        ],
         borderWidth: 1,
       },
     ],
@@ -1324,8 +1383,19 @@ const Analyzer = () => {
       suggestedMin: 0,
       ticks: {
         display: true,
-
         maxTicksLimit: 2,
+      },
+    },
+  };
+  const optionsRoles = {
+    responsive: true,
+    plugins: {
+      legend: {
+        position: "top",
+      },
+      title: {
+        display: true,
+        text: `Roles played ${hardData.soloQueues}`,
       },
     },
   };
@@ -1362,11 +1432,13 @@ const Analyzer = () => {
     <S.Wrapper>
 
       <span>Analyzer</span>
+      <S.GraphRoles
+      >
+        <Doughnut options={optionsRoles} data={dataRoles}/>
+      </S.GraphRoles>
+
       <S.Roles>
-        <button onClick={call}>Call</button>
-        <button onClick={btnTop}>Top</button>
-        <button onClick={btnJg}>Jungle</button>
-        <button onClick={btnMid}>Mid</button>
+
       </S.Roles>
       <S.Graph>
         <div
@@ -1385,20 +1457,6 @@ const Analyzer = () => {
               ) : (
                 <></>
               )}
-              {renderJungle ? (
-                <>
-                  <Radar data={dataJungle} options={options} />
-                </>
-              ) : (
-                <></>
-              )}
-              {renderMid ? (
-                <>
-                  <Radar data={dataMid} options={options} />
-                </>
-              ) : (
-                <></>
-              )}
             </>
           ) : (
             <></>
@@ -1407,5 +1465,6 @@ const Analyzer = () => {
       </S.Graph>
     </S.Wrapper>
   );
+
 };
 export default Analyzer;

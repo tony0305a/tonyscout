@@ -16,12 +16,7 @@ import EmblemGrandmaster from "../../imgs/Emblem_Grandmaster.png";
 import EmblemChallenger from "../../imgs/Emblem_Challenger.png";
 
 const ActiveMatch = () => {
-  const {
-    scoutState,
-    version,
-    getChampionInfo,
-    championState,
-  } = useScout();
+  const { scoutState, version, getChampionInfo, championState } = useScout();
 
   const [renderActiveMatch, setRenderActiveMatch] = useState(false);
   const [partElo, setPartElo] = useState([]);
@@ -30,6 +25,7 @@ const ActiveMatch = () => {
   const [runes, setRunes] = useState();
   const [activeInfo, setActiveInfo] = useState(false);
   const [gameQueue, setGameQueue] = useState();
+  const [champion,setChampion] = useState()
 
   useEffect(() => {
     setPartElo([]);
@@ -60,8 +56,14 @@ const ActiveMatch = () => {
     )
       .then((res) => res.text())
       .then((x) => setRunes(JSON.parse(x)));
-
+    fetch(
+      `http://ddragon.leagueoflegends.com/cdn/${version}/data/pt_BR/champion.json`
+    )
+      .then((response) => response.text())
+      .then((x) => setChampion(JSON.parse(x)));
     activeMatch(scoutState.id);
+    console.log("foi");
+    console.log(championState);
   }, [scoutState]);
 
   useEffect(() => {
@@ -84,7 +86,7 @@ const ActiveMatch = () => {
 
   const getHeroInfo = (id) => {
     try {
-      var info = championState.data;
+      var info = champion.data;
       for (var i in info) {
         if (info[i].key == id) {
           return info[i].image.full;
@@ -155,36 +157,32 @@ const ActiveMatch = () => {
             return EmblemGrandmaster;
           } else if (partElo[i][queue].tier == "CHALLENGER") {
             return EmblemChallenger;
-          } else if  (partElo[i][queue].tier == undefined) {
+          } else if (partElo[i][queue].tier == undefined) {
             return EmblemUnranked;
           }
         }
       }
     }
   };
-  const getEloInfo = (id, queue,param) => {
+  const getEloInfo = (id, queue, param) => {
     for (var i in partElo) {
       if (partElo[i][queue] != undefined) {
         if (partElo[i][queue].summonerId == id) {
-          if(param == 'queueType'){
-            if(partElo[i][queue].queueType == 'RANKED_SOLO_5x5'){
-              return 'Solo/Duo';
-            } else if(partElo[i][queue].queueType == 'RANKED_FLEX_SR'){
-              return 'Flex';
+          if (param == "queueType") {
+            if (partElo[i][queue].queueType == "RANKED_SOLO_5x5") {
+              return "Solo/Duo";
+            } else if (partElo[i][queue].queueType == "RANKED_FLEX_SR") {
+              return "Flex";
             }
-            
-          } else if ( param == 'rank'){
-            return  partElo[i][queue].rank;
-          }else if (param == 'leaguePoints'){
-            return  `${partElo[i][queue].leaguePoints} pdls`
+          } else if (param == "rank") {
+            return partElo[i][queue].rank;
+          } else if (param == "leaguePoints") {
+            return `${partElo[i][queue].leaguePoints} pdls`;
           }
-
-
         }
       }
     }
   };
-
 
   const call = () => {
     activeInfo.data.participants.map((item) => {
@@ -243,14 +241,13 @@ const ActiveMatch = () => {
                 item.perks.perkIds[8]
               )}`}
               elo={getElo(item.summonerId, 0)}
-              eloQueue={getEloInfo(item.summonerId,0,'queueType')}
-              eloRank={getEloInfo(item.summonerId,0,'rank')}
-              eloPdl={getEloInfo(item.summonerId,0,'leaguePoints')}
-
+              eloQueue={getEloInfo(item.summonerId, 0, "queueType")}
+              eloRank={getEloInfo(item.summonerId, 0, "rank")}
+              eloPdl={getEloInfo(item.summonerId, 0, "leaguePoints")}
               elo2={getElo(item.summonerId, 1)}
-              elo2Queue={getEloInfo(item.summonerId,1,'queueType')}
-              elo2Rank={getEloInfo(item.summonerId,1,'rank')}
-              elo2Pdl={getEloInfo(item.summonerId,1,'leaguePoints')}
+              elo2Queue={getEloInfo(item.summonerId, 1, "queueType")}
+              elo2Rank={getEloInfo(item.summonerId, 1, "rank")}
+              elo2Pdl={getEloInfo(item.summonerId, 1, "leaguePoints")}
             ></ActiveMatchPlayer>
           ))}
         </>

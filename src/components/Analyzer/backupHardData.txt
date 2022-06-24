@@ -1,0 +1,146 @@
+      <span>Hard Data</span>
+      <S.HardData>
+        <b>SoloQueues: {hardData.soloQueues}</b>
+        <b>timePlayed: {hardData.timePlayed}</b>
+        <b>kills: {hardData.kills}</b>
+        <b>deaths: {hardData.deaths}</b>
+        <b>assists: {hardData.assists}</b>
+        <b>Lane</b>
+        <p>
+          earlyLaningPhaseGoldExpAdvantage:
+          {hardData.earlyLaningPhaseGoldExpAdvantage}
+        </p>
+        <p>junglerKillsEarlyJungle:{hardData.junglerKillsEarlyJungle}</p>
+        <p> killAfterHiddenWithAlly:{hardData.killAfterHiddenWithAlly}</p>
+        <p> killsNearEnemyTurret:{hardData.killsNearEnemyTurret}</p>
+        <p>
+          killsOnLanersEarlyJungleAsJungler:
+          {hardData.killsOnLanersEarlyJungleAsJungler}
+        </p>
+        <p> killsUnderOwnTurret:{hardData.killsUnderOwnTurret}</p>
+        <p> laneMinionsFirst10Minutes:{hardData.laneMinionsFirst10Minutes}</p>
+        <p>
+          laningPhaseGoldExpAdvantage:{hardData.laningPhaseGoldExpAdvantage}
+        </p>
+        <p>
+          maxCsAdvantageOnLaneOpponent:{hardData.maxCsAdvantageOnLaneOpponent}
+        </p>
+        <p> maxKillDeficit:{hardData.maxKillDeficit}</p>
+        <p> maxLevelLeadLaneOpponent:{hardData.maxLevelLeadLaneOpponent}</p>
+
+        <p> multikills:{hardData.multikills}</p>
+        <p>
+          multikillsAfterAggressiveFlash:
+          {hardData.multikillsAfterAggressiveFlash}
+        </p>
+        <p> outnumberedKills:{hardData.outnumberedKills}</p>
+        <p> quickFirstTurret:{hardData.quickFirstTurret}</p>
+        <p> quickSoloKills:{hardData.quickSoloKills}</p>
+        <p> takedownOnFirstTurret:{hardData.takedownOnFirstTurret}</p>
+        <p>
+          takedownsAfterGainingLevelAdvantage:
+          {hardData.takedownsAfterGainingLevelAdvantage}
+        </p>
+        <p>
+          takedownsBeforeJungleMinionSpawn:
+          {hardData.takedownsBeforeJungleMinionSpawn}
+        </p>
+        <p> takedownsFirstXMinutes:{hardData.takedownsFirstXMinutes}</p>
+        <p> turretPlatesTaken:{hardData.turretPlatesTaken}</p>
+        <b>Damage</b>
+        <p>damagePerMinute: {hardData.damagePerMinute}</p>
+        <p>
+          damageTakenOnTeamPercentage: {hardData.damageTakenOnTeamPercentage}
+        </p>
+        <p>teamDamagePercentage: {hardData.teamDamagePercentage}</p>
+        <p>
+          totalDamageDealtToChampions: {hardData.totalDamageDealtToChampions}
+        </p>
+        <p>totalDamageTaken: {hardData.totalDamageTaken}</p>
+        <p>totalHeal: {hardData.totalHeal}</p>
+        <b>Fight</b>
+        <p>
+          enemyChampionImmobilizations:{hardData.enemyChampionImmobilizations}
+        </p>
+        <p>fullTeamTakedown:{hardData.fullTeamTakedown}</p>
+        <p>highestCrowdControlScore:{hardData.highestCrowdControlScore}</p>
+        <p>immobilizeAndKillWithAlly:{hardData.immobilizeAndKillWithAlly}</p>
+        <p>
+          killedChampTookFullTeamDamageSurvived:
+          {hardData.killedChampTookFullTeamDamageSurvived}
+        </p>
+        <p>knockEnemyIntoTeamAndKill:{hardData.knockEnemyIntoTeamAndKill}</p>
+        <p>pickKillWithAlly:{hardData.pickKillWithAlly}</p>
+        <p>
+          survivedThreeImmobilizesInFight:
+          {hardData.survivedThreeImmobilizesInFight}
+        </p>
+        <p>tookLargeDamageSurvived:{hardData.tookLargeDamageSurvived}</p>
+        <b>Utility</b>
+        <p>completeSupportQuestInTime:{hardData.completeSupportQuestInTime}</p>
+        <p>
+          controlWardTimeCoverageInRiverOrEnemyHalf:
+          {hardData.controlWardTimeCoverageInRiverOrEnemyHalf}
+        </p>
+        <p>controlWardsPlaced:{hardData.controlWardsPlaced}</p>
+        <p>effectiveHealAndShielding:{hardData.effectiveHealAndShielding}</p>
+        <p>killParticipation:{hardData.killParticipation}</p>
+        <p>saveAllyFromDeath:{hardData.saveAllyFromDeath}</p>
+        <p>stealthWardsPlaced:{hardData.stealthWardsPlaced}</p>
+        <p>threeWardsOneSweeperCount:{hardData.threeWardsOneSweeperCount}</p>
+        <p>
+          visionScoreAdvantageLaneOpponent:
+          {hardData.visionScoreAdvantageLaneOpponent}
+        </p>
+        <p>visionScorePerMinute:{hardData.visionScorePerMinute}</p>
+        <p>assists:{hardData.assists}</p>
+        <p>visionScore:{hardData.visionScore}</p>
+        <b>Split</b>
+        <p>soloKills:{hardData.soloKills}</p>
+        <p>soloTurretsLategame:{hardData.soloTurretsLategame}</p>
+        <p>teamBaronKills:{hardData.teamBaronKills}</p>
+        <p>teamElderDragonKills:{hardData.teamElderDragonKills}</p>
+        <p>damageDealtToBuildings:{hardData.damageDealtToBuildings}</p>
+        <b>Farm</b>
+        <p>totalMinionsKilled:{hardData.totalMinionsKilled}</p>
+        <p>neutralMinionsKilled:{hardData.neutralMinionsKilled}</p>
+        <p>laneMinionsFirst10Minutes:{hardData.laneMinionsFirst10Minutes}</p>
+        <p>alliedJungleMonsterKills:{hardData.alliedJungleMonsterKills}</p>
+        <p>buffsStolen:{hardData.buffsStolen}</p>
+        <p>enemyJungleMonsterKills:{hardData.enemyJungleMonsterKills}</p>
+        <p>initialBuffCount:{hardData.initialBuffCount}</p>
+        <p>initialCrabCount:{hardData.initialCrabCount}</p>
+        <p>jungleCsBefore10Minutes:{hardData.jungleCsBefore10Minutes}</p>
+        <p>scuttleCrabKills:{hardData.scuttleCrabKills}</p>
+        <b>Objectives</b>
+        <p>baronTakedowns:{hardData.baronTakedowns}</p>
+        <p>dragonTakedowns:{hardData.dragonTakedowns}</p>
+        <p>
+          epicMonsterKillsNearEnemyJungler:
+          {hardData.epicMonsterKillsNearEnemyJungler}
+        </p>
+        <p>
+          epicMonsterKillsWithin30SecondsOfSpawn:
+          {hardData.epicMonsterKillsWithin30SecondsOfSpawn}
+        </p>
+        <p>epicMonsterSteals:{hardData.epicMonsterSteals}</p>
+        <p>
+          epicMonsterStolenWithoutSmite:{hardData.epicMonsterStolenWithoutSmite}
+        </p>
+        <p>
+          junglerTakedownsNearDamagedEpicMonster:
+          {hardData.junglerTakedownsNearDamagedEpicMonster}
+        </p>
+        <p>
+          kTurretsDestroyedBeforePlatesFall:
+          {hardData.kTurretsDestroyedBeforePlatesFall}
+        </p>
+        <p>multiTurretRiftHeraldCount:{hardData.multiTurretRiftHeraldCount}</p>
+        <p>outnumberedNexusKill:{hardData.outnumberedNexusKill}</p>
+        <p>perfectDragonSoulsTaken:{hardData.perfectDragonSoulsTaken}</p>
+        <p>riftHeraldTakedowns:{hardData.riftHeraldTakedowns}</p>
+        <p>soloBaronKills:{hardData.soloBaronKills}</p>
+        <p>takedownOnFirstTurret:{hardData.takedownOnFirstTurret}</p>
+        <p>turretTakedowns:{hardData.turretTakedowns}</p>
+        <p>turretsTakenWithRiftHerald:{hardData.turretsTakenWithRiftHerald}</p>
+      </S.HardData>

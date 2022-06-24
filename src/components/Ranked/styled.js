@@ -2,32 +2,33 @@ import styled from "styled-components";
 
 export const Wrapper = styled.div`
   display: flex;
-  margin: 8px;
   height: 400px;
-  border-radius: 8px;
+  margin:8px;
+
 `;
 
 export const WrapperColumn = styled.div`
   display: flex;
   flex-direction: column;
   background-color: white;
-  margin: 8px;
+  border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
 `;
 
 export const SoloDuo = styled.div`
   display: flex;
   flex-direction: column;
-  background-color: white;
   width: 400px;
   height: 235px;
   border-bottom: 1px solid #ccc;
   border-right: 1px solid #ccc;
+   
   h1 {
     background-color: purple;
     color: white;
-    border-top-left-radius: 4px;
-    border-top-right-radius: 4px;
     padding: 8px;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
   }
 `;
 export const SoloDuoData = styled.div`

@@ -8,6 +8,7 @@ import * as S from "./styled";
 import Ranked from "../Ranked/Ranked";
 import Matches from "../Matches/Matches";
 import Analyzer from "../Analyzer/Analyzer";
+import Graphics from "../Analyzer/Graphics";
 
 const Profile = () => {
   const {
@@ -25,6 +26,7 @@ const Profile = () => {
   const [renderActiveMatch, setRenderActiveMatch] = useState(true);
   const [renderMatchs, setRenderMatch] = useState(false);
   useEffect(() => {
+    if(scoutState.id != undefined){
     setRenderMatch(false);
     async function activeMatch(id) {
       try {
@@ -38,9 +40,10 @@ const Profile = () => {
         throw error;
       }
     }
-
+  
     activeMatch(scoutState.id);
-  }, []);
+  }
+  }, [scoutState]);
 
   useEffect(() => {
     return function ComeUp() {
@@ -49,7 +52,12 @@ const Profile = () => {
   }, [matchState]);
 
   const renderMatch = () => {
-    setRenderMatch(true);
+    if(renderMatchs){
+      setRenderMatch(false)
+    } else {
+      setRenderMatch(true);
+    }
+   
   };
 
   const analisar = () => {
@@ -66,8 +74,6 @@ const Profile = () => {
                 <span>{scoutState.name}</span>
                 <img src={profileIcon} width="112" />
                 <span>{scoutState.summonerLevel}</span>
-                <span>{scoutState.id}</span>
-                <span>{scoutState.puuid}</span>
                 {renderActiveMatch ? (
                   <>
                     <button onClick={renderMatch}>Partida Ativa</button>
@@ -80,6 +86,7 @@ const Profile = () => {
               <S.Mast>
                 <Masteries />
               </S.Mast>
+              <Graphics/>
             </>
           ) : (
             <>
@@ -90,7 +97,7 @@ const Profile = () => {
         <>
           {renderMatchs ? (
             <>
-              <ActiveMatch />
+              <ActiveMatch/>
             </>
           ) : (
             <></>
