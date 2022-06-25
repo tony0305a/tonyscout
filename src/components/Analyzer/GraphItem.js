@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Radar } from "react-chartjs-2";
 import {
   Chart as ChartJS,
@@ -30,24 +30,15 @@ ChartJS.register(
   Legend
 );
 
-const Graphics = () => {
-  const { graphState } = useScout();
-  const [renderGraph, setRenderGraph] = useState(true);
-
-  useEffect(() => {
-    if (!isNaN(graphState[0])) {
-      setRenderGraph(true);
-    }
-  }, [graphState]);
-
+export const GraphItem = ({ graphData, summonerName, color }) => {
   const data = {
     labels: ["Lane", "Fight", "Utility", "Split", "Farm", "Objectives"],
     datasets: [
       {
-        label: "Solo/Duo Perfomace",
-        data: graphState,
+        label: `${summonerName} Solo/Duo Perfomace`,
+        data: graphData,
         borderColor: "rgba(128, 0, 128, 1)",
-        backgroundColor: "rgba(128,0,128,0.4)",
+        backgroundColor: `rgba(${color})`,
         borderWidth: 1,
       },
     ],
@@ -65,22 +56,15 @@ const Graphics = () => {
   };
   return (
     <>
-      <>
-        {renderGraph ? (
-          <div
-            style={{
-              position: "relative",
-              margin: "auto",
-              width: "300px",
-            }}
-          >
-            <Radar data={data} options={options} />
-          </div>
-        ) : (
-          <></>
-        )}
-      </>
+      <div
+        style={{
+          position: "relative",
+          margin: "auto",
+          width: "300px",
+        }}
+      >
+        <Radar data={data} options={options} />
+      </div>
     </>
   );
 };
-export default Graphics;

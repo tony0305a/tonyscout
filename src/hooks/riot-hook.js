@@ -23,6 +23,10 @@ const useScout = () => {
     renderState,
     graphState,
     setGraphs,
+    graphSlot1State,
+    graphSlot2State,
+    setSlot1Graph,
+    setSlot2Graph
   } = useContext(RiotContext);
 
   return {
@@ -45,7 +49,11 @@ const useScout = () => {
     setRender,
     renderState,
     setGraphs,
-    graphState
+    graphState,
+    graphSlot1State,
+    graphSlot2State,
+    setSlot1Graph,
+    setSlot2Graph,
   };
 };
 export default useScout;

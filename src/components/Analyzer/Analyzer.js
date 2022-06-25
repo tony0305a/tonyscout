@@ -37,8 +37,15 @@ ChartJS.register(
 );
 
 const Analyzer = () => {
-  const { matchDataState, scoutState, renderState, setRender, rankedState, graphState, setGraphs } =
-    useScout();
+  const {
+    matchDataState,
+    scoutState,
+    renderState,
+    setRender,
+    rankedState,
+    graphState,
+    setGraphs,
+  } = useScout();
   const [graph, setGraph] = useState([]);
   const [roles, setRoles] = useState([]);
   const [renderTop, setRenderTop] = useState(false);
@@ -152,29 +159,30 @@ const Analyzer = () => {
     var ad = 0;
     var sup = 0;
     matchDataState.map((item) => {
-      if(item.info.queueId == 420){
-
-      
-      if (item.info.participants[getIndex(item)].individualPosition === "TOP") {
-        top += 1;
-      } else if (
-        item.info.participants[getIndex(item)].individualPosition === "JUNGLE"
-      ) {
-        jungle += 1;
-      } else if (
-        item.info.participants[getIndex(item)].individualPosition === "MIDDLE"
-      ) {
-        mid += 1;
-      } else if (
-        item.info.participants[getIndex(item)].individualPosition === "BOTTOM"
-      ) {
-        ad += 1;
-      } else if (
-        item.info.participants[getIndex(item)].individualPosition === "UTILITY"
-      ) {
-        sup += 1;
+      if (item.info.queueId == 420) {
+        if (
+          item.info.participants[getIndex(item)].individualPosition === "TOP"
+        ) {
+          top += 1;
+        } else if (
+          item.info.participants[getIndex(item)].individualPosition === "JUNGLE"
+        ) {
+          jungle += 1;
+        } else if (
+          item.info.participants[getIndex(item)].individualPosition === "MIDDLE"
+        ) {
+          mid += 1;
+        } else if (
+          item.info.participants[getIndex(item)].individualPosition === "BOTTOM"
+        ) {
+          ad += 1;
+        } else if (
+          item.info.participants[getIndex(item)].individualPosition ===
+          "UTILITY"
+        ) {
+          sup += 1;
+        }
       }
-    }
     });
     setRoles([top, jungle, mid, ad, sup]);
   };
@@ -1209,7 +1217,6 @@ const Analyzer = () => {
       buildObjectivesBuildings +
       buildObjectivesSteals;
 
-
     var Lane = finalLane;
 
     var Fight = finalFight;
@@ -1333,10 +1340,10 @@ const Analyzer = () => {
     getChallenges();
     getRoles();
   }, [matchDataState]);
-  useEffect(()=>{
-    setGraphs(graph)
-    console.log(graphState)
-  },[graph])
+  useEffect(() => {
+    setGraphs(graph);
+    console.log(graphState);
+  }, [graph]);
 
   const dataTop = {
     labels: ["Lane", "Fight", "Utility", "Split", "Farm", "Objectives"],
@@ -1345,7 +1352,7 @@ const Analyzer = () => {
         label: "Solo/Duo Perfomace",
         data: graph,
         borderColor: "rgba(128, 0, 128, 1)",
-        backgroundColor:"rgba(128,0,128,0.4)",
+        backgroundColor: "rgba(128,0,128,0.4)",
         borderWidth: 1,
       },
     ],
@@ -1430,16 +1437,12 @@ const Analyzer = () => {
   }
   return (
     <S.Wrapper>
-
       <span>Analyzer</span>
-      <S.GraphRoles
-      >
-        <Doughnut options={optionsRoles} data={dataRoles}/>
+      <S.GraphRoles>
+        <Doughnut options={optionsRoles} data={dataRoles} />
       </S.GraphRoles>
 
-      <S.Roles>
-
-      </S.Roles>
+      <S.Roles></S.Roles>
       <S.Graph>
         <div
           style={{
@@ -1465,6 +1468,5 @@ const Analyzer = () => {
       </S.Graph>
     </S.Wrapper>
   );
-
 };
 export default Analyzer;

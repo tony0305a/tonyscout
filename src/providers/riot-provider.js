@@ -32,6 +32,8 @@ const RiotProvider = ({ children }) => {
   const [matchDataState, setMatchDataState] = useState([]);
   const [renderState, setRenderState] = useState(Boolean);
   const [graphState, setGraphState] = useState([]);
+  const [graphSlot1State, setGraphSlot1State] = useState([])
+  const [graphSlot2State, setGraphSlot2State] = useState([])
   const getSummoner = (name) => {
     api
       .get(
@@ -122,6 +124,12 @@ const RiotProvider = ({ children }) => {
   const setGraphs = (array) =>{
     setGraphState(array)
   }
+  const setSlot1Graph = (array) =>{
+    setGraphSlot1State(array)
+  }
+  const setSlot2Graph = (array) =>{
+    setGraphSlot2State(array)
+  }
 
   const contextValue = {
     scoutState,
@@ -133,6 +141,8 @@ const RiotProvider = ({ children }) => {
     matchDataState,
     renderState,
     graphState,
+    graphSlot1State,
+    graphSlot2State,
     getSummoner: useCallback((name) => getSummoner(name), []),
     getVersion: useCallback((version) => getVersion(version), []),
     getChampionInfo: useCallback(() => getChampionInfo(), []),
@@ -146,8 +156,9 @@ const RiotProvider = ({ children }) => {
     getMatchData: useCallback((id) => getMatchData(id), []),
     setRender: useCallback((bool) => setRender(bool), []),
     setGraphs: useCallback((array) => setGraphs(array), []),
+    setSlot1Graph: useCallback((array) => setSlot1Graph(array), []),
+    setSlot2Graph: useCallback((array) => setSlot2Graph(array), []),
   };
-
   return (
     <RiotContext.Provider value={contextValue}>{children}</RiotContext.Provider>
   );

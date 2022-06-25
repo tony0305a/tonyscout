@@ -9,6 +9,7 @@ import Ranked from "../Ranked/Ranked";
 import Matches from "../Matches/Matches";
 import Analyzer from "../Analyzer/Analyzer";
 import Graphics from "../Analyzer/Graphics";
+import Compare from "../Compare/Compare";
 
 const Profile = () => {
   const {
@@ -95,6 +96,7 @@ const Profile = () => {
           )}
         </S.Wrapper>
         <>
+        <Compare/>
           {renderMatchs ? (
             <>
               <ActiveMatch/>
