@@ -53,18 +53,18 @@ const ActiveMatch = () => {
     }
 
     fetch(
-      `http://ddragon.leagueoflegends.com/cdn/${version}/data/pt_BR/summoner.json`
+      `https://ddragon.leagueoflegends.com/cdn/${version}/data/pt_BR/summoner.json`
     )
       .then((res) => res.text())
       .then((x) => setSummonerSpell(JSON.parse(x)));
 
     fetch(
-      `http://ddragon.leagueoflegends.com/cdn/${version}/data/pt_BR/runesReforged.json`
+      `https://ddragon.leagueoflegends.com/cdn/${version}/data/pt_BR/runesReforged.json`
     )
       .then((res) => res.text())
       .then((x) => setRunes(JSON.parse(x)));
     fetch(
-      `http://ddragon.leagueoflegends.com/cdn/${version}/data/pt_BR/champion.json`
+      `https://ddragon.leagueoflegends.com/cdn/${version}/data/pt_BR/champion.json`
     )
       .then((response) => response.text())
       .then((x) => setChampion(JSON.parse(x)));
@@ -204,47 +204,47 @@ const ActiveMatch = () => {
           {activeInfo.data.participants.sort().map((item) => (
             <ActiveMatchPlayer
               summonerName={item.summonerName}
-              summonerIcon={`http://ddragon.leagueoflegends.com/cdn/${version}/img/profileicon/${item.profileIconId}.png`}
-              championImage={`http://ddragon.leagueoflegends.com/cdn/${version}/img/champion/${getHeroInfo(
+              summonerIcon={`https://ddragon.leagueoflegends.com/cdn/${version}/img/profileicon/${item.profileIconId}.png`}
+              championImage={`https://ddragon.leagueoflegends.com/cdn/${version}/img/champion/${getHeroInfo(
                 item.championId
               )}`}
-              summonerSpell1={`http://ddragon.leagueoflegends.com/cdn/${version}/img/spell/${getSS1(
+              summonerSpell1={`https://ddragon.leagueoflegends.com/cdn/${version}/img/spell/${getSS1(
                 item.spell1Id
               )}`}
-              summonerSpell2={`http://ddragon.leagueoflegends.com/cdn/${version}/img/spell/${getSS1(
+              summonerSpell2={`https://ddragon.leagueoflegends.com/cdn/${version}/img/spell/${getSS1(
                 item.spell2Id
               )}`}
-              primaryRune1={`http://ddragon.leagueoflegends.com/cdn/img/${getRunes(
+              primaryRune1={`https://ddragon.leagueoflegends.com/cdn/img/${getRunes(
                 item.perks.perkStyle,
                 item.perks.perkIds[0]
               )}`}
-              primaryRune2={`http://ddragon.leagueoflegends.com/cdn/img/${getRunes(
+              primaryRune2={`https://ddragon.leagueoflegends.com/cdn/img/${getRunes(
                 item.perks.perkStyle,
                 item.perks.perkIds[1]
               )}`}
-              primaryRune3={`http://ddragon.leagueoflegends.com/cdn/img/${getRunes(
+              primaryRune3={`https://ddragon.leagueoflegends.com/cdn/img/${getRunes(
                 item.perks.perkStyle,
                 item.perks.perkIds[2]
               )}`}
-              primaryRune4={`http://ddragon.leagueoflegends.com/cdn/img/${getRunes(
+              primaryRune4={`https://ddragon.leagueoflegends.com/cdn/img/${getRunes(
                 item.perks.perkStyle,
                 item.perks.perkIds[3]
               )}`}
-              secondaryRune1={`http://ddragon.leagueoflegends.com/cdn/img/${getRunes(
+              secondaryRune1={`https://ddragon.leagueoflegends.com/cdn/img/${getRunes(
                 item.perks.perkSubStyle,
                 item.perks.perkIds[4]
               )}`}
-              secondaryRune2={`http://ddragon.leagueoflegends.com/cdn/img/${getRunes(
+              secondaryRune2={`https://ddragon.leagueoflegends.com/cdn/img/${getRunes(
                 item.perks.perkSubStyle,
                 item.perks.perkIds[5]
               )}`}
-              statMod1={`http://ddragon.leagueoflegends.com/cdn/img/perk-images/StatMods/${getMods(
+              statMod1={`https://ddragon.leagueoflegends.com/cdn/img/perk-images/StatMods/${getMods(
                 item.perks.perkIds[6]
               )}`}
-              statMod2={`http://ddragon.leagueoflegends.com/cdn/img/perk-images/StatMods/${getMods(
+              statMod2={`https://ddragon.leagueoflegends.com/cdn/img/perk-images/StatMods/${getMods(
                 item.perks.perkIds[7]
               )}`}
-              statMod3={`http://ddragon.leagueoflegends.com/cdn/img/perk-images/StatMods/${getMods(
+              statMod3={`https://ddragon.leagueoflegends.com/cdn/img/perk-images/StatMods/${getMods(
                 item.perks.perkIds[8]
               )}`}
               elo={getElo(item.summonerId, 0)}

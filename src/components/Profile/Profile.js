@@ -22,7 +22,7 @@ const Profile = () => {
     matchDataState,
   } = useScout();
 
-  const profileIcon = `http://ddragon.leagueoflegends.com/cdn/${version}/img/profileicon/${scoutState.profileIconId}.png`;
+  const profileIcon = `https://ddragon.leagueoflegends.com/cdn/${version}/img/profileicon/${scoutState.profileIconId}.png`;
   const [activeInfo, setActiveInfo] = useState(false);
   const [renderActiveMatch, setRenderActiveMatch] = useState(true);
   const [renderMatchs, setRenderMatch] = useState(false);

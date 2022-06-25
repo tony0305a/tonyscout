@@ -50,13 +50,13 @@ const Matchitem = ({
 
   useEffect(() => {
     fetch(
-      `http://ddragon.leagueoflegends.com/cdn/${version}/data/pt_BR/summoner.json`
+      `https://ddragon.leagueoflegends.com/cdn/${version}/data/pt_BR/summoner.json`
     )
       .then((res) => res.text())
       .then((x) => setSummonerSpell(JSON.parse(x)));
 
     fetch(
-      `http://ddragon.leagueoflegends.com/cdn/${version}/data/pt_BR/runesReforged.json`
+      `https://ddragon.leagueoflegends.com/cdn/${version}/data/pt_BR/runesReforged.json`
     )
       .then((res) => res.text())
       .then((x) => setRunes(JSON.parse(x)));
@@ -68,7 +68,7 @@ const Matchitem = ({
     return function cleanUp() {
       //   cleanMatchData()
       fetch(
-        `http://ddragon.leagueoflegends.com/cdn/${version}/data/pt_BR/champion.json`
+        `https://ddragon.leagueoflegends.com/cdn/${version}/data/pt_BR/champion.json`
       )
         .then((response) => response.text())
         .then((x) => setChampion(JSON.parse(x)));
@@ -143,7 +143,7 @@ const Matchitem = ({
     if (id == 0) {
       return `https://upload.wikimedia.org/wikipedia/commons/thumb/b/b1/Grey_background.jpg/1200px-Grey_background.jpg`;
     } else {
-      return `http://ddragon.leagueoflegends.com/cdn/${version}/img/item/${id}.png`;
+      return `https://ddragon.leagueoflegends.com/cdn/${version}/img/item/${id}.png`;
     }
   };
   const call = () => {
@@ -206,7 +206,7 @@ const Matchitem = ({
           {passItem.info.participants.map((item) => (
             <MatchitemParticipants
               name={item.summonerName}
-              champ={`http://ddragon.leagueoflegends.com/cdn/${version}/img/champion/${getChampName(
+              champ={`https://ddragon.leagueoflegends.com/cdn/${version}/img/champion/${getChampName(
                 item.championId
               )}`}
             ></MatchitemParticipants>

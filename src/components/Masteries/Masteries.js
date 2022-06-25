@@ -8,7 +8,7 @@ const Masteries = () => {
     const {masteriesState, scoutState, championState, version} = useScout() 
     const [champion, setChampion] = useState()
 
-            fetch(`http://ddragon.leagueoflegends.com/cdn/${version}/data/pt_BR/champion.json`)
+            fetch(`https://ddragon.leagueoflegends.com/cdn/${version}/data/pt_BR/champion.json`)
             .then((response)=>response.text()).then((x)=> setChampion(JSON.parse(x)))
 
       const check = () => {
@@ -37,7 +37,7 @@ const Masteries = () => {
         {masteriesState.hasSearch?(<> {masteriesState.maestrias.map((item)=>(
             
             <MasteryItem
-            pic={`http://ddragon.leagueoflegends.com/cdn/${version}/img/champion/${getChampName(item.championId)}`}
+            pic={`https://ddragon.leagueoflegends.com/cdn/${version}/img/champion/${getChampName(item.championId)}`}
             championLevel={item.championLevel}
             championPoints={item.championPoints}
             lastPlayTime={item.lastPlayTime}

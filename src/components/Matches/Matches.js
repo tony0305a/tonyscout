@@ -43,18 +43,18 @@ const Matches = () => {
 
     
     fetch(
-      `http://ddragon.leagueoflegends.com/cdn/${version}/data/pt_BR/champion.json`
+      `https://ddragon.leagueoflegends.com/cdn/${version}/data/pt_BR/champion.json`
     )
       .then((response) => response.text())
       .then((x) => setChampion(JSON.parse(x)));
     fetch(
-      `http://ddragon.leagueoflegends.com/cdn/${version}/data/pt_BR/summoner.json`
+      `https://ddragon.leagueoflegends.com/cdn/${version}/data/pt_BR/summoner.json`
     )
       .then((res) => res.text())
       .then((x) => setSummonerSpell(JSON.parse(x)));
 
     fetch(
-      `http://ddragon.leagueoflegends.com/cdn/${version}/data/pt_BR/runesReforged.json`
+      `https://ddragon.leagueoflegends.com/cdn/${version}/data/pt_BR/runesReforged.json`
     )
       .then((res) => res.text())
       .then((x) => setRunes(JSON.parse(x)));
@@ -155,7 +155,7 @@ const Matches = () => {
     if (id == 0) {
       return `https://upload.wikimedia.org/wikipedia/commons/thumb/b/b1/Grey_background.jpg/1200px-Grey_background.jpg`;
     } else {
-      return `http://ddragon.leagueoflegends.com/cdn/${version}/img/item/${id}.png`;
+      return `https://ddragon.leagueoflegends.com/cdn/${version}/img/item/${id}.png`;
     }
   };
 
@@ -205,62 +205,62 @@ const Matches = () => {
                     item.info.participants[getIndex(item)].individualPosition
                   }
                   id={item.metadata.matchId}
-                  champPic={`http://ddragon.leagueoflegends.com/cdn/${version}/img/champion/${getChampName(
+                  champPic={`https://ddragon.leagueoflegends.com/cdn/${version}/img/champion/${getChampName(
                     item.info.participants[getIndex(item)].championId
                   )}`}
                   kills={item.info.participants[getIndex(item)].kills}
                   deaths={item.info.participants[getIndex(item)].deaths}
                   assists={item.info.participants[getIndex(item)].assists}
-                  SS1={`http://ddragon.leagueoflegends.com/cdn/${version}/img/spell/${getSS(
+                  SS1={`https://ddragon.leagueoflegends.com/cdn/${version}/img/spell/${getSS(
                     item.info.participants[getIndex(item)].summoner1Id
                   )}`}
-                  SS2={`http://ddragon.leagueoflegends.com/cdn/${version}/img/spell/${getSS(
+                  SS2={`https://ddragon.leagueoflegends.com/cdn/${version}/img/spell/${getSS(
                     item.info.participants[getIndex(item)].summoner2Id
                   )}`}
-                  rune1={`http://ddragon.leagueoflegends.com/cdn/img/${getRunes(
+                  rune1={`https://ddragon.leagueoflegends.com/cdn/img/${getRunes(
                     item.info.participants[getIndex(item)].perks.styles[0]
                       .style,
                     item.info.participants[getIndex(item)].perks.styles[0]
                       .selections[0].perk
                   )}`}
-                  rune2={`http://ddragon.leagueoflegends.com/cdn/img/${getRunes(
+                  rune2={`https://ddragon.leagueoflegends.com/cdn/img/${getRunes(
                     item.info.participants[getIndex(item)].perks.styles[0]
                       .style,
                     item.info.participants[getIndex(item)].perks.styles[0]
                       .selections[1].perk
                   )}`}
-                  rune3={`http://ddragon.leagueoflegends.com/cdn/img/${getRunes(
+                  rune3={`https://ddragon.leagueoflegends.com/cdn/img/${getRunes(
                     item.info.participants[getIndex(item)].perks.styles[0]
                       .style,
                     item.info.participants[getIndex(item)].perks.styles[0]
                       .selections[2].perk
                   )}`}
-                  rune4={`http://ddragon.leagueoflegends.com/cdn/img/${getRunes(
+                  rune4={`https://ddragon.leagueoflegends.com/cdn/img/${getRunes(
                     item.info.participants[getIndex(item)].perks.styles[0]
                       .style,
                     item.info.participants[getIndex(item)].perks.styles[0]
                       .selections[3].perk
                   )}`}
-                  rune5={`http://ddragon.leagueoflegends.com/cdn/img/${getRunes(
+                  rune5={`https://ddragon.leagueoflegends.com/cdn/img/${getRunes(
                     item.info.participants[getIndex(item)].perks.styles[1]
                       .style,
                     item.info.participants[getIndex(item)].perks.styles[1]
                       .selections[0].perk
                   )}`}
-                  rune6={`http://ddragon.leagueoflegends.com/cdn/img/${getRunes(
+                  rune6={`https://ddragon.leagueoflegends.com/cdn/img/${getRunes(
                     item.info.participants[getIndex(item)].perks.styles[1]
                       .style,
                     item.info.participants[getIndex(item)].perks.styles[1]
                       .selections[1].perk
                   )}`}
-                  rune7={`http://ddragon.leagueoflegends.com/cdn/img/perk-images/StatMods/${getMods(
+                  rune7={`https://ddragon.leagueoflegends.com/cdn/img/perk-images/StatMods/${getMods(
                     item.info.participants[getIndex(item)].perks.statPerks
                       .offense
                   )}`}
-                  rune8={`http://ddragon.leagueoflegends.com/cdn/img/perk-images/StatMods/${getMods(
+                  rune8={`https://ddragon.leagueoflegends.com/cdn/img/perk-images/StatMods/${getMods(
                     item.info.participants[getIndex(item)].perks.statPerks.flex
                   )}`}
-                  rune9={`http://ddragon.leagueoflegends.com/cdn/img/perk-images/StatMods/${getMods(
+                  rune9={`https://ddragon.leagueoflegends.com/cdn/img/perk-images/StatMods/${getMods(
                     item.info.participants[getIndex(item)].perks.statPerks
                       .defense
                   )}`}
