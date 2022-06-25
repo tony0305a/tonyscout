@@ -8,7 +8,7 @@ const Masteries = () => {
     const {masteriesState, scoutState, championState, version} = useScout() 
     const [champion, setChampion] = useState()
 
-            fetch(`http://ddragon.leagueoflegends.com/cdn/${version}/data/pt_BR/champion.json`)
+            fetch(`https://ddragon.leagueoflegends.com/cdn/${version}/data/pt_BR/champion.json`)
             .then((response)=>response.text()).then((x)=> setChampion(JSON.parse(x)))
 
       const check = () => {
