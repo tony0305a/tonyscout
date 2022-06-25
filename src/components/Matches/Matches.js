@@ -180,14 +180,6 @@ const Matches = () => {
     });
   };
 
-  if (matchDataState == undefined) {
-    return (
-      <>
-        <p>Loading...</p>{" "}
-      </>
-    );
-  }
-
   return (
     <>
       {scoutState.hasUser ? (
