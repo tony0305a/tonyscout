@@ -14,6 +14,13 @@ import EmblemDiamond from "../../imgs/Emblem_Diamond.png";
 import EmblemMaster from "../../imgs/Emblem_Master.png";
 import EmblemGrandmaster from "../../imgs/Emblem_Grandmaster.png";
 import EmblemChallenger from "../../imgs/Emblem_Challenger.png";
+import m7 from "../../imgs/7.png"
+import m6 from "../../imgs/6.png"
+import m5 from "../../imgs/5.png"
+import m4 from "../../imgs/4.png"
+import m3 from "../../imgs/3.png"
+import m2 from "../../imgs/2.png"
+import m1 from "../../imgs/1.png"
 
 const ActiveMatch = () => {
   const { scoutState, version, getChampionInfo, championState } = useScout();
