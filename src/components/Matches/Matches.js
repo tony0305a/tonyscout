@@ -182,6 +182,7 @@ const Matches = () => {
 
   return (
     <>
+    <button onClick={call}>call</button>
       {scoutState.hasUser ? (
         <>
           {renderState ? (
