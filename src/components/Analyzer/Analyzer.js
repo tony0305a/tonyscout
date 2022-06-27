@@ -1389,13 +1389,7 @@ const Analyzer = () => {
     },
   };
 
-  if (matchDataState === undefined) {
-    return (
-      <>
-        <p>Loading...</p>
-      </>
-    );
-  }
+
   return (
     <S.Wrapper>
       <span>Analyzer</span>
