@@ -292,7 +292,7 @@ const Analyzer = () => {
             item.info.participants[getIndex(item)].challenges.soloKills
           );
 
-          if (junglerKillsEarlyJungle != 0) {
+          if (junglerKillsEarlyJungle !== 0) {
             junglerKillsEarlyJungle +=
               item.info.participants[getIndex(item)].challenges
                 .junglerKillsEarlyJungle;
