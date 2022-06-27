@@ -1,10 +1,8 @@
 import React, { useEffect, useState } from "react";
 import useScout from "../../hooks/riot-hook";
-import { M } from "../MasteryItem/styled";
 import * as S from "./styled";
 import { Radar } from "react-chartjs-2";
 import { Doughnut } from "react-chartjs-2";
-import { Bar } from "react-chartjs-2";
 
 import {
   Chart as ChartJS,
@@ -20,7 +18,6 @@ import {
   Filler,
   ArcElement,
 } from "chart.js";
-import { Flex } from "../Ranked/styled";
 
 ChartJS.register(
   ArcElement,
@@ -41,7 +38,6 @@ const Analyzer = () => {
     matchDataState,
     scoutState,
     renderState,
-    setRender,
     rankedState,
     graphState,
     setGraphs,
@@ -49,10 +45,6 @@ const Analyzer = () => {
   const [graph, setGraph] = useState([]);
   const [roles, setRoles] = useState([]);
   const [renderTop, setRenderTop] = useState(false);
-  const [renderJungle, setRenderJungle] = useState(false);
-  const [renderMid, setRenderMid] = useState(false);
-  const [renderCarry, setRenderCarry] = useState(false);
-  const [renderUtility, setRenderUtility] = useState(false);
   const [eloMultiplaier, setEloMultiplaier] = useState(0.2);
   const [hardData, setHardData] = useState({
     soloQueues: 0,
@@ -111,7 +103,6 @@ const Analyzer = () => {
     visionScoreAdvantageLaneOpponent: 0,
     visionScorePerMinute: 0,
     // Non-Challenges
-    assists: 0,
     visionScore: 0,
     // Split
     soloKills: 0,
@@ -123,7 +114,6 @@ const Analyzer = () => {
     // Farm
     alliedJungleMonsterKills: 0,
     buffsStolen: 0,
-    elderDragonMultikills: 0,
     enemyJungleMonsterKills: 0,
     initialBuffCount: 0,
     initialCrabCount: 0,
@@ -159,7 +149,7 @@ const Analyzer = () => {
     var ad = 0;
     var sup = 0;
     matchDataState.map((item) => {
-      if (item.info.queueId == 420) {
+      if (item.info.queueId === 420) {
         if (
           item.info.participants[getIndex(item)].individualPosition === "TOP"
         ) {
@@ -254,7 +244,6 @@ const Analyzer = () => {
     //Farm
     var alliedJungleMonsterKills = 0;
     var buffsStolen = 0;
-    var elderDragonMultikills = 0;
     var enemyJungleMonsterKills = 0;
     var initialBuffCount = 0;
     var initialCrabCount = 0;
@@ -274,7 +263,6 @@ const Analyzer = () => {
     var perfectDragonSoulsTaken = 0;
     var riftHeraldTakedowns = 0;
     var soloBaronKills = 0;
-    var takedownOnFirstTurret = 0;
     var turretTakedowns = 0;
     var turretsTakenWithRiftHerald = 0;
     var neutralMinionsKilled = 0;
@@ -282,9 +270,9 @@ const Analyzer = () => {
     var timePlayed = 0;
 
     matchDataState.map((item) => {
-      if (item.info.participants != undefined) {
+      if (item.info.participants !== undefined) {
         if (
-          item.info.participants[getIndex(item)].challenges != undefined &&
+          item.info.participants[getIndex(item)].challenges !== undefined &&
           item.info.queueId === 420
         ) {
           soloQ += 1;
@@ -336,7 +324,7 @@ const Analyzer = () => {
             item.info.participants[getIndex(item)].challenges
               .killsNearEnemyTurret
           );
-          if (killsOnLanersEarlyJungleAsJungler != 0) {
+          if (killsOnLanersEarlyJungleAsJungler !== 0) {
             killsOnLanersEarlyJungleAsJungler += parseInt(
               item.info.participants[getIndex(item)].challenges
                 .killsOnLanersEarlyJungleAsJungler
@@ -351,13 +339,13 @@ const Analyzer = () => {
             item.info.participants[getIndex(item)].challenges
               .laneMinionsFirst10Minutes
           );
-          if (laningPhaseGoldExpAdvantage != 0) {
+          if (laningPhaseGoldExpAdvantage !== 0) {
             laningPhaseGoldExpAdvantage += parseInt(
               item.info.participants[getIndex(item)].challenges
                 .laningPhaseGoldExpAdvantage
             );
           }
-          if (maxCsAdvantageOnLaneOpponent != 0) {
+          if (maxCsAdvantageOnLaneOpponent !== 0) {
             maxCsAdvantageOnLaneOpponent += parseInt(
               item.info.participants[getIndex(item)].challenges
                 .maxCsAdvantageOnLaneOpponent
@@ -367,7 +355,7 @@ const Analyzer = () => {
           maxKillDeficit += parseInt(
             item.info.participants[getIndex(item)].challenges.maxKillDeficit
           );
-          if (maxLevelLeadLaneOpponent != 0) {
+          if (maxLevelLeadLaneOpponent !== 0) {
             maxLevelLeadLaneOpponent += parseInt(
               item.info.participants[getIndex(item)].challenges
                 .maxLevelLeadLaneOpponent
@@ -433,7 +421,7 @@ const Analyzer = () => {
 
           if (
             item.info.participants[getIndex(item)].challenges
-              .enemyChampionImmobilizations != 0
+              .enemyChampionImmobilizations !== 0
           ) {
             enemyChampionImmobilizations += parseInt(
               item.info.participants[getIndex(item)].challenges
@@ -442,7 +430,7 @@ const Analyzer = () => {
           }
           if (
             item.info.participants[getIndex(item)].challenges
-              .fullTeamTakedown != 0
+              .fullTeamTakedown !== 0
           ) {
             fullTeamTakedown += parseInt(
               item.info.participants[getIndex(item)].challenges.fullTeamTakedown
@@ -459,7 +447,7 @@ const Analyzer = () => {
           }
           if (
             item.info.participants[getIndex(item)].challenges
-              .immobilizeAndKillWithAlly != 0
+              .immobilizeAndKillWithAlly !== 0
           ) {
             immobilizeAndKillWithAlly += parseInt(
               item.info.participants[getIndex(item)].challenges
@@ -468,7 +456,7 @@ const Analyzer = () => {
           }
           if (
             item.info.participants[getIndex(item)].challenges
-              .killedChampTookFullTeamDamageSurvived != 0
+              .killedChampTookFullTeamDamageSurvived !== 0
           ) {
             killedChampTookFullTeamDamageSurvived += parseInt(
               item.info.participants[getIndex(item)].challenges
@@ -477,7 +465,7 @@ const Analyzer = () => {
           }
           if (
             item.info.participants[getIndex(item)].challenges
-              .knockEnemyIntoTeamAndKill != 0
+              .knockEnemyIntoTeamAndKill !== 0
           ) {
             knockEnemyIntoTeamAndKill += parseInt(
               item.info.participants[getIndex(item)].challenges
@@ -486,7 +474,7 @@ const Analyzer = () => {
           }
           if (
             item.info.participants[getIndex(item)].challenges
-              .pickKillWithAlly != 0
+              .pickKillWithAlly !== 0
           ) {
             pickKillWithAlly += parseInt(
               item.info.participants[getIndex(item)].challenges.pickKillWithAlly
@@ -494,7 +482,7 @@ const Analyzer = () => {
           }
           if (
             item.info.participants[getIndex(item)].challenges
-              .survivedThreeImmobilizesInFight != 0
+              .survivedThreeImmobilizesInFight !== 0
           ) {
             survivedThreeImmobilizesInFight += parseInt(
               item.info.participants[getIndex(item)].challenges
@@ -503,7 +491,7 @@ const Analyzer = () => {
           }
           if (
             item.info.participants[getIndex(item)].challenges
-              .tookLargeDamageSurvived != 0
+              .tookLargeDamageSurvived !== 0
           ) {
             tookLargeDamageSurvived += parseInt(
               item.info.participants[getIndex(item)].challenges
@@ -513,7 +501,7 @@ const Analyzer = () => {
 
           if (
             item.info.participants[getIndex(item)].challenges
-              .completeSupportQuestInTime != 0
+              .completeSupportQuestInTime !== 0
           ) {
             completeSupportQuestInTime += parseInt(
               item.info.participants[getIndex(item)].challenges
@@ -531,7 +519,7 @@ const Analyzer = () => {
           }
           if (
             item.info.participants[getIndex(item)].challenges
-              .controlWardsPlaced != 0
+              .controlWardsPlaced !== 0
           ) {
             controlWardsPlaced += parseFloat(
               item.info.participants[getIndex(item)].challenges
@@ -540,7 +528,7 @@ const Analyzer = () => {
           }
           if (
             item.info.participants[getIndex(item)].challenges
-              .effectiveHealAndShielding != 0
+              .effectiveHealAndShielding !== 0
           ) {
             effectiveHealAndShielding += parseInt(
               item.info.participants[getIndex(item)].challenges
@@ -558,7 +546,7 @@ const Analyzer = () => {
           }
           if (
             item.info.participants[getIndex(item)].challenges
-              .saveAllyFromDeath != 0
+              .saveAllyFromDeath !== 0
           ) {
             saveAllyFromDeath += parseInt(
               item.info.participants[getIndex(item)].challenges
@@ -567,7 +555,7 @@ const Analyzer = () => {
           }
           if (
             item.info.participants[getIndex(item)].challenges
-              .stealthWardsPlaced != 0
+              .stealthWardsPlaced !== 0
           ) {
             stealthWardsPlaced += parseInt(
               item.info.participants[getIndex(item)].challenges
@@ -576,7 +564,7 @@ const Analyzer = () => {
           }
           if (
             item.info.participants[getIndex(item)].challenges
-              .threeWardsOneSweeperCount != 0
+              .threeWardsOneSweeperCount !== 0
           ) {
             threeWardsOneSweeperCount += parseInt(
               item.info.participants[getIndex(item)].challenges
@@ -619,7 +607,7 @@ const Analyzer = () => {
             );
           }
           if (
-            item.info.participants[getIndex(item)].challenges.soloKills != 0
+            item.info.participants[getIndex(item)].challenges.soloKills !== 0
           ) {
             soloKills += parseInt(
               item.info.participants[getIndex(item)].challenges.soloKills
@@ -627,7 +615,7 @@ const Analyzer = () => {
           }
           if (
             item.info.participants[getIndex(item)].challenges
-              .soloTurretsLategame != 0
+              .soloTurretsLategame !== 0
           ) {
             soloTurretsLategame += parseInt(
               item.info.participants[getIndex(item)].challenges
@@ -635,7 +623,7 @@ const Analyzer = () => {
             );
           }
           if (
-            item.info.participants[getIndex(item)].challenges.teamBaronKills !=
+            item.info.participants[getIndex(item)].challenges.teamBaronKills !==
             0
           ) {
             teamBaronKills += parseInt(
@@ -644,7 +632,7 @@ const Analyzer = () => {
           }
           if (
             item.info.participants[getIndex(item)].challenges
-              .teamElderDragonKills != 0
+              .teamElderDragonKills !== 0
           ) {
             teamElderDragonKills += parseInt(
               item.info.participants[getIndex(item)].challenges
@@ -652,7 +640,7 @@ const Analyzer = () => {
             );
           }
           if (
-            item.info.participants[getIndex(item)].damageDealtToBuildings != 0
+            item.info.participants[getIndex(item)].damageDealtToBuildings !== 0
           ) {
             damageDealtToBuildings += parseInt(
               item.info.participants[getIndex(item)].damageDealtToBuildings
@@ -660,7 +648,7 @@ const Analyzer = () => {
           }
           if (
             item.info.participants[getIndex(item)].challenges
-              .alliedJungleMonsterKills != 0
+              .alliedJungleMonsterKills !== 0
           ) {
             alliedJungleMonsterKills += parseInt(
               item.info.participants[getIndex(item)].challenges
@@ -668,7 +656,7 @@ const Analyzer = () => {
             );
           }
           if (
-            item.info.participants[getIndex(item)].challenges.buffsStolen != 0
+            item.info.participants[getIndex(item)].challenges.buffsStolen !== 0
           ) {
             buffsStolen += parseInt(
               item.info.participants[getIndex(item)].challenges.buffsStolen
@@ -676,7 +664,7 @@ const Analyzer = () => {
           }
           if (
             item.info.participants[getIndex(item)].challenges
-              .enemyJungleMonsterKills != 0
+              .enemyJungleMonsterKills !== 0
           ) {
             enemyJungleMonsterKills += parseInt(
               item.info.participants[getIndex(item)].challenges
@@ -685,7 +673,7 @@ const Analyzer = () => {
           }
           if (
             item.info.participants[getIndex(item)].challenges
-              .initialBuffCount != 0
+              .initialBuffCount !== 0
           ) {
             initialBuffCount += parseInt(
               item.info.participants[getIndex(item)].challenges.initialBuffCount
@@ -693,7 +681,7 @@ const Analyzer = () => {
           }
           if (
             item.info.participants[getIndex(item)].challenges
-              .initialCrabCount != 0
+              .initialCrabCount !== 0
           ) {
             initialCrabCount += parseInt(
               item.info.participants[getIndex(item)].challenges.initialCrabCount
@@ -701,7 +689,7 @@ const Analyzer = () => {
           }
           if (
             item.info.participants[getIndex(item)].challenges
-              .jungleCsBefore10Minutes != 0
+              .jungleCsBefore10Minutes !== 0
           ) {
             jungleCsBefore10Minutes += parseInt(
               item.info.participants[getIndex(item)].challenges
@@ -710,14 +698,14 @@ const Analyzer = () => {
           }
           if (
             item.info.participants[getIndex(item)].challenges
-              .scuttleCrabKills != 0
+              .scuttleCrabKills !== 0
           ) {
             scuttleCrabKills += parseInt(
               item.info.participants[getIndex(item)].challenges.scuttleCrabKills
             );
           }
           if (
-            item.info.participants[getIndex(item)].challenges.baronTakedowns !=
+            item.info.participants[getIndex(item)].challenges.baronTakedowns !==
             0
           ) {
             baronTakedowns += parseInt(
@@ -726,7 +714,7 @@ const Analyzer = () => {
           }
           if (
             item.info.participants[getIndex(item)].challenges
-              .epicMonsterKillsNearEnemyJungler != 0
+              .epicMonsterKillsNearEnemyJungler !== 0
           ) {
             epicMonsterKillsNearEnemyJungler += parseInt(
               item.info.participants[getIndex(item)].challenges
@@ -735,7 +723,7 @@ const Analyzer = () => {
           }
           if (
             item.info.participants[getIndex(item)].challenges
-              .epicMonsterKillsWithin30SecondsOfSpawn != 0
+              .epicMonsterKillsWithin30SecondsOfSpawn !== 0
           ) {
             epicMonsterKillsWithin30SecondsOfSpawn += parseInt(
               item.info.participants[getIndex(item)].challenges
@@ -744,7 +732,7 @@ const Analyzer = () => {
           }
           if (
             item.info.participants[getIndex(item)].challenges
-              .epicMonsterSteals != 0
+              .epicMonsterSteals !== 0
           ) {
             epicMonsterSteals += parseInt(
               item.info.participants[getIndex(item)].challenges
@@ -753,7 +741,7 @@ const Analyzer = () => {
           }
           if (
             item.info.participants[getIndex(item)].challenges
-              .epicMonsterStolenWithoutSmite != 0
+              .epicMonsterStolenWithoutSmite !== 0
           ) {
             epicMonsterStolenWithoutSmite += parseInt(
               item.info.participants[getIndex(item)].challenges
@@ -762,7 +750,7 @@ const Analyzer = () => {
           }
           if (
             item.info.participants[getIndex(item)].challenges
-              .junglerTakedownsNearDamagedEpicMonster != 0
+              .junglerTakedownsNearDamagedEpicMonster !== 0
           ) {
             junglerTakedownsNearDamagedEpicMonster += parseInt(
               item.info.participants[getIndex(item)].challenges
@@ -771,7 +759,7 @@ const Analyzer = () => {
           }
           if (
             item.info.participants[getIndex(item)].challenges
-              .kTurretsDestroyedBeforePlatesFall != 0
+              .kTurretsDestroyedBeforePlatesFall !== 0
           ) {
             kTurretsDestroyedBeforePlatesFall += parseInt(
               item.info.participants[getIndex(item)].challenges
@@ -780,7 +768,7 @@ const Analyzer = () => {
           }
           if (
             item.info.participants[getIndex(item)].challenges
-              .multiTurretRiftHeraldCount != 0
+              .multiTurretRiftHeraldCount !== 0
           ) {
             multiTurretRiftHeraldCount += parseInt(
               item.info.participants[getIndex(item)].challenges
@@ -789,7 +777,7 @@ const Analyzer = () => {
           }
           if (
             item.info.participants[getIndex(item)].challenges
-              .outnumberedNexusKill != 0
+              .outnumberedNexusKill !== 0
           ) {
             outnumberedNexusKill += parseInt(
               item.info.participants[getIndex(item)].challenges
@@ -798,7 +786,7 @@ const Analyzer = () => {
           }
           if (
             item.info.participants[getIndex(item)].challenges
-              .perfectDragonSoulsTaken != 0
+              .perfectDragonSoulsTaken !== 0
           ) {
             perfectDragonSoulsTaken += parseInt(
               item.info.participants[getIndex(item)].challenges
@@ -806,7 +794,7 @@ const Analyzer = () => {
             );
           }
           if (
-            item.info.participants[getIndex(item)].challenges.soloBaronKills !=
+            item.info.participants[getIndex(item)].challenges.soloBaronKills !==
             0
           ) {
             soloBaronKills += parseInt(
@@ -816,7 +804,7 @@ const Analyzer = () => {
 
           if (
             item.info.participants[getIndex(item)].challenges
-              .takedownOnFirstTurret != 0
+              .takedownOnFirstTurret !== 0
           ) {
             takedownOnFirstTurret += parseInt(
               item.info.participants[getIndex(item)].challenges
@@ -824,7 +812,7 @@ const Analyzer = () => {
             );
           }
           if (
-            item.info.participants[getIndex(item)].challenges.turretTakedowns !=
+            item.info.participants[getIndex(item)].challenges.turretTakedowns !==
             0
           ) {
             turretTakedowns += parseInt(
@@ -833,25 +821,25 @@ const Analyzer = () => {
           }
           if (
             item.info.participants[getIndex(item)].challenges
-              .turretsTakenWithRiftHerald != 0
+              .turretsTakenWithRiftHerald !== 0
           ) {
             turretsTakenWithRiftHerald += parseInt(
               item.info.participants[getIndex(item)].challenges
                 .turretsTakenWithRiftHerald
             );
           }
-          if (item.info.participants[getIndex(item)].kills != 0) {
+          if (item.info.participants[getIndex(item)].kills !== 0) {
             kills += parseInt(item.info.participants[getIndex(item)].kills);
           }
-          if (item.info.participants[getIndex(item)].deaths != 0) {
+          if (item.info.participants[getIndex(item)].deaths !== 0) {
             deaths += parseInt(item.info.participants[getIndex(item)].deaths);
           }
         }
       }
     });
-    if (rankedState.ranked != undefined) {
+    if (rankedState.ranked !== undefined) {
       var sq = rankedState.ranked[0];
-      if (sq.queueType != "RANKED_SOLO_5x5") {
+      if (sq.queueType !== "RANKED_SOLO_5x5") {
         sq = rankedState.ranked[1];
       }
       if (sq.tier === "IRON") {
@@ -890,7 +878,6 @@ const Analyzer = () => {
     var buildFightFullTeamTakedown = 0;
     var buildFightHighestCrowdControlScore = 0;
     var buildFightImmobilizeAndKillWithAlly = 0;
-    var buildFightKilledChampTookFullTeamDamageSurvived = 0;
     var buildFightKnockEnemyIntoTeamAndKill = 0;
     var buildFightPickKillWithAlly = 0;
     var buildFightSurvivedThreeImmobilizesInFight = 0;
@@ -903,7 +890,6 @@ const Analyzer = () => {
     var buildUtilityKillParticipation = 0;
     var buildUtilitySaveAllyFromDeath = 0;
     var buildUtilityStealthWardsPlaced = 0;
-    var buildUtilityThreeWardsOneSweeperCount = 0;
     var buildUtilityVisionScoreAdvantageLaneOpponent = 0;
     var buildUtilityVisionScore = 0;
     var buildUtilityAssists = 0;
@@ -911,7 +897,7 @@ const Analyzer = () => {
     var buildSplitSoloKills = 0;
     var buildSplitSoloTurrentsLateGame = 0;
     var buildSplitTeamBarons = 0;
-    var buildSplitTeamElderDragons = 0;
+ //   var buildSplitTeamElderDragons = 0;
     var buildSplitDamageDealtToBuildings = 0;
 
     var buildFarmXminCs = 0;
@@ -1332,10 +1318,6 @@ const Analyzer = () => {
       parseInt((Objectives * 10 * eloMultiplaier).toFixed(0)),
     ]);
   };
-  const call = () => {
-    console.log(graph);
-    console.log(roles);
-  };
   useEffect(() => {
     getChallenges();
     getRoles();
@@ -1405,27 +1387,6 @@ const Analyzer = () => {
         text: `Roles played ${hardData.soloQueues}`,
       },
     },
-  };
-  const btnTop = () => {
-    if (renderTop) {
-      setRenderTop(false);
-    } else {
-      setRenderTop(true);
-    }
-  };
-  const btnJg = () => {
-    if (renderJungle) {
-      setRenderJungle(false);
-    } else {
-      setRenderJungle(true);
-    }
-  };
-  const btnMid = () => {
-    if (renderMid) {
-      setRenderMid(false);
-    } else {
-      setRenderMid(true);
-    }
   };
 
   if (matchDataState === undefined) {
