@@ -1,18 +1,14 @@
 import React, { useLayoutEffect } from "react";
 import { useState } from "react";
 import { useEffect } from "react";
-import { getTTFB } from "web-vitals";
 import useScout from "../../hooks/riot-hook";
-import matchApi from "../../services/matchs-api";
 import Matchitem from "../MatchItem/Matchitem";
-import MatchitemParticipants from "../MatchItem/MatchitemParticipants";
 import * as S from "./styled";
 
 const Matches = () => {
   const {
     scoutState,
     matchDataState,
-    cleanMatchData,
     matchState,
     version,
     renderState,
