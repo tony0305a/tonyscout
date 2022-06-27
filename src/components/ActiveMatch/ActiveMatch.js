@@ -32,6 +32,12 @@ const ActiveMatch = () => {
   const [activeInfo, setActiveInfo] = useState(false);
   const [champion,setChampion] = useState()
 
+  useEffect(()=>{
+
+      console.log('montou')
+  },[])
+
+
   useEffect(() => {
     setPartElo([]);
     async function activeMatch(id) {
@@ -50,24 +56,12 @@ const ActiveMatch = () => {
       }
     }
 
-    fetch(
-      `https://ddragon.leagueoflegends.com/cdn/${version}/data/pt_BR/summoner.json`
-    )
-      .then((res) => res.text())
-      .then((x) => setSummonerSpell(JSON.parse(x)));
 
-    fetch(
-      `https://ddragon.leagueoflegends.com/cdn/${version}/data/pt_BR/runesReforged.json`
-    )
-      .then((res) => res.text())
-      .then((x) => setRunes(JSON.parse(x)));
-    fetch(
-      `https://ddragon.leagueoflegends.com/cdn/${version}/data/pt_BR/champion.json`
-    )
-      .then((response) => response.text())
-      .then((x) => setChampion(JSON.parse(x)));
+
     activeMatch(scoutState.id);
-    console.log("foi");
+
+
+
   }, [scoutState]);
 
   useEffect(() => {
@@ -85,13 +79,31 @@ const ActiveMatch = () => {
         }
       }
     }
+    fetch(
+      `https://ddragon.leagueoflegends.com/cdn/${version}/data/pt_BR/summoner.json`
+    )
+      .then((res) => res.text())
+      .then((x) => setSummonerSpell(JSON.parse(x)));
+
+    fetch(
+      `https://ddragon.leagueoflegends.com/cdn/${version}/data/pt_BR/runesReforged.json`
+    )
+      .then((res) => res.text())
+      .then((x) => setRunes(JSON.parse(x)));
+    fetch(
+      `https://ddragon.leagueoflegends.com/cdn/${version}/data/pt_BR/champion.json`
+    )
+      .then((response) => response.text())
+      .then((x) => setChampion(JSON.parse(x)));
+      console.log(champion)
+
   }, [activeInfo]);
 
   const getHeroInfo = (id) => {
     try {
       var info = champion.data;
       for (var i in info) {
-        if (info[i].key === id) {
+        if (info[i].key == id) {
           return info[i].image.full;
         }
       }
@@ -102,7 +114,7 @@ const ActiveMatch = () => {
   const getSS1 = (id) => {
     var info = summonerSpell.data;
     for (var i in info) {
-      if (info[i].key === id) {
+      if (info[i].key == id) {
         return info[i].image.full;
       }
     }

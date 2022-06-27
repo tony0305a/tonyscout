@@ -44,6 +44,7 @@ const Profile = () => {
   
     activeMatch(scoutState.id);
   }
+  
   }, [scoutState]);
 
   useEffect(() => {

@@ -174,6 +174,7 @@ const Matches = () => {
     matchDataState.map((item) => {
       console.log(item);
     });
+    console.log(renderState)
   };
 
   return (
