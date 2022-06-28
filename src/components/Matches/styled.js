@@ -28,6 +28,7 @@ h1{
 `;
 
 export const SingleMatch = styled.div`
+display:flex;
 width:100%;
 `;
 export const MatchBody = styled.div`
