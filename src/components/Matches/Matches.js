@@ -170,13 +170,13 @@ const Matches = () => {
   };
 
   return (
-    <S.Header>
-      <h1>Histórico</h1>
+    <>
+
       {scoutState.hasUser ? (
-        <>
-          
+        <S.Wrapper>
+                  <h1>Histórico</h1>
           {renderState ? (   
-            <S.Wrapper>
+            <S.MatchBody>
               {matchDataState
                 .sort((a, b) => b.info.gameCreation - a.info.gameCreation)
                 .map((item, index) => (
@@ -293,15 +293,15 @@ const Matches = () => {
                     ></Matchitem>
                   </S.SingleMatch>
                 ))}
-            </S.Wrapper>
+            </S.MatchBody>
           ) : (
             <></>
           )}
-        </>
+        </S.Wrapper>
       ) : (
         <></>
       )}
-    </S.Header>
+    </>
   );
 };
 export default Matches;

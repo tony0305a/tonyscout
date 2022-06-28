@@ -6,6 +6,9 @@ export const Wrapper = styled.div`
   width: 100%;
   border: 1px solid black;
   margin-top:2px;
+  @media screen and (max-width: 600px){
+    width:100%;  
+}
 `;
 export const Champion = styled.img`
   border-radius: 50%;
@@ -21,8 +24,9 @@ export const ColunmMetadata = styled.div`
   align-items: center;
   padding: 8px;
     @media screen and (max-width: 600px){
-    width:70px;
-    
+    width:80px;   
+      display:flex;
+      justify-content:center;
 }
 `;
 export const ColunmChampion = styled.div`
@@ -38,12 +42,12 @@ export const ColunmChampion = styled.div`
 export const ColunmParticipants = styled.div`
   display: flex;
   flex-direction: column;
-  width: 430px;
+  width: 300px;
   align-items: flex-start;
   height: 130px;
   flex-wrap: wrap;
   @media screen and (max-width: 600px){
-    width:200px;
+    width:150px;
   
 }
 `;
@@ -111,7 +115,7 @@ export const MatchParticipantsWrapper = styled.div`
   align-items: center;
   span {
     font-size: 14px;
-    width: 150px;
+    width: 85px;
     cursor: pointer;
     margin-left: 4px;
     &:hover{
