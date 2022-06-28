@@ -4,7 +4,9 @@ export const Wrapper = styled.div`
   display: flex;
   height: 400px;
   margin:8px;
-
+  @media screen and (max-width: 600px){
+    width:100%;
+}
 `;
 
 export const WrapperColumn = styled.div`
@@ -12,7 +14,10 @@ export const WrapperColumn = styled.div`
   flex-direction: column;
   background-color: white;
   border-top-left-radius: 8px;
-    border-top-right-radius: 8px;
+  border-top-right-radius: 8px;
+  @media screen and (max-width: 600px){
+    width:100%;
+}
 `;
 
 export const SoloDuo = styled.div`
@@ -30,11 +35,17 @@ export const SoloDuo = styled.div`
     border-top-left-radius: 8px;
     border-top-right-radius: 8px;
   }
+  @media screen and (max-width: 600px){
+    width:100%;
+}
 `;
 export const SoloDuoData = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
+  @media screen and (max-width: 600px){
+    justify-content: space-around;
+}
 `;
 export const EmblemAndData = styled.div`
   display: flex;
@@ -67,6 +78,10 @@ export const Flex = styled.div`
   background-color: white;
   width: 400px;
   height: 168px;
+  @media screen and (max-width: 600px){
+    width:100%;
+}
+
   h1 {
     background-color: purple;
     color: white;
@@ -80,4 +95,7 @@ export const FlexData = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
+  @media screen and (max-width: 600px){
+    justify-content: space-around;
+}
 `;

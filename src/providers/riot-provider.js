@@ -32,8 +32,8 @@ const RiotProvider = ({ children }) => {
   const [matchDataState, setMatchDataState] = useState([]);
   const [renderState, setRenderState] = useState(Boolean);
   const [graphState, setGraphState] = useState([]);
-  const [graphSlot1State, setGraphSlot1State] = useState([])
-  const [graphSlot2State, setGraphSlot2State] = useState([])
+  const [graphSlot1State, setGraphSlot1State] = useState([]);
+  const [graphSlot2State, setGraphSlot2State] = useState([]);
   const getSummoner = (name) => {
     api
       .get(
@@ -58,12 +58,12 @@ const RiotProvider = ({ children }) => {
   };
 
   const getChampionInfo = (version) => {
-    if(version != undefined){
-    fetch(
-      `http://ddragon.leagueoflegends.com/cdn/${version}/data/pt_BR/champion.json`
-    )
-      .then((response) => response.text())
-      .then((x) => setChampionState(JSON.parse(x)));
+    if (version != undefined) {
+      fetch(
+        `http://ddragon.leagueoflegends.com/cdn/${version}/data/pt_BR/champion.json`
+      )
+        .then((response) => response.text())
+        .then((x) => setChampionState(JSON.parse(x)));
     }
   };
 
@@ -96,7 +96,7 @@ const RiotProvider = ({ children }) => {
   const getMatches = (puuid) => {
     matchApi
       .get(
-        `lol/match/v5/matches/by-puuid/${puuid}/ids?queue=420&?start=0&count=30&api_key=RGAPI-3ff69f05-592c-43e4-b1d8-b6a1b5159f56`
+        `lol/match/v5/matches/by-puuid/${puuid}/ids?queue=420&?start=0&count=100&api_key=RGAPI-3ff69f05-592c-43e4-b1d8-b6a1b5159f56`
       )
       .then((response) =>
         setMatchState({
@@ -118,18 +118,28 @@ const RiotProvider = ({ children }) => {
   const cleanMatchData = () => {
     setMatchDataState([]);
   };
+  const cleanScoutState = () => {
+    setScoutState({ hasUser: false, id:0, name:'name',puuid:0,summonerLevel:0,profileIconId:0});
+  };
+  const cleanMasteriesState = () =>{
+    setMastertiesState({hasSearch:false,maestrias:undefined})
+  }
+  const cleanRankedState = () =>{
+    setRankedState({searchCompleted:false,ranked:undefined})
+  }
+
   const setRender = (bool) => {
     setRenderState(bool);
   };
-  const setGraphs = (array) =>{
-    setGraphState(array)
-  }
-  const setSlot1Graph = (array) =>{
-    setGraphSlot1State(array)
-  }
-  const setSlot2Graph = (array) =>{
-    setGraphSlot2State(array)
-  }
+  const setGraphs = (array) => {
+    setGraphState(array);
+  };
+  const setSlot1Graph = (array) => {
+    setGraphSlot1State(array);
+  };
+  const setSlot2Graph = (array) => {
+    setGraphSlot2State(array);
+  };
 
   const contextValue = {
     scoutState,
@@ -147,6 +157,9 @@ const RiotProvider = ({ children }) => {
     getVersion: useCallback((version) => getVersion(version), []),
     getChampionInfo: useCallback(() => getChampionInfo(), []),
     cleanMatchData: useCallback(() => cleanMatchData(), []),
+    cleanScoutState: useCallback(() => cleanScoutState(), []),
+    cleanMasteriesState: useCallback(() => cleanMasteriesState(), []),
+    cleanRankedState: useCallback(() => cleanRankedState(), []),
     getMasteries: useCallback((id) => getMasteries(id), []),
     getRanked: useCallback(
       (encryptedSummonerId) => getRanked(encryptedSummonerId),

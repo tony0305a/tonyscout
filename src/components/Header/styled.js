@@ -15,10 +15,11 @@ span{
 export const Form = styled.div`
 display:flex;
 border:1px solid black;
+width:60%;
 input{
     display:flex;
     flex-grow:2;
-    width:360px;
+    width:100%;
     background-color:white;
     padding-left:4px;
 }

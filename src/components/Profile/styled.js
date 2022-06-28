@@ -8,6 +8,14 @@ justify-content:space-around;
 border:1px solid #ccc;
 background-color:white;
 border-radius:8px;
+
+@media screen and (max-width: 600px){
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    width:100%;
+}
+
 `;
 
 export const SummonerInfo = styled.div`
@@ -40,7 +48,9 @@ button{
 export const Mast = styled.div`
 display:flex;
 flex-wrap:wrap;
-width:980px;
+justify-content:center;
+align-items:center;
+width:100%;
 
 `;
 export const MatchWrapper = styled.div`
@@ -54,8 +64,13 @@ flex-direction:column;
 export const ProfileAndMatchAndRanked = styled.div`
 display:flex;
 flex-direction:column;
+
 `;
 export const RankedAndMatches = styled.div`
 display:flex;
+@media screen and (max-width: 600px){
+    flex-direction:column;
+    width:100%;
+}
 
 `;

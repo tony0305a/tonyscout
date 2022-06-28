@@ -30,4 +30,8 @@ time{
     justify-content:center;
     width:96px;
 }
+@media screen and (max-width: 600px){
+    width:80px;
+}
+
 `;
