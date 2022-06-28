@@ -58,7 +58,6 @@ const Matches = () => {
     fetch("https://static.developer.riotgames.com/docs/lol/queues.json")
       .then((response) => response.text())
       .then((x) => setQueue(JSON.parse(x)));
-    console.log("call de queues.json");
     }
     setRender(true);
 
@@ -189,8 +188,7 @@ const Matches = () => {
                 <span>Histórico</span>
               </S.Header>
               {matchDataState.sort((a,b)=>b.info.gameCreation - a.info.gameCreation).map((item, index) => (
-                <ol>
-                <li key={index} >
+                <div key={index} >
                 <Matchitem
                   creationTime={item.info.gameCreation}
                   gameMode={getQueue(item.info.queueId)}
@@ -289,8 +287,7 @@ const Matches = () => {
                   farm1={item.info.participants[getIndex(item)].neutralMinionsKilled}
                   gameLength={item.info.gameDuration}
                 ></Matchitem>
-                </li>
-                </ol>
+                </div>
               ))}
             </S.Wrapper>
           ) : (

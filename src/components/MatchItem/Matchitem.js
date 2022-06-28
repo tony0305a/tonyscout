@@ -43,12 +43,17 @@ const Matchitem = ({
   farm1,
 }) => {
   const { matchDataState, version, matchState, scoutState } = useScout();
-  const [champion, setChampion] = useState([]);
+  const [champion, setChampion] = useState({ completed: false, info: [] });
   const [queue, setQueue] = useState();
   const [summonerSpell, setSummonerSpell] = useState();
   const [runes, setRunes] = useState();
   const [thisRender, setThisRender] = useState(false);
   useEffect(() => {
+    fetch(
+      `https://ddragon.leagueoflegends.com/cdn/${version}/data/pt_BR/champion.json`
+    )
+      .then((response) => response.text())
+      .then((x) => setChampion({ completed: true, info: JSON.parse(x) }));
     fetch(
       `https://ddragon.leagueoflegends.com/cdn/${version}/data/pt_BR/summoner.json`
     )
@@ -67,16 +72,11 @@ const Matchitem = ({
 
     return function cleanUp() {
       //   cleanMatchData()
-      fetch(
-        `https://ddragon.leagueoflegends.com/cdn/${version}/data/pt_BR/champion.json`
-      )
-        .then((response) => response.text())
-        .then((x) => setChampion(JSON.parse(x)));
     };
-  }, [matchState]);
+  }, [scoutState]);
 
   const getChampName = (cid) => {
-    var hero = champion.data;
+    var hero = champion.info.data;
     for (var i in hero) {
       if (hero[i].key == cid) {
         return hero[i].image.full;
@@ -204,16 +204,22 @@ const Matchitem = ({
             <span>{farm + farm1}:CS</span>
           </S.ColunmScore>
           <S.ColunmParticipants>
-            {passItem.info.participants.map((item, index) => (
-                <li key={index}>
-                  <MatchitemParticipants
-                    name={item.summonerName}
-                    champ={`https://ddragon.leagueoflegends.com/cdn/${version}/img/champion/${getChampName(
-                      item.championId
-                    )}`}
-                  ></MatchitemParticipants>
-                </li>
-            ))}
+            {champion.completed ? (
+              <>
+                {passItem.info.participants.map((item, index) => (
+                  <div key={index}>
+                    <MatchitemParticipants
+                      name={item.summonerName}
+                      champ={`https://ddragon.leagueoflegends.com/cdn/${version}/img/champion/${getChampName(
+                        item.championId
+                      )}`}
+                    ></MatchitemParticipants>
+                  </div>
+                ))}
+              </>
+            ) : (
+              <><p>carregando...</p></>
+            )}
           </S.ColunmParticipants>
         </S.UpperLine>
         <S.LowerLine>

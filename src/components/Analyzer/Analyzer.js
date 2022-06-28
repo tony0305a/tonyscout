@@ -1324,7 +1324,7 @@ const Analyzer = () => {
   }, [matchDataState]);
   useEffect(() => {
     setGraphs(graph);
-    console.log(graphState);
+   // console.log(graphState);
   }, [graph]);
 
   const dataTop = {
