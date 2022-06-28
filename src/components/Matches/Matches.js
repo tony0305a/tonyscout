@@ -97,7 +97,10 @@ const Matches = () => {
           return "Normal Alternada";
         } else if (queue[i].description == "5v5 ARAM games") {
           return "ARAM";
-        } else {
+        } else if (queue[i].description == "5v5 Ranked Solo games"){
+          return "Solo/Duo"
+        }
+        else {
           return queue[i].description;
         }
       }
@@ -167,18 +170,17 @@ const Matches = () => {
   };
 
   return (
-    <>
+    <S.Header>
+      <h1>Histórico</h1>
       {scoutState.hasUser ? (
         <>
-          {renderState ? (
+          
+          {renderState ? (   
             <S.Wrapper>
-              <S.Header>
-                <span>Histórico</span>
-              </S.Header>
               {matchDataState
                 .sort((a, b) => b.info.gameCreation - a.info.gameCreation)
                 .map((item, index) => (
-                  <div key={index}>
+                  <S.SingleMatch key={index}>
                     <Matchitem
                       creationTime={item.info.gameCreation}
                       gameMode={getQueue(item.info.queueId)}
@@ -289,7 +291,7 @@ const Matches = () => {
                       }
                       gameLength={item.info.gameDuration}
                     ></Matchitem>
-                  </div>
+                  </S.SingleMatch>
                 ))}
             </S.Wrapper>
           ) : (
@@ -299,7 +301,7 @@ const Matches = () => {
       ) : (
         <></>
       )}
-    </>
+    </S.Header>
   );
 };
 export default Matches;

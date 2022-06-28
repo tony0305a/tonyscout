@@ -151,7 +151,6 @@ const Matchitem = ({
   var clockTime = ("" + decimalTime).replace(".", ":");
 
   return (
-    <>
       <S.Wrapper style={{ backgroundColor: color }} id={id}>
         <S.UpperLine>
           <S.ColunmMetadata>
@@ -227,17 +226,16 @@ const Matchitem = ({
           </S.ColunmMetadata>
           <S.ColunmBuild>
             <S.Line>
-              <img src={item1} width="36" height="36" />
-              <img src={item2} width="36" height="36" />
-              <img src={item3} width="36" height="36" />
-              <img src={item4} width="36" height="36" />
-              <img src={item5} width="36" height="36" />
-              <img src={item6} width="36" height="36" />
+              <img src={item1}  />
+              <img src={item2}  />
+              <img src={item3}  />
+              <img src={item4}  />
+              <img src={item5}  />
+              <img src={item6}  />
             </S.Line>
           </S.ColunmBuild>
         </S.LowerLine>
       </S.Wrapper>
-    </>
   );
 };
 export default Matchitem;

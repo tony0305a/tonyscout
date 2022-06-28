@@ -1451,7 +1451,15 @@ const Analyzer = () => {
     <S.Wrapper>
       <span>Analyzer</span>
       <S.GraphRoles>
+      <div
+          style={{
+            position: "relative",
+            margin: "auto",
+            width: "330px",
+          }}
+        >
         <Doughnut options={optionsRoles} data={dataRoles} />
+        </div>
       </S.GraphRoles>
 
       <S.Roles></S.Roles>
@@ -1460,7 +1468,7 @@ const Analyzer = () => {
           style={{
             position: "relative",
             margin: "auto",
-            width: "350px",
+            width: "250px",
           }}
         >
           {renderState ? (
