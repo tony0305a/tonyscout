@@ -76,7 +76,7 @@ const Matchitem = ({
   }, [matchState]);
 
   const getChampName = (cid) => {
-    var hero = champion.info.data;
+    var hero = champion.data;
     for (var i in hero) {
       if (hero[i].key == cid) {
         return hero[i].image.full;
