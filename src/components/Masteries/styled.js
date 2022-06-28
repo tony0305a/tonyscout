@@ -9,4 +9,7 @@ overflow:scroll;
 &::-webkit-scrollbar{
     display:none;
 }
+li{
+    list-style:none;
+}
 `;

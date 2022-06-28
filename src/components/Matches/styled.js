@@ -11,6 +11,10 @@ export const Wrapper = styled.div`
   background-color: white;
   &::-webkit-scrollbar{
     display:none;
+
+}
+li{
+  list-style-type: none;
 }
 `;
 export const Header = styled.div`

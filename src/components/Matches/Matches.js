@@ -171,10 +171,11 @@ const Matches = () => {
   };
 
   const call = () => {
-    matchDataState.map((item) => {
+    matchDataState.sort((a,b)=>b.info.gameCreation - a.info.gameCreation).map((item,index) => {
       console.log(item);
     });
-    console.log(renderState)
+    console.log(matchState)
+    console.log(scoutState.puuid)
   };
 
   return (
@@ -187,14 +188,15 @@ const Matches = () => {
               <S.Header>
                 <span>Histórico</span>
               </S.Header>
-              {matchDataState.map((item) => (
+              {matchDataState.sort((a,b)=>b.info.gameCreation - a.info.gameCreation).map((item, index) => (
+                <ol>
+                <li key={index} >
                 <Matchitem
                   creationTime={item.info.gameCreation}
                   gameMode={getQueue(item.info.queueId)}
                   role={
                     item.info.participants[getIndex(item)].individualPosition
                   }
-                  id={item.metadata.matchId}
                   champPic={`https://ddragon.leagueoflegends.com/cdn/${version}/img/champion/${getChampName(
                     item.info.participants[getIndex(item)].championId
                   )}`}
@@ -287,6 +289,8 @@ const Matches = () => {
                   farm1={item.info.participants[getIndex(item)].neutralMinionsKilled}
                   gameLength={item.info.gameDuration}
                 ></Matchitem>
+                </li>
+                </ol>
               ))}
             </S.Wrapper>
           ) : (

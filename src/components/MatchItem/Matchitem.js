@@ -159,7 +159,7 @@ const Matchitem = ({
 
 
   return (
-    <S.Wrapper style={{ backgroundColor: color }}>
+    <S.Wrapper style={{ backgroundColor: color }}  id={id} >
       <S.UpperLine>
         <S.ColunmMetadata>
           <span>{gameMode}</span>
@@ -203,13 +203,15 @@ const Matchitem = ({
           <span>{farm+farm1}:CS</span>
         </S.ColunmScore>
         <S.ColunmParticipants>
-          {passItem.info.participants.map((item) => (
+          {passItem.info.participants.map((item,index) => (
+            <li key={index} >
             <MatchitemParticipants
               name={item.summonerName}
               champ={`https://ddragon.leagueoflegends.com/cdn/${version}/img/champion/${getChampName(
                 item.championId
               )}`}
             ></MatchitemParticipants>
+            </li>
           ))}
         </S.ColunmParticipants>
       </S.UpperLine>

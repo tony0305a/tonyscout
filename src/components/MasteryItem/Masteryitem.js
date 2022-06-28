@@ -5,7 +5,7 @@ import ReactTimeAgo from "react-time-ago";
 import en from 'javascript-time-ago/locale/en.json'
 TimeAgo.addDefaultLocale(en)
 TimeAgo.addLocale(en)
-const MasteryItem = ({ pic, championLevel, championPoints, lastPlayTime }) => {
+const MasteryItem = ({ pic, championLevel, championPoints, lastPlayTime, id }) => {
 
     return (
         <S.Wrapper>

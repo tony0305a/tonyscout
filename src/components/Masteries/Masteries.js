@@ -34,8 +34,8 @@ const Masteries = () => {
 
     return(
         <S.Wrapper>
-        {masteriesState.hasSearch?(<> {masteriesState.maestrias.map((item)=>(
-            
+        {masteriesState.hasSearch?(<> {masteriesState.maestrias.map((item,index)=>(
+            <li key={index}>
             <MasteryItem
             pic={`https://ddragon.leagueoflegends.com/cdn/${version}/img/champion/${getChampName(item.championId)}`}
             championLevel={item.championLevel}
@@ -44,7 +44,7 @@ const Masteries = () => {
             >
 
             </MasteryItem>
-           
+            </li>
         ))}</>):(<></>)}
        
        </S.Wrapper>

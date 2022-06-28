@@ -30,7 +30,7 @@ export const ColunmChampion = styled.div`
 export const ColunmParticipants = styled.div`
   display: flex;
   flex-direction: column;
-  width: 300px;
+  width: 430px;
   align-items: flex-start;
   height: 130px;
   flex-wrap: wrap;
@@ -94,5 +94,9 @@ export const MatchParticipantsWrapper = styled.div`
     &:hover{
         color:purple;
     }
+  }
+  li{
+    padding:0;
+    margin:0;
   }
 `;
