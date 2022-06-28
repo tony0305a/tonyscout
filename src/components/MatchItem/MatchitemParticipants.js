@@ -7,6 +7,7 @@ const MatchitemParticipants = ({ name, champ }) => {
     getSummoner(name);
     setRender(false);
   };
+  
   return (
     <S.MatchParticipantsWrapper>
       <img src={champ} width="24" height="24" />

@@ -43,7 +43,7 @@ const Matchitem = ({
   farm1,
 }) => {
   const { matchDataState, version, matchState, scoutState } = useScout();
-  const [champion, setChampion] = useState({completed:false,info:[]});
+  const [champion, setChampion] = useState([]);
   const [queue, setQueue] = useState();
   const [summonerSpell, setSummonerSpell] = useState();
   const [runes, setRunes] = useState();
@@ -71,7 +71,7 @@ const Matchitem = ({
         `https://ddragon.leagueoflegends.com/cdn/${version}/data/pt_BR/champion.json`
       )
         .then((response) => response.text())
-        .then((x) => setChampion({completed:true,info:JSON.parse(x)}));
+        .then((x) => setChampion(JSON.parse(x)));
     };
   }, [matchState]);
 
@@ -150,93 +150,90 @@ const Matchitem = ({
     console.log(champion);
   };
 
-
-
   var decimalTime = (gameLength / 60).toFixed(2);
   var clockTime = ("" + decimalTime).replace(".", ":");
 
   return (
-        <>
-          <S.Wrapper style={{ backgroundColor: color }} id={id}>
-            <button onClick={call}>call</button>
-            <S.UpperLine>
-              <S.ColunmMetadata>
-                <span>{gameMode}</span>
-                <span>{role}</span>
-                <ReactTimeAgo
-                  date={creationTime}
-                  locale="pt-BR"
-                  timeStyle="round"
-                />
-              </S.ColunmMetadata>
-              <S.ColunmChampion>
-                <S.ChampionLine>
-                  <S.Champion src={champPic} width="72" />
+    <>
+      <S.Wrapper style={{ backgroundColor: color }} id={id}>
+        <button onClick={call}>call</button>
+        <S.UpperLine>
+          <S.ColunmMetadata>
+            <span>{gameMode}</span>
+            <span>{role}</span>
+            <ReactTimeAgo
+              date={creationTime}
+              locale="pt-BR"
+              timeStyle="round"
+            />
+          </S.ColunmMetadata>
+          <S.ColunmChampion>
+            <S.ChampionLine>
+              <S.Champion src={champPic} width="72" />
+              <S.Line>
+                <S.SummonerSpells>
+                  <img src={SS1} width="22" height="22" />
+                  <img src={SS2} width="22" height="22" />
+                </S.SummonerSpells>
+              </S.Line>
+              <S.Line>
+                <S.Runes>
                   <S.Line>
-                    <S.SummonerSpells>
-                      <img src={SS1} width="22" height="22" />
-                      <img src={SS2} width="22" height="22" />
-                    </S.SummonerSpells>
+                    <img src={rune1} width="24" />
+                    <img src={rune2} width="24" />
+                    <img src={rune3} width="24" />
+                    <img src={rune4} width="24" />
                   </S.Line>
                   <S.Line>
-                    <S.Runes>
-                      <S.Line>
-                        <img src={rune1} width="24" />
-                        <img src={rune2} width="24" />
-                        <img src={rune3} width="24" />
-                        <img src={rune4} width="24" />
-                      </S.Line>
-                      <S.Line>
-                        <img src={rune5} width="24" />
-                        <img src={rune6} width="24" />
-                      </S.Line>
-                      <S.Line>
-                        <img src={rune7} width="24" />
-                        <img src={rune8} width="24" />
-                        <img src={rune9} width="24" />
-                      </S.Line>
-                    </S.Runes>
+                    <img src={rune5} width="24" />
+                    <img src={rune6} width="24" />
                   </S.Line>
-                </S.ChampionLine>
-              </S.ColunmChampion>
-              <S.ColunmScore>
-                <span>
-                  {kills}/{deaths}/{assists}
-                </span>
-                <span>{farm + farm1}:CS</span>
-              </S.ColunmScore>
-              <S.ColunmParticipants>
-                {passItem.info.participants.map((item, index) => (
-                  <li key={index}>
-                    <MatchitemParticipants
-                      name={item.summonerName}
-                      champ={`https://ddragon.leagueoflegends.com/cdn/${version}/img/champion/${getChampName(
-                        item.championId
-                      )}`}
-                    ></MatchitemParticipants>
-                  </li>
-                ))}
-              </S.ColunmParticipants>
-            </S.UpperLine>
-            <S.LowerLine>
-              <S.ColunmMetadata>
-                <span>{result}</span>
-                <span>{clockTime}</span>
-              </S.ColunmMetadata>
-              <S.ColunmBuild>
-                <S.Line>
-                  <img src={item1} width="36" height="36" />
-                  <img src={item2} width="36" height="36" />
-                  <img src={item3} width="36" height="36" />
-                  <img src={item4} width="36" height="36" />
-                  <img src={item5} width="36" height="36" />
-                  <img src={item6} width="36" height="36" />
-                </S.Line>
-              </S.ColunmBuild>
-            </S.LowerLine>
-          </S.Wrapper>
-        </>
-    
+                  <S.Line>
+                    <img src={rune7} width="24" />
+                    <img src={rune8} width="24" />
+                    <img src={rune9} width="24" />
+                  </S.Line>
+                </S.Runes>
+              </S.Line>
+            </S.ChampionLine>
+          </S.ColunmChampion>
+          <S.ColunmScore>
+            <span>
+              {kills}/{deaths}/{assists}
+            </span>
+            <span>{farm + farm1}:CS</span>
+          </S.ColunmScore>
+          <S.ColunmParticipants>
+            {passItem.info.participants.map((item, index) => (
+                <li key={index}>
+                  <MatchitemParticipants
+                    name={item.summonerName}
+                    champ={`https://ddragon.leagueoflegends.com/cdn/${version}/img/champion/${getChampName(
+                      item.championId
+                    )}`}
+                  ></MatchitemParticipants>
+                </li>
+            ))}
+          </S.ColunmParticipants>
+        </S.UpperLine>
+        <S.LowerLine>
+          <S.ColunmMetadata>
+            <span>{result}</span>
+            <span>{clockTime}</span>
+          </S.ColunmMetadata>
+          <S.ColunmBuild>
+            <S.Line>
+              <img src={item1} width="36" height="36" />
+              <img src={item2} width="36" height="36" />
+              <img src={item3} width="36" height="36" />
+              <img src={item4} width="36" height="36" />
+              <img src={item5} width="36" height="36" />
+              <img src={item6} width="36" height="36" />
+            </S.Line>
+          </S.ColunmBuild>
+        </S.LowerLine>
+      </S.Wrapper>
+    </>
   );
 };
 export default Matchitem;
