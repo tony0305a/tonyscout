@@ -53,7 +53,7 @@ export const ColunmParticipants = styled.div`
   height: 130px;
   flex-wrap: wrap;
   @media screen and (max-width: 600px){
-    width:130px;
+    width:10px;
   
 }
 `;
@@ -145,14 +145,12 @@ export const MatchParticipantsWrapper = styled.div`
         color:purple;
     }
   }
-  li{
-    padding:0;
-    margin:0;
-  }
   @media screen and (max-width: 600px){
+    margin:8px;
+    height:8px;
     span{
-      font-size:12px;
-      width:78px;
+      font-size:10px;
+      width:42px;
       overflow:hidden;
       
     }
