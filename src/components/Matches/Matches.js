@@ -171,16 +171,15 @@ const Matches = () => {
 
   return (
     <>
-
       {scoutState.hasUser ? (
         <S.Wrapper>
-                  <h1>Histórico</h1>
+          <h1>Histórico</h1>
           {renderState ? (   
             <S.MatchBody>
               {matchDataState
                 .sort((a, b) => b.info.gameCreation - a.info.gameCreation)
                 .map((item, index) => (
-                  <S.SingleMatch key={index}>
+                  <S.SingleMatch key={index} style={{ backgroundColor: getColor(item.info.participants[getIndex(item)].win) }}  >
                     <Matchitem
                       creationTime={item.info.gameCreation}
                       gameMode={getQueue(item.info.queueId)}

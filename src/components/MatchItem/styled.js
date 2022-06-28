@@ -12,6 +12,11 @@ export const Wrapper = styled.div`
 `;
 export const Champion = styled.img`
   border-radius: 50%;
+  @media screen and (max-width: 600px){
+    width:62px;   
+    height:62px
+
+}
 `;
 export const Colunm = styled.div`
   display: flex;
@@ -27,6 +32,7 @@ export const ColunmMetadata = styled.div`
     width:80px;   
       display:flex;
       justify-content:center;
+
 }
 `;
 export const ColunmChampion = styled.div`
@@ -36,7 +42,7 @@ export const ColunmChampion = styled.div`
   align-items: flex-start;
   padding: 8px;
   @media screen and (max-width: 600px){
-    width:200px;
+    width:175px;
 }
 `;
 export const ColunmParticipants = styled.div`
@@ -47,7 +53,7 @@ export const ColunmParticipants = styled.div`
   height: 130px;
   flex-wrap: wrap;
   @media screen and (max-width: 600px){
-    width:150px;
+    width:130px;
   
 }
 `;
@@ -57,6 +63,11 @@ export const ColunmScore = styled.div`
   width: 48px;
   align-items: center;
   padding: 8px;
+  @media screen and (max-width: 600px){
+    span {
+      font-size:12px;
+    }
+}
 `;
 export const ColunmBuild = styled.div`
   display: flex;
@@ -87,6 +98,12 @@ export const SummonerSpells = styled.div`
   img {
     border-radius: 40%;
   }
+  @media screen and (max-width: 600px){
+    img {
+    width:16px;   
+    height:16px
+    }
+}
 `;
 export const Runes = styled.div`
   display: flex;
@@ -94,6 +111,12 @@ export const Runes = styled.div`
   img {
     border-radius: 40%;
   }
+  @media screen and (max-width: 600px){
+    img {
+    width:24px;   
+    height:24px
+    }
+}
 `;
 export const Line = styled.div`
   display: flex;

@@ -10,10 +10,6 @@ export const Wrapper = styled.div`
   background-color: white;
   border-top-left-radius:4px;
   border-top-right-radius:4px;
-  &::-webkit-scrollbar{
-    display:none;
-
-}
 h1{
   background-color:purple;
   width:100%;
