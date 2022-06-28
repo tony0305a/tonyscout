@@ -320,25 +320,39 @@ const Analyzer = () => {
             item.info.participants[getIndex(item)].challenges
               .killAfterHiddenWithAlly
           );
-          killsNearEnemyTurret += parseInt(
+          if (
             item.info.participants[getIndex(item)].challenges
-              .killsNearEnemyTurret
-          );
+              .killsNearEnemyTurret !== 0
+          ) {
+            killsNearEnemyTurret += parseInt(
+              item.info.participants[getIndex(item)].challenges
+                .killsNearEnemyTurret
+            );
+          }
           if (killsOnLanersEarlyJungleAsJungler !== 0) {
             killsOnLanersEarlyJungleAsJungler += parseInt(
               item.info.participants[getIndex(item)].challenges
                 .killsOnLanersEarlyJungleAsJungler
             );
           }
-
-          killsUnderOwnTurret += parseInt(
+          if (
             item.info.participants[getIndex(item)].challenges
-              .killsUnderOwnTurret
-          );
-          laneMinionsFirst10Minutes += parseInt(
+              .killsUnderOwnTurret !== 0
+          ) {
+            killsUnderOwnTurret += parseInt(
+              item.info.participants[getIndex(item)].challenges
+                .killsUnderOwnTurret
+            );
+          }
+          if (
             item.info.participants[getIndex(item)].challenges
-              .laneMinionsFirst10Minutes
-          );
+              .laneMinionsFirst10Minutes !== 0
+          ) {
+            laneMinionsFirst10Minutes += parseInt(
+              item.info.participants[getIndex(item)].challenges
+                .laneMinionsFirst10Minutes
+            );
+          }
           if (laningPhaseGoldExpAdvantage !== 0) {
             laningPhaseGoldExpAdvantage += parseInt(
               item.info.participants[getIndex(item)].challenges
@@ -361,14 +375,14 @@ const Analyzer = () => {
                 .maxLevelLeadLaneOpponent
             );
           }
-
           multikills += parseInt(
             item.info.participants[getIndex(item)].challenges.multikills
           );
-          multikillsAfterAggressiveFlash += parseInt(
-            item.info.participants[getIndex(item)].challenges
-              .multikillsAfterAggressiveFlash
-          );
+
+            multikillsAfterAggressiveFlash += parseInt(
+              item.info.participants[getIndex(item)].challenges
+                .multikillsAfterAggressiveFlash
+            );
           outnumberedKills += parseInt(
             item.info.participants[getIndex(item)].challenges.outnumberedKills
           );
@@ -382,24 +396,29 @@ const Analyzer = () => {
             item.info.participants[getIndex(item)].challenges
               .takedownOnFirstTurret
           );
-          takedownsAfterGainingLevelAdvantage += parseInt(
-            item.info.participants[getIndex(item)].challenges
-              .takedownsAfterGainingLevelAdvantage
-          );
+            takedownsAfterGainingLevelAdvantage += parseInt(
+              item.info.participants[getIndex(item)].challenges
+                .takedownsAfterGainingLevelAdvantage
+            );
           takedownsBeforeJungleMinionSpawn += parseInt(
             item.info.participants[getIndex(item)].challenges
               .takedownsBeforeJungleMinionSpawn
           );
-          takedownsFirstXMinutes += parseInt(
-            item.info.participants[getIndex(item)].challenges
-              .takedownsFirstXMinutes
-          );
-          turretPlatesTaken += parseInt(
-            item.info.participants[getIndex(item)].challenges.turretPlatesTaken
-          );
-          earlyLaningPhaseGoldExpAdvantage += parseInt(
-            item.info.participants[getIndex(item)].challenges.turretPlatesTaken
-          );
+            if(item.info.participants[getIndex(item)].challenges.takedownsFirstXMinutes){
+            takedownsFirstXMinutes += parseInt(
+              item.info.participants[getIndex(item)].challenges
+                .takedownsFirstXMinutes
+            );
+            }
+            turretPlatesTaken += parseInt(
+              item.info.participants[getIndex(item)].challenges
+                .turretPlatesTaken
+            );
+
+            earlyLaningPhaseGoldExpAdvantage += parseInt(
+              item.info.participants[getIndex(item)].challenges
+                .turretPlatesTaken
+            );
           damagePerMinute += parseInt(
             item.info.participants[getIndex(item)].challenges.damagePerMinute
           );
@@ -812,8 +831,8 @@ const Analyzer = () => {
             );
           }
           if (
-            item.info.participants[getIndex(item)].challenges.turretTakedowns !==
-            0
+            item.info.participants[getIndex(item)].challenges
+              .turretTakedowns !== 0
           ) {
             turretTakedowns += parseInt(
               item.info.participants[getIndex(item)].challenges.turretTakedowns
@@ -837,29 +856,31 @@ const Analyzer = () => {
         }
       }
     });
-    if (rankedState.ranked !== undefined) {
-      var sq = rankedState.ranked[0];
-      if (sq.queueType !== "RANKED_SOLO_5x5") {
-        sq = rankedState.ranked[1];
-      }
-      if (sq.tier === "IRON") {
-        setEloMultiplaier(0.2);
-      } else if (sq.tier === "BRONZE") {
-        setEloMultiplaier(0.3);
-      } else if (sq.tier === "SIVER") {
-        setEloMultiplaier(0.4);
-      } else if (sq.tier === "GOLD") {
-        setEloMultiplaier(0.5);
-      } else if (sq.tier === "PLATINUM") {
-        setEloMultiplaier(0.6);
-      } else if (sq.tier === "DIAMOND") {
-        setEloMultiplaier(0.7);
-      } else if (sq.tier === "MASTER") {
-        setEloMultiplaier(0.8);
-      } else if (sq.tier === "GRANDMASTER") {
-        setEloMultiplaier(0.9);
-      } else if (sq.tier === "CHALLENGER") {
-        setEloMultiplaier(1);
+    if (rankedState.searchCompleted) {
+      if (rankedState.ranked[0] != undefined) {
+        var sq = rankedState.ranked[0];
+        if (sq.queueType !== "RANKED_SOLO_5x5") {
+          sq = rankedState.ranked[1];
+        }
+        if (sq.tier === "IRON") {
+          setEloMultiplaier(0.2);
+        } else if (sq.tier === "BRONZE") {
+          setEloMultiplaier(0.3);
+        } else if (sq.tier === "SIVER") {
+          setEloMultiplaier(0.4);
+        } else if (sq.tier === "GOLD") {
+          setEloMultiplaier(0.5);
+        } else if (sq.tier === "PLATINUM") {
+          setEloMultiplaier(0.6);
+        } else if (sq.tier === "DIAMOND") {
+          setEloMultiplaier(0.7);
+        } else if (sq.tier === "MASTER") {
+          setEloMultiplaier(0.8);
+        } else if (sq.tier === "GRANDMASTER") {
+          setEloMultiplaier(0.9);
+        } else if (sq.tier === "CHALLENGER") {
+          setEloMultiplaier(1);
+        }
       }
     }
 
@@ -897,7 +918,7 @@ const Analyzer = () => {
     var buildSplitSoloKills = 0;
     var buildSplitSoloTurrentsLateGame = 0;
     var buildSplitTeamBarons = 0;
- //   var buildSplitTeamElderDragons = 0;
+    //   var buildSplitTeamElderDragons = 0;
     var buildSplitDamageDealtToBuildings = 0;
 
     var buildFarmXminCs = 0;
@@ -1169,6 +1190,7 @@ const Analyzer = () => {
       buildLaneKda +
       buildLaneOutNumbered +
       buildLaneKillsAfterHide;
+
     var finalFight =
       buildFightEnemyChampionsImmo +
       buildFightFullTeamTakedown +
@@ -1324,7 +1346,7 @@ const Analyzer = () => {
   }, [matchDataState]);
   useEffect(() => {
     setGraphs(graph);
-   // console.log(graphState);
+    // console.log(graphState);
   }, [graph]);
 
   const dataTop = {
@@ -1389,10 +1411,155 @@ const Analyzer = () => {
     },
   };
 
-
   return (
     <S.Wrapper>
       <span>Analyzer</span>
+      <span>Hard Data</span>
+      <S.HardData>
+        <b>SoloQueues: {hardData.soloQueues}</b>
+        <b>timePlayed: {hardData.timePlayed}</b>
+        <b>kills: {hardData.kills}</b>
+        <b>deaths: {hardData.deaths}</b>
+        <b>assists: {hardData.assists}</b>
+        <b>Lane</b>
+        <p>
+          earlyLaningPhaseGoldExpAdvantage:
+          {hardData.earlyLaningPhaseGoldExpAdvantage}
+        </p>
+        <p>junglerKillsEarlyJungle:{hardData.junglerKillsEarlyJungle}</p>
+        <p> killAfterHiddenWithAlly:{hardData.killAfterHiddenWithAlly}</p>
+        <p> killsNearEnemyTurret:{hardData.killsNearEnemyTurret}</p>
+        <p>
+          killsOnLanersEarlyJungleAsJungler:
+          {hardData.killsOnLanersEarlyJungleAsJungler}
+        </p>
+        <p> killsUnderOwnTurret:{hardData.killsUnderOwnTurret}</p>
+        <p> laneMinionsFirst10Minutes:{hardData.laneMinionsFirst10Minutes}</p>
+        <p>
+          laningPhaseGoldExpAdvantage:{hardData.laningPhaseGoldExpAdvantage}
+        </p>
+        <p>
+          maxCsAdvantageOnLaneOpponent:{hardData.maxCsAdvantageOnLaneOpponent}
+        </p>
+        <p> maxKillDeficit:{hardData.maxKillDeficit}</p>
+        <p> maxLevelLeadLaneOpponent:{hardData.maxLevelLeadLaneOpponent}</p>
+
+        <p> multikills:{hardData.multikills}</p>
+        <p>
+          multikillsAfterAggressiveFlash:
+          {hardData.multikillsAfterAggressiveFlash}
+        </p>
+        <p> outnumberedKills:{hardData.outnumberedKills}</p>
+        <p> quickFirstTurret:{hardData.quickFirstTurret}</p>
+        <p> quickSoloKills:{hardData.quickSoloKills}</p>
+        <p> takedownOnFirstTurret:{hardData.takedownOnFirstTurret}</p>
+        <p>
+          takedownsAfterGainingLevelAdvantage:
+          {hardData.takedownsAfterGainingLevelAdvantage}
+        </p>
+        <p>
+          takedownsBeforeJungleMinionSpawn:
+          {hardData.takedownsBeforeJungleMinionSpawn}
+        </p>
+        <p> takedownsFirstXMinutes:{hardData.takedownsFirstXMinutes}</p>
+        <p> turretPlatesTaken:{hardData.turretPlatesTaken}</p>
+        <b>Damage</b>
+        <p>damagePerMinute: {hardData.damagePerMinute}</p>
+        <p>
+          damageTakenOnTeamPercentage: {hardData.damageTakenOnTeamPercentage}
+        </p>
+        <p>teamDamagePercentage: {hardData.teamDamagePercentage}</p>
+        <p>
+          totalDamageDealtToChampions: {hardData.totalDamageDealtToChampions}
+        </p>
+        <p>totalDamageTaken: {hardData.totalDamageTaken}</p>
+        <p>totalHeal: {hardData.totalHeal}</p>
+        <b>Fight</b>
+        <p>
+          enemyChampionImmobilizations:{hardData.enemyChampionImmobilizations}
+        </p>
+        <p>fullTeamTakedown:{hardData.fullTeamTakedown}</p>
+        <p>highestCrowdControlScore:{hardData.highestCrowdControlScore}</p>
+        <p>immobilizeAndKillWithAlly:{hardData.immobilizeAndKillWithAlly}</p>
+        <p>
+          killedChampTookFullTeamDamageSurvived:
+          {hardData.killedChampTookFullTeamDamageSurvived}
+        </p>
+        <p>knockEnemyIntoTeamAndKill:{hardData.knockEnemyIntoTeamAndKill}</p>
+        <p>pickKillWithAlly:{hardData.pickKillWithAlly}</p>
+        <p>
+          survivedThreeImmobilizesInFight:
+          {hardData.survivedThreeImmobilizesInFight}
+        </p>
+        <p>tookLargeDamageSurvived:{hardData.tookLargeDamageSurvived}</p>
+        <b>Utility</b>
+        <p>completeSupportQuestInTime:{hardData.completeSupportQuestInTime}</p>
+        <p>
+          controlWardTimeCoverageInRiverOrEnemyHalf:
+          {hardData.controlWardTimeCoverageInRiverOrEnemyHalf}
+        </p>
+        <p>controlWardsPlaced:{hardData.controlWardsPlaced}</p>
+        <p>effectiveHealAndShielding:{hardData.effectiveHealAndShielding}</p>
+        <p>killParticipation:{hardData.killParticipation}</p>
+        <p>saveAllyFromDeath:{hardData.saveAllyFromDeath}</p>
+        <p>stealthWardsPlaced:{hardData.stealthWardsPlaced}</p>
+        <p>threeWardsOneSweeperCount:{hardData.threeWardsOneSweeperCount}</p>
+        <p>
+          visionScoreAdvantageLaneOpponent:
+          {hardData.visionScoreAdvantageLaneOpponent}
+        </p>
+        <p>visionScorePerMinute:{hardData.visionScorePerMinute}</p>
+        <p>assists:{hardData.assists}</p>
+        <p>visionScore:{hardData.visionScore}</p>
+        <b>Split</b>
+        <p>soloKills:{hardData.soloKills}</p>
+        <p>soloTurretsLategame:{hardData.soloTurretsLategame}</p>
+        <p>teamBaronKills:{hardData.teamBaronKills}</p>
+        <p>teamElderDragonKills:{hardData.teamElderDragonKills}</p>
+        <p>damageDealtToBuildings:{hardData.damageDealtToBuildings}</p>
+        <b>Farm</b>
+        <p>totalMinionsKilled:{hardData.totalMinionsKilled}</p>
+        <p>neutralMinionsKilled:{hardData.neutralMinionsKilled}</p>
+        <p>laneMinionsFirst10Minutes:{hardData.laneMinionsFirst10Minutes}</p>
+        <p>alliedJungleMonsterKills:{hardData.alliedJungleMonsterKills}</p>
+        <p>buffsStolen:{hardData.buffsStolen}</p>
+        <p>enemyJungleMonsterKills:{hardData.enemyJungleMonsterKills}</p>
+        <p>initialBuffCount:{hardData.initialBuffCount}</p>
+        <p>initialCrabCount:{hardData.initialCrabCount}</p>
+        <p>jungleCsBefore10Minutes:{hardData.jungleCsBefore10Minutes}</p>
+        <p>scuttleCrabKills:{hardData.scuttleCrabKills}</p>
+        <b>Objectives</b>
+        <p>baronTakedowns:{hardData.baronTakedowns}</p>
+        <p>dragonTakedowns:{hardData.dragonTakedowns}</p>
+        <p>
+          epicMonsterKillsNearEnemyJungler:
+          {hardData.epicMonsterKillsNearEnemyJungler}
+        </p>
+        <p>
+          epicMonsterKillsWithin30SecondsOfSpawn:
+          {hardData.epicMonsterKillsWithin30SecondsOfSpawn}
+        </p>
+        <p>epicMonsterSteals:{hardData.epicMonsterSteals}</p>
+        <p>
+          epicMonsterStolenWithoutSmite:{hardData.epicMonsterStolenWithoutSmite}
+        </p>
+        <p>
+          junglerTakedownsNearDamagedEpicMonster:
+          {hardData.junglerTakedownsNearDamagedEpicMonster}
+        </p>
+        <p>
+          kTurretsDestroyedBeforePlatesFall:
+          {hardData.kTurretsDestroyedBeforePlatesFall}
+        </p>
+        <p>multiTurretRiftHeraldCount:{hardData.multiTurretRiftHeraldCount}</p>
+        <p>outnumberedNexusKill:{hardData.outnumberedNexusKill}</p>
+        <p>perfectDragonSoulsTaken:{hardData.perfectDragonSoulsTaken}</p>
+        <p>riftHeraldTakedowns:{hardData.riftHeraldTakedowns}</p>
+        <p>soloBaronKills:{hardData.soloBaronKills}</p>
+        <p>takedownOnFirstTurret:{hardData.takedownOnFirstTurret}</p>
+        <p>turretTakedowns:{hardData.turretTakedowns}</p>
+        <p>turretsTakenWithRiftHerald:{hardData.turretsTakenWithRiftHerald}</p>
+      </S.HardData>
       <S.GraphRoles>
         <Doughnut options={optionsRoles} data={dataRoles} />
       </S.GraphRoles>
