@@ -156,8 +156,6 @@ const Matchitem = ({
   var clockTime = ("" + decimalTime).replace(".", ":");
 
   return (
-    <>
-      {champion.completed?(
         <>
           <S.Wrapper style={{ backgroundColor: color }} id={id}>
             <button onClick={call}>call</button>
@@ -238,10 +236,7 @@ const Matchitem = ({
             </S.LowerLine>
           </S.Wrapper>
         </>
-      ) : (
-        <></>
-      )}
-    </>
+    
   );
 };
 export default Matchitem;
