@@ -42,7 +42,6 @@ const Masteries = () => {
             championPoints={item.championPoints}
             lastPlayTime={item.lastPlayTime}
             >
-
             </MasteryItem>
             </li>
         ))}</>):(<></>)}
