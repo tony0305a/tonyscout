@@ -5,7 +5,7 @@ import { GraphItem } from "../Analyzer/GraphItem";
 export const Slot1 = () => {
   const { graphState, scoutState, rankedState, setSlot1Graph } = useScout();
   const [thisGraph, setThisGraph] = useState([]);
-  const [summonerName, setSummonerName] = useState("Nome");
+  const [summonerName, setSummonerName] = useState("Summoner Name");
   const [summonerElo, setSummonerElo] = useState("Unranked");
   const saveHere = () => {
     console.log(graphState);
@@ -14,7 +14,6 @@ export const Slot1 = () => {
       setSummonerName(scoutState.name);
       if (rankedState.ranked[0] != undefined) {
         var r = rankedState.ranked[0];
-        console.log(r);
         if (r.queueType === "RANKED_SOLO_5x5") {
           r = rankedState.ranked[0];
         } else {

@@ -27,48 +27,45 @@ const Matches = () => {
 
   useEffect(() => {
     //mount
-    getVersion()
+    getVersion();
     //unmount
     return function CleanUp() {
-      getVersion()
+      getVersion();
     };
   }, []);
 
   useEffect(() => {
-    if(version != undefined){
+    if (version != undefined) {
+      fetch(
+        `https://ddragon.leagueoflegends.com/cdn/${version}/data/pt_BR/champion.json`
+      )
+        .then((response) => response.text())
+        .then((x) => setChampion(JSON.parse(x)));
+      fetch(
+        `https://ddragon.leagueoflegends.com/cdn/${version}/data/pt_BR/summoner.json`
+      )
+        .then((res) => res.text())
+        .then((x) => setSummonerSpell(JSON.parse(x)));
 
-    
-    fetch(
-      `https://ddragon.leagueoflegends.com/cdn/${version}/data/pt_BR/champion.json`
-    )
-      .then((response) => response.text())
-      .then((x) => setChampion(JSON.parse(x)));
-    fetch(
-      `https://ddragon.leagueoflegends.com/cdn/${version}/data/pt_BR/summoner.json`
-    )
-      .then((res) => res.text())
-      .then((x) => setSummonerSpell(JSON.parse(x)));
+      fetch(
+        `https://ddragon.leagueoflegends.com/cdn/${version}/data/pt_BR/runesReforged.json`
+      )
+        .then((res) => res.text())
+        .then((x) => setRunes(JSON.parse(x)));
 
-    fetch(
-      `https://ddragon.leagueoflegends.com/cdn/${version}/data/pt_BR/runesReforged.json`
-    )
-      .then((res) => res.text())
-      .then((x) => setRunes(JSON.parse(x)));
-
-    fetch("https://static.developer.riotgames.com/docs/lol/queues.json")
-      .then((response) => response.text())
-      .then((x) => setQueue(JSON.parse(x)));
+      fetch("https://static.developer.riotgames.com/docs/lol/queues.json")
+        .then((response) => response.text())
+        .then((x) => setQueue(JSON.parse(x)));
     }
     setRender(true);
 
     return function cleanUp() {
       //   cleanMatchData()
-      getVersion()
+      getVersion();
     };
   }, [matchState]);
 
   useEffect(() => {
-
     return function cleanUp() {
       getChampionInfo(version);
     };
@@ -169,17 +166,8 @@ const Matches = () => {
     }
   };
 
-  const call = () => {
-    matchDataState.sort((a,b)=>b.info.gameCreation - a.info.gameCreation).map((item,index) => {
-      console.log(item);
-    });
-    console.log(matchState)
-    console.log(scoutState.puuid)
-  };
-
   return (
     <>
-    <button onClick={call}>call</button>
       {scoutState.hasUser ? (
         <>
           {renderState ? (
@@ -187,108 +175,122 @@ const Matches = () => {
               <S.Header>
                 <span>Histórico</span>
               </S.Header>
-              {matchDataState.sort((a,b)=>b.info.gameCreation - a.info.gameCreation).map((item, index) => (
-                <div key={index} >
-                <Matchitem
-                  creationTime={item.info.gameCreation}
-                  gameMode={getQueue(item.info.queueId)}
-                  role={
-                    item.info.participants[getIndex(item)].individualPosition
-                  }
-                  champPic={`https://ddragon.leagueoflegends.com/cdn/${version}/img/champion/${getChampName(
-                    item.info.participants[getIndex(item)].championId
-                  )}`}
-                  kills={item.info.participants[getIndex(item)].kills}
-                  deaths={item.info.participants[getIndex(item)].deaths}
-                  assists={item.info.participants[getIndex(item)].assists}
-                  SS1={`https://ddragon.leagueoflegends.com/cdn/${version}/img/spell/${getSS(
-                    item.info.participants[getIndex(item)].summoner1Id
-                  )}`}
-                  SS2={`https://ddragon.leagueoflegends.com/cdn/${version}/img/spell/${getSS(
-                    item.info.participants[getIndex(item)].summoner2Id
-                  )}`}
-                  rune1={`https://ddragon.leagueoflegends.com/cdn/img/${getRunes(
-                    item.info.participants[getIndex(item)].perks.styles[0]
-                      .style,
-                    item.info.participants[getIndex(item)].perks.styles[0]
-                      .selections[0].perk
-                  )}`}
-                  rune2={`https://ddragon.leagueoflegends.com/cdn/img/${getRunes(
-                    item.info.participants[getIndex(item)].perks.styles[0]
-                      .style,
-                    item.info.participants[getIndex(item)].perks.styles[0]
-                      .selections[1].perk
-                  )}`}
-                  rune3={`https://ddragon.leagueoflegends.com/cdn/img/${getRunes(
-                    item.info.participants[getIndex(item)].perks.styles[0]
-                      .style,
-                    item.info.participants[getIndex(item)].perks.styles[0]
-                      .selections[2].perk
-                  )}`}
-                  rune4={`https://ddragon.leagueoflegends.com/cdn/img/${getRunes(
-                    item.info.participants[getIndex(item)].perks.styles[0]
-                      .style,
-                    item.info.participants[getIndex(item)].perks.styles[0]
-                      .selections[3].perk
-                  )}`}
-                  rune5={`https://ddragon.leagueoflegends.com/cdn/img/${getRunes(
-                    item.info.participants[getIndex(item)].perks.styles[1]
-                      .style,
-                    item.info.participants[getIndex(item)].perks.styles[1]
-                      .selections[0].perk
-                  )}`}
-                  rune6={`https://ddragon.leagueoflegends.com/cdn/img/${getRunes(
-                    item.info.participants[getIndex(item)].perks.styles[1]
-                      .style,
-                    item.info.participants[getIndex(item)].perks.styles[1]
-                      .selections[1].perk
-                  )}`}
-                  rune7={`https://ddragon.leagueoflegends.com/cdn/img/perk-images/StatMods/${getMods(
-                    item.info.participants[getIndex(item)].perks.statPerks
-                      .offense
-                  )}`}
-                  rune8={`https://ddragon.leagueoflegends.com/cdn/img/perk-images/StatMods/${getMods(
-                    item.info.participants[getIndex(item)].perks.statPerks.flex
-                  )}`}
-                  rune9={`https://ddragon.leagueoflegends.com/cdn/img/perk-images/StatMods/${getMods(
-                    item.info.participants[getIndex(item)].perks.statPerks
-                      .defense
-                  )}`}
-                  item0={buildFilter(
-                    item.info.participants[getIndex(item)].item0
-                  )}
-                  item1={buildFilter(
-                    item.info.participants[getIndex(item)].item1
-                  )}
-                  item2={buildFilter(
-                    item.info.participants[getIndex(item)].item2
-                  )}
-                  item3={buildFilter(
-                    item.info.participants[getIndex(item)].item3
-                  )}
-                  item4={buildFilter(
-                    item.info.participants[getIndex(item)].item4
-                  )}
-                  item5={buildFilter(
-                    item.info.participants[getIndex(item)].item5
-                  )}
-                  item6={buildFilter(
-                    item.info.participants[getIndex(item)].item6
-                  )}
-                  color={getColor(item.info.participants[getIndex(item)].win)}
-                  kda={(
-                    (item.info.participants[getIndex(item)].kills +
-                      item.info.participants[getIndex(item)].assists) /
-                    item.info.participants[getIndex(item)].deaths
-                  ).toFixed(1)}
-                  passItem={item}
-                  result={getResult(item.info.participants[getIndex(item)].win)}
-                  farm={item.info.participants[getIndex(item)].totalMinionsKilled}
-                  farm1={item.info.participants[getIndex(item)].neutralMinionsKilled}
-                  gameLength={item.info.gameDuration}
-                ></Matchitem>
-                </div>
-              ))}
+              {matchDataState
+                .sort((a, b) => b.info.gameCreation - a.info.gameCreation)
+                .map((item, index) => (
+                  <div key={index}>
+                    <Matchitem
+                      creationTime={item.info.gameCreation}
+                      gameMode={getQueue(item.info.queueId)}
+                      role={
+                        item.info.participants[getIndex(item)]
+                          .individualPosition
+                      }
+                      champPic={`https://ddragon.leagueoflegends.com/cdn/${version}/img/champion/${getChampName(
+                        item.info.participants[getIndex(item)].championId
+                      )}`}
+                      kills={item.info.participants[getIndex(item)].kills}
+                      deaths={item.info.participants[getIndex(item)].deaths}
+                      assists={item.info.participants[getIndex(item)].assists}
+                      SS1={`https://ddragon.leagueoflegends.com/cdn/${version}/img/spell/${getSS(
+                        item.info.participants[getIndex(item)].summoner1Id
+                      )}`}
+                      SS2={`https://ddragon.leagueoflegends.com/cdn/${version}/img/spell/${getSS(
+                        item.info.participants[getIndex(item)].summoner2Id
+                      )}`}
+                      rune1={`https://ddragon.leagueoflegends.com/cdn/img/${getRunes(
+                        item.info.participants[getIndex(item)].perks.styles[0]
+                          .style,
+                        item.info.participants[getIndex(item)].perks.styles[0]
+                          .selections[0].perk
+                      )}`}
+                      rune2={`https://ddragon.leagueoflegends.com/cdn/img/${getRunes(
+                        item.info.participants[getIndex(item)].perks.styles[0]
+                          .style,
+                        item.info.participants[getIndex(item)].perks.styles[0]
+                          .selections[1].perk
+                      )}`}
+                      rune3={`https://ddragon.leagueoflegends.com/cdn/img/${getRunes(
+                        item.info.participants[getIndex(item)].perks.styles[0]
+                          .style,
+                        item.info.participants[getIndex(item)].perks.styles[0]
+                          .selections[2].perk
+                      )}`}
+                      rune4={`https://ddragon.leagueoflegends.com/cdn/img/${getRunes(
+                        item.info.participants[getIndex(item)].perks.styles[0]
+                          .style,
+                        item.info.participants[getIndex(item)].perks.styles[0]
+                          .selections[3].perk
+                      )}`}
+                      rune5={`https://ddragon.leagueoflegends.com/cdn/img/${getRunes(
+                        item.info.participants[getIndex(item)].perks.styles[1]
+                          .style,
+                        item.info.participants[getIndex(item)].perks.styles[1]
+                          .selections[0].perk
+                      )}`}
+                      rune6={`https://ddragon.leagueoflegends.com/cdn/img/${getRunes(
+                        item.info.participants[getIndex(item)].perks.styles[1]
+                          .style,
+                        item.info.participants[getIndex(item)].perks.styles[1]
+                          .selections[1].perk
+                      )}`}
+                      rune7={`https://ddragon.leagueoflegends.com/cdn/img/perk-images/StatMods/${getMods(
+                        item.info.participants[getIndex(item)].perks.statPerks
+                          .offense
+                      )}`}
+                      rune8={`https://ddragon.leagueoflegends.com/cdn/img/perk-images/StatMods/${getMods(
+                        item.info.participants[getIndex(item)].perks.statPerks
+                          .flex
+                      )}`}
+                      rune9={`https://ddragon.leagueoflegends.com/cdn/img/perk-images/StatMods/${getMods(
+                        item.info.participants[getIndex(item)].perks.statPerks
+                          .defense
+                      )}`}
+                      item0={buildFilter(
+                        item.info.participants[getIndex(item)].item0
+                      )}
+                      item1={buildFilter(
+                        item.info.participants[getIndex(item)].item1
+                      )}
+                      item2={buildFilter(
+                        item.info.participants[getIndex(item)].item2
+                      )}
+                      item3={buildFilter(
+                        item.info.participants[getIndex(item)].item3
+                      )}
+                      item4={buildFilter(
+                        item.info.participants[getIndex(item)].item4
+                      )}
+                      item5={buildFilter(
+                        item.info.participants[getIndex(item)].item5
+                      )}
+                      item6={buildFilter(
+                        item.info.participants[getIndex(item)].item6
+                      )}
+                      color={getColor(
+                        item.info.participants[getIndex(item)].win
+                      )}
+                      kda={(
+                        (item.info.participants[getIndex(item)].kills +
+                          item.info.participants[getIndex(item)].assists) /
+                        item.info.participants[getIndex(item)].deaths
+                      ).toFixed(1)}
+                      passItem={item}
+                      result={getResult(
+                        item.info.participants[getIndex(item)].win
+                      )}
+                      farm={
+                        item.info.participants[getIndex(item)]
+                          .totalMinionsKilled
+                      }
+                      farm1={
+                        item.info.participants[getIndex(item)]
+                          .neutralMinionsKilled
+                      }
+                      gameLength={item.info.gameDuration}
+                    ></Matchitem>
+                  </div>
+                ))}
             </S.Wrapper>
           ) : (
             <></>

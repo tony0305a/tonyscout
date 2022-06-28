@@ -146,9 +146,6 @@ const Matchitem = ({
       return `https://ddragon.leagueoflegends.com/cdn/${version}/img/item/${id}.png`;
     }
   };
-  const call = () => {
-    console.log(champion);
-  };
 
   var decimalTime = (gameLength / 60).toFixed(2);
   var clockTime = ("" + decimalTime).replace(".", ":");
@@ -156,7 +153,6 @@ const Matchitem = ({
   return (
     <>
       <S.Wrapper style={{ backgroundColor: color }} id={id}>
-        <button onClick={call}>call</button>
         <S.UpperLine>
           <S.ColunmMetadata>
             <span>{gameMode}</span>
@@ -218,7 +214,9 @@ const Matchitem = ({
                 ))}
               </>
             ) : (
-              <><p>carregando...</p></>
+              <>
+                <p>carregando...</p>
+              </>
             )}
           </S.ColunmParticipants>
         </S.UpperLine>
