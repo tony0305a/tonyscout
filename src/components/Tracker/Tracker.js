@@ -17,12 +17,12 @@ export const Tracker = () => {
     }
   }, [trackerState]);
   useEffect(()=>{
-    sessionStorage.setItem('item',JSON.stringify(trackedSummoners))
+    window.localStorage.setItem('item',JSON.stringify(trackedSummoners))
+    setRenderStorage(JSON.parse(window.localStorage.getItem('item')))
   },[trackedSummoners])
+  
 
   const call = () => {
-    console.log(trackedSummoners)
-   setRenderStorage(JSON.parse(sessionStorage.getItem('item')))
    console.log(renderStorage)
 
   };
@@ -42,6 +42,11 @@ export const Tracker = () => {
         />
         <button onClick={track}>Pesquisar</button>
       </S.Form>
+      {JSON.parse(window.localStorage.getItem('item')).map((item)=>(
+        <div>
+            <span>{item.summonerName}</span>
+        </div>
+      ))}
         <S.TrackedData>
           <S.SummonerData>
             <span>{trackerState.summonerName}</span>
