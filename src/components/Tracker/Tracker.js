@@ -5,35 +5,31 @@ export const Tracker = () => {
   const { scoutState, getSummonerToTrack, trackerState, version } = useScout();
   const [trackSearch, setTrackSearch] = useState();
   const [trackedSummoners, setTrackedSummoners] = useState([]);
-  const [renderStorage,setRenderStorage] = useState()
+  const [renderStorage, setRenderStorage] = useState(true);
   const profileIcon = `https://ddragon.leagueoflegends.com/cdn/${version}/img/profileicon/${trackerState.profileIconId}.png`;
   const track = () => {
     getSummonerToTrack(trackSearch);
   };
   useEffect(() => {
-    if (trackerState.id){
-        setTrackedSummoners((prev)=>[...prev,trackerState])
-      
+    if (trackerState.id) {
+      setTrackedSummoners((prev) => [...prev, trackerState]);
     }
   }, [trackerState]);
-  useEffect(()=>{
-    window.localStorage.setItem('item',JSON.stringify(trackedSummoners))
-    setRenderStorage(JSON.parse(window.localStorage.getItem('item')))
-  },[trackedSummoners])
-  
+  useEffect(() => {
+    window.localStorage.setItem("item", JSON.stringify(trackedSummoners));
+  }, [trackedSummoners]);
 
   const call = () => {
-   console.log(renderStorage)
-
+    console.log(renderStorage);
   };
   const cleann = () => {
-    sessionStorage.clear()
+    sessionStorage.clear();
   };
   return (
     <S.Wrapper>
       <h1>Tracker</h1>
       <button onClick={call}>call</button>
-      <button onClick={cleann} >clean</button>
+      <button onClick={cleann}>clean</button>
       <S.Form>
         <input
           type="text"
@@ -42,21 +38,26 @@ export const Tracker = () => {
         />
         <button onClick={track}>Pesquisar</button>
       </S.Form>
-      {JSON.parse(window.localStorage.getItem('item')).map((item)=>(
-        <div>
-            <span>{item.summonerName}</span>
-        </div>
-      ))}
-        <S.TrackedData>
-          <S.SummonerData>
-            <span>{trackerState.summonerName}</span>
-            <img
-              src={`https://ddragon.leagueoflegends.com/cdn/${version}/img/profileicon/${trackerState.profileIconId}.png`}
-              width="48"
-            />
-            <span>{trackerState.summonerLevel}</span>
-          </S.SummonerData>
-        </S.TrackedData>
+      {renderStorage ? (
+        <>
+          {JSON.parse(window.localStorage.getItem("item")).map((item,index) => (
+      <S.TrackedData key={index} >
+      <S.SummonerData>
+        <span>{item.summonerName}</span>
+        <img
+          src={`https://ddragon.leagueoflegends.com/cdn/${version}/img/profileicon/${item.profileIconId}.png`}
+          width="48"
+        />
+        <span>{item.summonerLevel}</span>
+      </S.SummonerData>
+    </S.TrackedData>
+          ))}
+        </>
+      ) : (
+        <></>
+      )}
+
+
     </S.Wrapper>
   );
 };
