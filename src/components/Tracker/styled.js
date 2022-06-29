@@ -1,6 +1,9 @@
 import styled from "styled-components";
 
 export const Wrapper = styled.div`
+display:flex;
+flex-direction:column;
+width:40%;
 h1{
     background-color:purple;
     color:white;
@@ -8,8 +11,7 @@ h1{
     border-top-left-radius:4px;
     border-top-right-radius:4px;
 }
-display:flex;
-flex-direction:column;
+
 `;
 export const Form = styled.div`
 display:flex;

@@ -5,31 +5,47 @@ export const Tracker = () => {
   const { scoutState, getSummonerToTrack, trackerState, version } = useScout();
   const [trackSearch, setTrackSearch] = useState();
   const [trackedSummoners, setTrackedSummoners] = useState([]);
-  const [renderStorage, setRenderStorage] = useState(true);
+  const [renderStorage, setRenderStorage] = useState(false);
   const profileIcon = `https://ddragon.leagueoflegends.com/cdn/${version}/img/profileicon/${trackerState.profileIconId}.png`;
   const track = () => {
     getSummonerToTrack(trackSearch);
   };
+  useEffect(()=>{
+
+    console.log(JSON.parse(window.localStorage.getItem('item')))
+    setTrackedSummoners(JSON.parse(window.localStorage.getItem('item')))
+
+  },[])
+
   useEffect(() => {
-    if (trackerState.id) {
-      setTrackedSummoners((prev) => [...prev, trackerState]);
+
+    if (trackerState.id !== 0) {
+
+        setTrackedSummoners((prev)=>[...prev,trackerState])
+   
     }
+
   }, [trackerState]);
   useEffect(() => {
-    window.localStorage.setItem("item", JSON.stringify(trackedSummoners));
+    if(trackedSummoners.length !== 0){
+    window.localStorage.setItem('item',JSON.stringify(trackedSummoners))
+    setRenderStorage(true)
+    }
+
   }, [trackedSummoners]);
 
   const call = () => {
-    console.log(renderStorage);
+
+    console.log(trackedSummoners)
   };
   const cleann = () => {
-    sessionStorage.clear();
+    window.localStorage.clear();
   };
+
+
   return (
     <S.Wrapper>
       <h1>Tracker</h1>
-      <button onClick={call}>call</button>
-      <button onClick={cleann}>clean</button>
       <S.Form>
         <input
           type="text"
@@ -38,24 +54,23 @@ export const Tracker = () => {
         />
         <button onClick={track}>Pesquisar</button>
       </S.Form>
-      {renderStorage ? (
-        <>
-          {JSON.parse(window.localStorage.getItem("item")).map((item,index) => (
-      <S.TrackedData key={index} >
-      <S.SummonerData>
-        <span>{item.summonerName}</span>
-        <img
-          src={`https://ddragon.leagueoflegends.com/cdn/${version}/img/profileicon/${item.profileIconId}.png`}
-          width="48"
-        />
-        <span>{item.summonerLevel}</span>
-      </S.SummonerData>
-    </S.TrackedData>
-          ))}
-        </>
-      ) : (
-        <></>
-      )}
+    {renderStorage?(<>
+    
+            {trackedSummoners.map((item,index)=>(
+                      <S.TrackedData key={index} >
+                      <S.SummonerData>
+                        <span>{item.summonerName}</span>
+                        <img
+                          src={`https://ddragon.leagueoflegends.com/cdn/${version}/img/profileicon/${item.profileIconId}.png`}
+                          width="48"
+                        />
+                        <span>{item.summonerLevel}</span>
+                      </S.SummonerData>
+                    </S.TrackedData>
+        ))}</>):(<><p>sem nd</p></>)}
+        
+
+
 
 
     </S.Wrapper>
