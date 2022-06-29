@@ -13,8 +13,8 @@ export const Wrapper = styled.div`
 export const Champion = styled.img`
   border-radius: 50%;
   @media screen and (max-width: 600px) {
-    width: 62px;
-    height: 62px;
+    width: 48px;
+    height: 48px;
   }
 `;
 export const Colunm = styled.div`
@@ -28,7 +28,7 @@ export const ColunmMetadata = styled.div`
   align-items: center;
   padding: 8px;
   @media screen and (max-width: 600px) {
-    width: 80px;
+    width: 70px;
     display: flex;
     justify-content: center;
   }
@@ -40,7 +40,7 @@ export const ColunmChampion = styled.div`
   align-items: flex-start;
   padding: 8px;
   @media screen and (max-width: 600px) {
-    width: 160px;
+    width: 150px;
   }
 `;
 export const ColunmParticipants = styled.div`
@@ -51,7 +51,7 @@ export const ColunmParticipants = styled.div`
   height: 130px;
   flex-wrap: wrap;
   @media screen and (max-width: 600px) {
-    width: 10px;
+    
   }
 `;
 export const ColunmScore = styled.div`
@@ -148,7 +148,7 @@ export const MatchParticipantsWrapper = styled.div`
     height: 8px;
     span {
       font-size: 10px;
-      width: 48px;
+      width: 42px;
       overflow: hidden;
     }
   }
