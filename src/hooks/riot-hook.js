@@ -30,6 +30,8 @@ const useScout = () => {
     cleanScoutState,
     cleanMasteriesState,
     cleanRankedState,
+    trackerState,
+    getSummonerToTrack,
   } = useContext(RiotContext);
 
   return {
@@ -60,6 +62,8 @@ const useScout = () => {
     cleanScoutState,
     cleanMasteriesState,
     cleanRankedState,
+    trackerState,
+    getSummonerToTrack,
   };
 };
 export default useScout;

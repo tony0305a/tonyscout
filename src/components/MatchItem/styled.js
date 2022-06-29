@@ -5,18 +5,17 @@ export const Wrapper = styled.div`
   flex-direction: column;
   width: 100%;
   border: 1px solid black;
-  margin-top:2px;
-  @media screen and (max-width: 600px){
-    width:100%;  
-}
+  margin-top: 2px;
+  @media screen and (max-width: 600px) {
+    width: 100%;
+  }
 `;
 export const Champion = styled.img`
   border-radius: 50%;
-  @media screen and (max-width: 600px){
-    width:62px;   
-    height:62px
-
-}
+  @media screen and (max-width: 600px) {
+    width: 62px;
+    height: 62px;
+  }
 `;
 export const Colunm = styled.div`
   display: flex;
@@ -28,12 +27,11 @@ export const ColunmMetadata = styled.div`
   width: 120px;
   align-items: center;
   padding: 8px;
-    @media screen and (max-width: 600px){
-    width:80px;   
-      display:flex;
-      justify-content:center;
-
-}
+  @media screen and (max-width: 600px) {
+    width: 80px;
+    display: flex;
+    justify-content: center;
+  }
 `;
 export const ColunmChampion = styled.div`
   display: flex;
@@ -41,9 +39,9 @@ export const ColunmChampion = styled.div`
   width: 200px;
   align-items: flex-start;
   padding: 8px;
-  @media screen and (max-width: 600px){
-    width:175px;
-}
+  @media screen and (max-width: 600px) {
+    width: 200px;
+  }
 `;
 export const ColunmParticipants = styled.div`
   display: flex;
@@ -52,10 +50,9 @@ export const ColunmParticipants = styled.div`
   align-items: flex-start;
   height: 130px;
   flex-wrap: wrap;
-  @media screen and (max-width: 600px){
-    width:10px;
-  
-}
+  @media screen and (max-width: 600px) {
+    width: 10px;
+  }
 `;
 export const ColunmScore = styled.div`
   display: flex;
@@ -63,11 +60,11 @@ export const ColunmScore = styled.div`
   width: 48px;
   align-items: center;
   padding: 8px;
-  @media screen and (max-width: 600px){
+  @media screen and (max-width: 600px) {
     span {
-      font-size:12px;
+      font-size: 16px;
     }
-}
+  }
 `;
 export const ColunmBuild = styled.div`
   display: flex;
@@ -75,17 +72,17 @@ export const ColunmBuild = styled.div`
   width: 240px;
   align-items: flex-start;
   padding: 8px;
-  img{
-    width:36px;
-    height:36px;
+  img {
+    width: 32px;
+    height: 32px;
   }
-  @media screen and (max-width: 600px){
-    width:150px;
-    img{
-    width:24px;
-    height:24px;
+  @media screen and (max-width: 600px) {
+    width: 150px;
+    img {
+      width: 24px;
+      height: 24px;
+    }
   }
-}
 `;
 export const ChampionLine = styled.div`
   display: flex;
@@ -98,12 +95,12 @@ export const SummonerSpells = styled.div`
   img {
     border-radius: 40%;
   }
-  @media screen and (max-width: 600px){
+  @media screen and (max-width: 600px) {
     img {
-    width:16px;   
-    height:16px
+      width: 24px;
+      height: 24px;
     }
-}
+  }
 `;
 export const Runes = styled.div`
   display: flex;
@@ -111,12 +108,12 @@ export const Runes = styled.div`
   img {
     border-radius: 40%;
   }
-  @media screen and (max-width: 600px){
+  @media screen and (max-width: 600px) {
     img {
-    width:24px;   
-    height:24px
+      width: 24px;
+      height: 24px;
     }
-}
+  }
 `;
 export const Line = styled.div`
   display: flex;
@@ -127,7 +124,7 @@ export const UpperLine = styled.div`
 `;
 export const LowerLine = styled.div`
   display: flex;
-  width:370px;
+  width: 370px;
 `;
 
 export const MatchParticipantsWrapper = styled.div`
@@ -141,18 +138,17 @@ export const MatchParticipantsWrapper = styled.div`
     width: 85px;
     cursor: pointer;
     margin-left: 4px;
-    &:hover{
-        color:purple;
+    &:hover {
+      color: purple;
     }
   }
-  @media screen and (max-width: 600px){
-    margin:8px;
-    height:8px;
-    span{
-      font-size:10px;
-      width:42px;
-      overflow:hidden;
-      
+  @media screen and (max-width: 600px) {
+    margin: 8px;
+    height: 8px;
+    span {
+      font-size: 10px;
+      width: 42px;
+      overflow: hidden;
     }
   }
 `;

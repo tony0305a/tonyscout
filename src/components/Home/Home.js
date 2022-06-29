@@ -1,4 +1,5 @@
 import React from "react";
+import { Tracker } from "../Tracker/Tracker";
 import * as S from './styled';
 export const Home = () =>{
 
@@ -6,6 +7,7 @@ export const Home = () =>{
         <>
         <S.Wrapper>
             <span>Bem-Vindos(a)s</span>
+            <Tracker/>
         </S.Wrapper>
         </>
     )

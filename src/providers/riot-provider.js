@@ -34,6 +34,7 @@ const RiotProvider = ({ children }) => {
   const [graphState, setGraphState] = useState([]);
   const [graphSlot1State, setGraphSlot1State] = useState([]);
   const [graphSlot2State, setGraphSlot2State] = useState([]);
+  const [trackerState, setTrackerState] = useState({searchCompleted:false,id:0,puuid:0,summonerName:'name',summonerLevel:0,profileIconId:0})
   const getSummoner = (name) => {
     api
       .get(
@@ -50,7 +51,22 @@ const RiotProvider = ({ children }) => {
         })
       );
   };
-
+const getSummonerToTrack = (name) => {
+  api
+  .get(
+    `lol/summoner/v4/summoners/by-name/${name}?api_key=RGAPI-3ff69f05-592c-43e4-b1d8-b6a1b5159f56`
+  )
+  .then((respose) =>
+    setTrackerState({
+      searchCompleted: true,
+      id: respose.data.id,
+      summonerName: respose.data.name,
+      puuid: respose.data.puuid,
+      summonerLevel: respose.data.summonerLevel,
+      profileIconId: respose.data.profileIconId,
+    })
+  );
+}
   const getVersion = () => {
     fetch("https://ddragon.leagueoflegends.com/api/versions.json")
       .then((response) => response.text())
@@ -153,7 +169,9 @@ const RiotProvider = ({ children }) => {
     graphState,
     graphSlot1State,
     graphSlot2State,
+    trackerState,
     getSummoner: useCallback((name) => getSummoner(name), []),
+    getSummonerToTrack: useCallback((name) => getSummonerToTrack(name), []),
     getVersion: useCallback((version) => getVersion(version), []),
     getChampionInfo: useCallback(() => getChampionInfo(), []),
     cleanMatchData: useCallback(() => cleanMatchData(), []),
