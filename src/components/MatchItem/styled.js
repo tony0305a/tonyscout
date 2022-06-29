@@ -51,7 +51,7 @@ export const ColunmParticipants = styled.div`
   height: 130px;
   flex-wrap: wrap;
   @media screen and (max-width: 600px) {
-    
+    width:200px;
   }
 `;
 export const ColunmScore = styled.div`
@@ -122,6 +122,9 @@ export const Line = styled.div`
 export const UpperLine = styled.div`
   display: flex;
   height: 80px;
+  @media screen and (max-width: 600px) {
+    height:70px;
+  }
 `;
 export const LowerLine = styled.div`
   display: flex;
@@ -131,14 +134,14 @@ export const LowerLine = styled.div`
 export const MatchParticipantsWrapper = styled.div`
   display: flex;
   height: 10px;
-  margin: 8px;
+  margin: 2px;
   justify-content: center;
   align-items: center;
   span {
-    font-size: 14px;
-    width: 85px;
+    font-size: 12px;
+    width: 10px;
     cursor: pointer;
-    margin-left: 4px;
+    margin-left: 2px;
     &:hover {
       color: purple;
     }
@@ -148,7 +151,7 @@ export const MatchParticipantsWrapper = styled.div`
     height: 8px;
     span {
       font-size: 10px;
-      width: 42px;
+      width: 40px;
       overflow: hidden;
     }
   }
