@@ -17,17 +17,17 @@ export const Tracker = () => {
     }
   }, [trackerState]);
   useEffect(()=>{
-    localStorage.setItem('item',JSON.stringify(trackedSummoners))
+    sessionStorage.setItem('item',JSON.stringify(trackedSummoners))
   },[trackedSummoners])
 
   const call = () => {
     console.log(trackedSummoners)
-   setRenderStorage(JSON.parse(localStorage.getItem('item')))
+   setRenderStorage(JSON.parse(sessionStorage.getItem('item')))
    console.log(renderStorage)
 
   };
   const cleann = () => {
-  localStorage.clear()
+    sessionStorage.clear()
   };
   return (
     <S.Wrapper>

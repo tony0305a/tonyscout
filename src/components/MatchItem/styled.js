@@ -40,7 +40,7 @@ export const ColunmChampion = styled.div`
   align-items: flex-start;
   padding: 8px;
   @media screen and (max-width: 600px) {
-    width: 200px;
+    width: 160px;
   }
 `;
 export const ColunmParticipants = styled.div`
@@ -62,6 +62,7 @@ export const ColunmScore = styled.div`
   padding: 8px;
   @media screen and (max-width: 600px) {
     span {
+      width:40px;
       font-size: 16px;
     }
   }
@@ -77,7 +78,7 @@ export const ColunmBuild = styled.div`
     height: 32px;
   }
   @media screen and (max-width: 600px) {
-    width: 150px;
+    width: 100px;
     img {
       width: 24px;
       height: 24px;
@@ -97,8 +98,8 @@ export const SummonerSpells = styled.div`
   }
   @media screen and (max-width: 600px) {
     img {
-      width: 24px;
-      height: 24px;
+      width: 18px;
+      height: 18px;
     }
   }
 `;
@@ -110,8 +111,8 @@ export const Runes = styled.div`
   }
   @media screen and (max-width: 600px) {
     img {
-      width: 24px;
-      height: 24px;
+      width: 18px;
+      height: 18px;
     }
   }
 `;
@@ -147,7 +148,7 @@ export const MatchParticipantsWrapper = styled.div`
     height: 8px;
     span {
       font-size: 10px;
-      width: 42px;
+      width: 48px;
       overflow: hidden;
     }
   }
