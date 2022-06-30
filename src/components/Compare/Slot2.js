@@ -21,10 +21,13 @@ export const Slot2 = () => {
         }
 
         setSummonerElo(`${r.tier} ${r.rank}`);
-        setSlot2Graph([thisGraph, summonerName, summonerElo]);
+
       }
     }
   };
+  useEffect(()=>{
+    setSlot2Graph([thisGraph, summonerName, summonerElo]);
+  },[thisGraph])
 
   return (
     <>

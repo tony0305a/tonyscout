@@ -8,7 +8,6 @@ export const Slot1 = () => {
   const [summonerName, setSummonerName] = useState("Summoner Name");
   const [summonerElo, setSummonerElo] = useState("Unranked");
   const saveHere = () => {
-    console.log(graphState);
     if (!isNaN(graphState[0])) {
       setThisGraph(graphState);
       setSummonerName(scoutState.name);
@@ -21,11 +20,13 @@ export const Slot1 = () => {
         }
 
         setSummonerElo(`${r.tier} ${r.rank}`);
-        setSlot1Graph([thisGraph, summonerName, summonerElo]);
+
       }
     }
   };
-
+  useEffect(()=>{
+    setSlot1Graph([thisGraph, summonerName, summonerElo]);
+  },[thisGraph])
   return (
     <>
       <button onClick={saveHere}>Save Graph here</button>
