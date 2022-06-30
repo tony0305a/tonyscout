@@ -198,12 +198,15 @@ const ActiveMatch = () => {
       }
     }
   };
+  const call = () =>{
+    console.log(activeInfo)
+  }
 
   return (
     <S.Wrapper>
       {renderActiveMatch ? (
         <>
-          {activeInfo.data.participants.sort().map((item) => (
+          {activeInfo.data.participants.sort((a,b)=>{b.teamId - a.teamId}).map((item) => (
             <ActiveMatchPlayer
               summonerName={item.summonerName}
               summonerIcon={`https://ddragon.leagueoflegends.com/cdn/${version}/img/profileicon/${item.profileIconId}.png`}
