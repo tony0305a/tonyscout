@@ -7,7 +7,6 @@ export const Home = () =>{
         <>
         <S.Wrapper>
             <span>Bem-Vindos(a)s</span>
-            <Tracker/>
         </S.Wrapper>
         </>
     )

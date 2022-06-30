@@ -134,14 +134,15 @@ export const LowerLine = styled.div`
 export const MatchParticipantsWrapper = styled.div`
   display: flex;
   height: 10px;
-  margin: 2px;
+  margin: 8px;
   justify-content: center;
   align-items: center;
   span {
     font-size: 12px;
-    width: 10px;
+    width: 78px;
     cursor: pointer;
     margin-left: 2px;
+    overflow:hidden;
     &:hover {
       color: purple;
     }
