@@ -36,7 +36,7 @@ const Header = () => {
     if (scoutState.hasUser) {
       getMasteries(scoutState.id);
       getRanked(scoutState.id);
-      getMatches(scoutState.puuid);
+      getMatches(scoutState.puuid,420);
       getChampionInfo();
     }
   }, [scoutState]);

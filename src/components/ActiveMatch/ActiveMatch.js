@@ -21,6 +21,7 @@ import m4 from "../../imgs/4.png"
 import m3 from "../../imgs/3.png"
 import m2 from "../../imgs/2.png"
 import m1 from "../../imgs/1.png"
+import apiHeader from "../../services/apiHeader";
 
 const ActiveMatch = () => {
   const { scoutState, version, getChampionInfo } = useScout();
@@ -30,7 +31,8 @@ const ActiveMatch = () => {
   const [summonerSpell, setSummonerSpell] = useState();
   const [runes, setRunes] = useState();
   const [activeInfo, setActiveInfo] = useState(false);
-  const [champion,setChampion] = useState()
+  const [champion,setChampion] = useState();
+  const [playerInfo,setPlayerInfo] = useState()
 
   useEffect(()=>{
 
@@ -198,14 +200,22 @@ const ActiveMatch = () => {
       }
     }
   };
+  const getPlayerInfo = () =>{
+    apiHeader.get(`/lol/summoner/v4/summoners/by-name/TonyLee`).then((res)=>console.log(res))
+  }
+
+
   const call = () =>{
-    console.log(activeInfo)
+    getPlayerInfo()
   }
 
   return (
     <S.Wrapper>
+      <h1>Active Match</h1>
+      <button onClick={call}>call</button>
       {renderActiveMatch ? (
         <>
+        <S.Body>
           {activeInfo.data.participants.sort().map((item) => (
             <ActiveMatchPlayer
               summonerName={item.summonerName}
@@ -262,6 +272,7 @@ const ActiveMatch = () => {
               elo2Pdl={getEloInfo(item.summonerId, 1, "leaguePoints")}
             ></ActiveMatchPlayer>
           ))}
+          </S.Body>
         </>
       ) : (
         <S.Wrapper></S.Wrapper>

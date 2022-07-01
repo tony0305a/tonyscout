@@ -109,10 +109,10 @@ const getSummonerToTrack = (name) => {
       );
   };
 
-  const getMatches = (puuid) => {
+  const getMatches = (puuid,queueId) => {
     matchApi
       .get(
-        `lol/match/v5/matches/by-puuid/${puuid}/ids?queue=420&?start=0&count=100&api_key=RGAPI-3ff69f05-592c-43e4-b1d8-b6a1b5159f56`
+        `lol/match/v5/matches/by-puuid/${puuid}/ids?queue=${queueId}&?start=0&count=10&api_key=RGAPI-3ff69f05-592c-43e4-b1d8-b6a1b5159f56`
       )
       .then((response) =>
         setMatchState({
@@ -183,7 +183,7 @@ const getSummonerToTrack = (name) => {
       (encryptedSummonerId) => getRanked(encryptedSummonerId),
       []
     ),
-    getMatches: useCallback((puuid) => getMatches(puuid), []),
+    getMatches: useCallback((puuid,queueId) => getMatches(puuid,queueId), []),
     getMatchData: useCallback((id) => getMatchData(id), []),
     setRender: useCallback((bool) => setRender(bool), []),
     setGraphs: useCallback((array) => setGraphs(array), []),
