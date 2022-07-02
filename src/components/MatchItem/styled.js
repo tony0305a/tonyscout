@@ -121,7 +121,7 @@ export const Line = styled.div`
 `;
 export const UpperLine = styled.div`
   display: flex;
-  height: 80px;
+  height: 100px;
   @media screen and (max-width: 600px) {
     height:70px;
   }
@@ -156,4 +156,8 @@ export const MatchParticipantsWrapper = styled.div`
       overflow: hidden;
     }
   }
+`;
+export const ColunmGraphs = styled.div`
+display:flex;
+justify-content:center;
 `;

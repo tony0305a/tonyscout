@@ -201,7 +201,18 @@ const ActiveMatch = () => {
     }
   };
   const getPlayerInfo = () =>{
-    apiHeader.get(`/lol/summoner/v4/summoners/by-name/TonyLee`).then((res)=>console.log(res))
+    fetch("https://br1.api.riotgames.com/lol/summoner/v4/summoners/by-name/TonyLee", {
+      "method": "GET",
+      "headers": {
+        "X-Riot-Token": "RGAPI-3ff69f05-592c-43e4-b1d8-b6a1b5159f56"
+      }
+    })
+    .then(response => {
+      console.log(response);
+    })
+    .catch(err => {
+      console.error(err);
+    });
   }
 
 

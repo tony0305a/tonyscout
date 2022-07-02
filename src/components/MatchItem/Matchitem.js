@@ -5,7 +5,24 @@ import ReactTimeAgo from "react-time-ago";
 import en from "javascript-time-ago/locale/en.json";
 import MatchitemParticipants from "./MatchitemParticipants";
 import useScout from "../../hooks/riot-hook";
-import { M } from "../MasteryItem/styled";
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend,
+} from 'chart.js';
+import { Bar } from 'react-chartjs-2';
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend
+);
 TimeAgo.addLocale(en);
 
 const Matchitem = ({
@@ -41,6 +58,7 @@ const Matchitem = ({
   gameLength,
   farm,
   farm1,
+  parts,
 }) => {
   const { matchDataState, version, matchState, scoutState } = useScout();
   const [champion, setChampion] = useState({ completed: false, info: [] });
@@ -150,6 +168,60 @@ const Matchitem = ({
   var decimalTime = (gameLength / 60).toFixed(2);
   var clockTime = ("" + decimalTime).replace(".", ":");
 
+  const options = {
+    indexAxis: 'x',
+    elements: {
+      bar: {
+        borderWidth: 2,
+      },
+    },
+    responsive: true,
+    plugins: {
+      legend: {
+        position: 'right',
+      },
+      title: {
+        display: false,
+        text: 'Chart.js Horizontal Bar Chart',
+      },
+    },
+  };
+  
+  const labels = []
+  const damages = []
+  const labels2 = []
+  const damages2 = []
+  for(var i = 0;i<5;i++){
+    labels.push(parts[i].summonerName)
+    damages.push(parts[i].totalDamageDealtToChampions)
+  }
+
+  for(var i = 5;i<10;i++){
+    labels2.push(parts[i].summonerName)
+    damages2.push(parts[i].totalDamageDealtToChampions)
+  } 
+   const data = {
+    labels,
+    datasets: [ 
+      {
+        label: 'Dmg',
+        data: damages,
+        borderColor: 'rgb(0, 0, 255)',
+        backgroundColor: 'rgba(128, 0, 128, 1)',
+      },
+    ],
+  };
+   const data2 = {
+    labels:labels2,
+    datasets: [ 
+      {
+        label: 'Dmg',
+        data: damages2,
+        borderColor: 'rgb(255, 0, 0)',
+        backgroundColor: 'rgba(128, 0, 128, 1)',
+      },
+    ],
+  };
   return (
       <S.Wrapper style={{ backgroundColor: color }} id={id}>
         <S.UpperLine>
@@ -235,6 +307,25 @@ const Matchitem = ({
             </S.Line>
           </S.ColunmBuild>
         </S.LowerLine>
+        <S.ColunmGraphs>
+            <div             
+            style={{
+              display:"flex",
+              margin: "8",
+              width: "370px",
+            }}>
+          <Bar options={options} data={data} />
+          </div>
+          <div             
+            style={{
+              display:"flex",
+              margin: "8",
+              width: "370px",
+            }}>
+          <Bar options={options} data={data2} />
+          </div>
+          </S.ColunmGraphs>
+
       </S.Wrapper>
   );
 };

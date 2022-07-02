@@ -1442,20 +1442,19 @@ const Analyzer = () => {
       },
       title: {
         display: true,
-        text: `Roles played ${hardData.soloQueues}`,
+        text: `Games played ${hardData.soloQueues}`,
       },
     },
   };
 
   return (
     <S.Wrapper>
-      <span>Analyzer</span>
       <S.GraphRoles>
       <div
           style={{
             position: "relative",
-            margin: "auto",
-            width: "330px",
+            margin: "0",
+            width: "200px",
           }}
         >
         <Doughnut options={optionsRoles} data={dataRoles} />

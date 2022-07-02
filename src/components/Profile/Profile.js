@@ -109,7 +109,6 @@ const Profile = () => {
       </S.ProfileAndMatch>
       <S.RankedAndMatches>
         <Ranked />
-        <Analyzer />
         <Matches />
       </S.RankedAndMatches>
     </S.ProfileAndMatchAndRanked>

@@ -2,6 +2,7 @@ import React, { useLayoutEffect } from "react";
 import { useState } from "react";
 import { useEffect } from "react";
 import useScout from "../../hooks/riot-hook";
+import Analyzer from "../Analyzer/Analyzer";
 import Matchitem from "../MatchItem/Matchitem";
 import * as S from "./styled";
 
@@ -174,6 +175,9 @@ const Matches = () => {
       {scoutState.hasUser ? (
         <S.Wrapper>
           <h1>Histórico</h1>
+          <S.Analyzer>
+            <Analyzer/>
+          </S.Analyzer>
           {renderState ? (   
             <S.MatchBody>
               {matchDataState
@@ -289,6 +293,7 @@ const Matches = () => {
                           .neutralMinionsKilled
                       }
                       gameLength={item.info.gameDuration}
+                      parts={item.info.participants}
                     ></Matchitem>
                   </S.SingleMatch>
                 ))}

@@ -29,7 +29,6 @@ width:100%;
 `;
 export const MatchBody = styled.div`
 display:flex;
-overflow:scroll;
 width:100%;
 flex-wrap:wrap;
 @media screen and (max-width: 600px){
@@ -39,4 +38,8 @@ flex-wrap:wrap;
     display:none;
 
 }
+`;
+export const Analyzer = styled.div`
+display:flex;
+height:220px;
 `;
