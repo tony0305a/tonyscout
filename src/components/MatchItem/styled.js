@@ -159,5 +159,4 @@ export const MatchParticipantsWrapper = styled.div`
 `;
 export const ColunmGraphs = styled.div`
 display:flex;
-justify-content:center;
 `;
