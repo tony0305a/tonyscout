@@ -1,6 +1,5 @@
 import React, { createContext, useState, useCallback } from "react";
-import api from "../services/api";
-import matchApi from "../services/matchs-api";
+import apiHeader from "../services/apiHeader";
 
 export const RiotContext = createContext({
   loading: false,
@@ -36,9 +35,9 @@ const RiotProvider = ({ children }) => {
   const [graphSlot2State, setGraphSlot2State] = useState([]);
   const [trackerState, setTrackerState] = useState({searchCompleted:false,id:0,puuid:0,summonerName:'name',summonerLevel:0,profileIconId:0})
   const getSummoner = (name) => {
-    api
+    apiHeader
       .get(
-        `lol/summoner/v4/summoners/by-name/${name}?api_key=RGAPI-3ff69f05-592c-43e4-b1d8-b6a1b5159f56`
+        `summoner/${name}`
       )
       .then((respose) =>
         setScoutState({
@@ -52,9 +51,9 @@ const RiotProvider = ({ children }) => {
       );
   };
 const getSummonerToTrack = (name) => {
-  api
+  apiHeader
   .get(
-    `lol/summoner/v4/summoners/by-name/${name}?api_key=RGAPI-3ff69f05-592c-43e4-b1d8-b6a1b5159f56`
+    `/${name}`
   )
   .then((respose) =>
     setTrackerState({
@@ -74,7 +73,7 @@ const getSummonerToTrack = (name) => {
   };
 
   const getChampionInfo = (version) => {
-    if (version != undefined) {
+    if (version !== undefined) {
       fetch(
         `http://ddragon.leagueoflegends.com/cdn/${version}/data/pt_BR/champion.json`
       )
@@ -84,9 +83,9 @@ const getSummonerToTrack = (name) => {
   };
 
   const getMasteries = (id) => {
-    api
+    apiHeader
       .get(
-        `lol/champion-mastery/v4/champion-masteries/by-summoner/${id}?api_key=RGAPI-3ff69f05-592c-43e4-b1d8-b6a1b5159f56`
+        `summoner/masteries/${id}`
       )
       .then((response) =>
         setMastertiesState({
@@ -97,9 +96,9 @@ const getSummonerToTrack = (name) => {
   };
 
   const getRanked = (encryptedSummonerId) => {
-    api
+    apiHeader
       .get(
-        `lol/league/v4/entries/by-summoner/${encryptedSummonerId}?api_key=RGAPI-3ff69f05-592c-43e4-b1d8-b6a1b5159f56`
+        `ranked/${encryptedSummonerId}`
       )
       .then((respone) =>
         setRankedState({
@@ -110,9 +109,9 @@ const getSummonerToTrack = (name) => {
   };
 
   const getMatches = (puuid,queueId) => {
-    matchApi
+    apiHeader
       .get(
-        `lol/match/v5/matches/by-puuid/${puuid}/ids?queue=${queueId}&?start=0&count=10&api_key=RGAPI-3ff69f05-592c-43e4-b1d8-b6a1b5159f56`
+        `matchs-ids/${puuid}/${queueId}`
       )
       .then((response) =>
         setMatchState({
@@ -123,9 +122,9 @@ const getSummonerToTrack = (name) => {
   };
 
   const getMatchData = (id) => {
-    matchApi
+    apiHeader
       .get(
-        `lol/match/v5/matches/${id}?api_key=RGAPI-3ff69f05-592c-43e4-b1d8-b6a1b5159f56`
+        `matchs-info/${id}`
       )
       .then((response) =>
         setMatchDataState((prevState) => [...prevState, response.data])
