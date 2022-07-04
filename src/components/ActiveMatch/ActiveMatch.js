@@ -44,8 +44,8 @@ const ActiveMatch = () => {
     setPartElo([]);
     async function activeMatch(id) {
       try {
-        const match = await api.get(
-          `lol/spectator/v4/active-games/by-summoner/${id}?api_key=RGAPI-3ff69f05-592c-43e4-b1d8-b6a1b5159f56`
+        const match = await apiHeader.get(
+          `active-match/${id}`
         );
         console.log(match);
         setActiveInfo(match);
@@ -69,9 +69,9 @@ const ActiveMatch = () => {
   useEffect(() => {
     if (activeInfo !== undefined) {
       const getPartElo = (id) => {
-        api
+        apiHeader
           .get(
-            `lol/league/v4/entries/by-summoner/${id}?api_key=RGAPI-3ff69f05-592c-43e4-b1d8-b6a1b5159f56`
+            `ranked/${id}`
           )
           .then((res) => setPartElo((prevState) => [...prevState, res.data]));
       };
