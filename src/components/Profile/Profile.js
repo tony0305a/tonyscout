@@ -30,6 +30,7 @@ const Profile = () => {
   const profileIcon = `https://ddragon.leagueoflegends.com/cdn/${version}/img/profileicon/${scoutState.profileIconId}.png`;
   const [activeInfo, setActiveInfo] = useState(false);
   const [renderActiveMatch, setRenderActiveMatch] = useState(true);
+  const [renderAtt, setRenderAtt] = useState(true);
   const [renderMatchs, setRenderMatch] = useState(false);
   useEffect(() => {
     if (scoutState.id != undefined) {
@@ -46,6 +47,9 @@ const Profile = () => {
       }
 
       activeMatch(scoutState.id);
+    }
+    return function cleanUp(){
+      setRenderAtt(true)
     }
   }, [scoutState]);
 
@@ -67,8 +71,8 @@ const Profile = () => {
 
   const analisar = async () => {
     setRender(false);
+    setRenderAtt(false);
     getMatches(scoutState.puuid, 420);
-    console.log(matchState);
     for (var i in matchState.matches) {
       await apiHeader.get(`/verify-id/${matchState.matches[i]}`).then((res) => {
         if (res.data.length == 0) {
@@ -76,6 +80,7 @@ const Profile = () => {
         }
       });
     }
+
   };
   useEffect(() => {
     if (matchDataStateDb.length >= 1) {
@@ -99,7 +104,14 @@ const Profile = () => {
                 ) : (
                   <></>
                 )}
-                <button onClick={analisar}>Atualizar</button>
+                {renderAtt ? (
+                  <>
+                    {" "}
+                    <button onClick={analisar}>Atualizar</button>
+                  </>
+                ) : (
+                  <></>
+                )}
               </S.SummonerInfo>
               <S.Mast>
                 <Masteries />

@@ -2,11 +2,10 @@ import React from "react";
 import useScout from "../../hooks/riot-hook";
 import * as S from "./styled";
 const MatchitemParticipants = ({ name, champ }) => {
-  const { version, championState, getSummoner, setRender, renderState } =
+  const { getSummoner, setRender } =
     useScout();
   const call = () => {
     setRender(false);
-    console.log(renderState);
     getSummoner(name);
   };
 

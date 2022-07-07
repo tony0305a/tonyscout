@@ -177,7 +177,6 @@ const Matches = () => {
 
   return (
     <>
-      <button onClick={call}>call</button>
       {scoutState.hasUser ? (
         <S.Wrapper>
           <h1>Histórico</h1>

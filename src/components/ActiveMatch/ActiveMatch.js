@@ -84,7 +84,6 @@ const ActiveMatch = () => {
     )
       .then((response) => response.text())
       .then((x) => setChampion(JSON.parse(x)));
-    console.log(champion);
   }, [activeInfo]);
 
   const getHeroInfo = (id) => {
