@@ -19,8 +19,6 @@ export const Home = () => {
     <>
       <S.Wrapper>
         <span>Bem-Vindos(a)s</span>
-        <button onClick={call}>Call</button>
-        <button onClick={call2}>Call 2</button>
       </S.Wrapper>
     </>
   );
