@@ -4,14 +4,11 @@ export const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   margin: 8px;
-  justify-content:center;
+  justify-content: center;
   width: 100%;
   background-color: white;
   border-top-right-radius: 8px;
   border-top-left-radius: 8px;
-
-
-
 `;
 export const Head = styled.div`
   display: flex;
@@ -26,11 +23,11 @@ export const Head = styled.div`
 `;
 export const Body = styled.div`
   display: flex;
-  @media screen and (max-width: 600px){
-    flex-direction:column;
-    justify-content:center;
-    align-items:center;
-}
+  @media screen and (max-width: 600px) {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
 `;
 export const Slot1 = styled.div`
   display: flex;
