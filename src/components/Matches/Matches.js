@@ -5,6 +5,7 @@ import useScout from "../../hooks/riot-hook";
 import Analyzer from "../Analyzer/Analyzer";
 import Matchitem from "../MatchItem/Matchitem";
 import * as S from "./styled";
+import apiHeader from "../../services/apiHeader";
 
 const Matches = () => {
   const {
@@ -16,15 +17,13 @@ const Matches = () => {
     setRender,
     getChampionInfo,
     getVersion,
+    matchDataStateDb,
   } = useScout();
   const [champion, setChampion] = useState();
   const [queue, setQueue] = useState();
   const [summonerSpell, setSummonerSpell] = useState();
   const [runes, setRunes] = useState();
-
-  useLayoutEffect(() => {
-    return () => {};
-  }, [scoutState]);
+  const [matchDataDb, setMatchDataDb] = useState([]);
 
   useEffect(() => {
     //mount
@@ -58,7 +57,6 @@ const Matches = () => {
         .then((response) => response.text())
         .then((x) => setQueue(JSON.parse(x)));
     }
-    setRender(true);
 
     return function cleanUp() {
       //   cleanMatchData()
@@ -72,9 +70,13 @@ const Matches = () => {
     };
   }, [scoutState]);
 
+  useEffect(() => {
+    return function cleanUp() {};
+  }, [matchDataStateDb]);
+
   const getIndex = (item) => {
-    for (var i in item.info.participants) {
-      if (item.info.participants[i].summonerId == scoutState.id) {
+    for (var i in item.participants) {
+      if (item.participants[i].summonerId == scoutState.id) {
         return i;
       }
     }
@@ -98,10 +100,9 @@ const Matches = () => {
           return "Normal Alternada";
         } else if (queue[i].description == "5v5 ARAM games") {
           return "ARAM";
-        } else if (queue[i].description == "5v5 Ranked Solo games"){
-          return "Solo/Duo"
-        }
-        else {
+        } else if (queue[i].description == "5v5 Ranked Solo games") {
+          return "Solo/Duo";
+        } else {
           return queue[i].description;
         }
       }
@@ -170,130 +171,128 @@ const Matches = () => {
     }
   };
 
+  const call = () => {
+    console.log(matchState);
+  };
+
   return (
     <>
+      <button onClick={call}>call</button>
       {scoutState.hasUser ? (
         <S.Wrapper>
           <h1>Histórico</h1>
           <S.Analyzer>
-            <Analyzer/>
+            <Analyzer />
           </S.Analyzer>
-          {renderState ? (   
+          {renderState ? (
             <S.MatchBody>
-              {matchDataState
-                .sort((a, b) => b.info.gameCreation - a.info.gameCreation)
+              {matchDataStateDb
+                .sort((a, b) => b.gameCreation - a.gameCreation)
                 .map((item, index) => (
-                  <S.SingleMatch key={index} style={{ backgroundColor: getColor(item.info.participants[getIndex(item)].win) }}  >
+                  <S.SingleMatch
+                    key={index}
+                    style={{
+                      backgroundColor: getColor(
+                        item.participants[getIndex(item)].win
+                      ),
+                    }}
+                  >
                     <Matchitem
-                      creationTime={item.info.gameCreation}
-                      gameMode={getQueue(item.info.queueId)}
+                      creationTime={item.gameCreation}
+                      gameMode={getQueue(item.queueId)}
                       role={
-                        item.info.participants[getIndex(item)]
-                          .individualPosition
+                        item.participants[getIndex(item)].individualPosition
                       }
                       champPic={`https://ddragon.leagueoflegends.com/cdn/${version}/img/champion/${getChampName(
-                        item.info.participants[getIndex(item)].championId
+                        item.participants[getIndex(item)].championId
                       )}`}
-                      kills={item.info.participants[getIndex(item)].kills}
-                      deaths={item.info.participants[getIndex(item)].deaths}
-                      assists={item.info.participants[getIndex(item)].assists}
+                      kills={item.participants[getIndex(item)].kills}
+                      deaths={item.participants[getIndex(item)].deaths}
+                      assists={item.participants[getIndex(item)].assists}
                       SS1={`https://ddragon.leagueoflegends.com/cdn/${version}/img/spell/${getSS(
-                        item.info.participants[getIndex(item)].summoner1Id
+                        item.participants[getIndex(item)].summoner1Id
                       )}`}
                       SS2={`https://ddragon.leagueoflegends.com/cdn/${version}/img/spell/${getSS(
-                        item.info.participants[getIndex(item)].summoner2Id
+                        item.participants[getIndex(item)].summoner2Id
                       )}`}
                       rune1={`https://ddragon.leagueoflegends.com/cdn/img/${getRunes(
-                        item.info.participants[getIndex(item)].perks.styles[0]
-                          .style,
-                        item.info.participants[getIndex(item)].perks.styles[0]
+                        item.participants[getIndex(item)].perks.styles[0].style,
+                        item.participants[getIndex(item)].perks.styles[0]
                           .selections[0].perk
                       )}`}
                       rune2={`https://ddragon.leagueoflegends.com/cdn/img/${getRunes(
-                        item.info.participants[getIndex(item)].perks.styles[0]
-                          .style,
-                        item.info.participants[getIndex(item)].perks.styles[0]
+                        item.participants[getIndex(item)].perks.styles[0].style,
+                        item.participants[getIndex(item)].perks.styles[0]
                           .selections[1].perk
                       )}`}
                       rune3={`https://ddragon.leagueoflegends.com/cdn/img/${getRunes(
-                        item.info.participants[getIndex(item)].perks.styles[0]
-                          .style,
-                        item.info.participants[getIndex(item)].perks.styles[0]
+                        item.participants[getIndex(item)].perks.styles[0].style,
+                        item.participants[getIndex(item)].perks.styles[0]
                           .selections[2].perk
                       )}`}
                       rune4={`https://ddragon.leagueoflegends.com/cdn/img/${getRunes(
-                        item.info.participants[getIndex(item)].perks.styles[0]
-                          .style,
-                        item.info.participants[getIndex(item)].perks.styles[0]
+                        item.participants[getIndex(item)].perks.styles[0].style,
+                        item.participants[getIndex(item)].perks.styles[0]
                           .selections[3].perk
                       )}`}
                       rune5={`https://ddragon.leagueoflegends.com/cdn/img/${getRunes(
-                        item.info.participants[getIndex(item)].perks.styles[1]
-                          .style,
-                        item.info.participants[getIndex(item)].perks.styles[1]
+                        item.participants[getIndex(item)].perks.styles[1].style,
+                        item.participants[getIndex(item)].perks.styles[1]
                           .selections[0].perk
                       )}`}
                       rune6={`https://ddragon.leagueoflegends.com/cdn/img/${getRunes(
-                        item.info.participants[getIndex(item)].perks.styles[1]
-                          .style,
-                        item.info.participants[getIndex(item)].perks.styles[1]
+                        item.participants[getIndex(item)].perks.styles[1].style,
+                        item.participants[getIndex(item)].perks.styles[1]
                           .selections[1].perk
                       )}`}
                       rune7={`https://ddragon.leagueoflegends.com/cdn/img/perk-images/StatMods/${getMods(
-                        item.info.participants[getIndex(item)].perks.statPerks
+                        item.participants[getIndex(item)].perks.statPerks
                           .offense
                       )}`}
                       rune8={`https://ddragon.leagueoflegends.com/cdn/img/perk-images/StatMods/${getMods(
-                        item.info.participants[getIndex(item)].perks.statPerks
-                          .flex
+                        item.participants[getIndex(item)].perks.statPerks.flex
                       )}`}
                       rune9={`https://ddragon.leagueoflegends.com/cdn/img/perk-images/StatMods/${getMods(
-                        item.info.participants[getIndex(item)].perks.statPerks
+                        item.participants[getIndex(item)].perks.statPerks
                           .defense
                       )}`}
                       item0={buildFilter(
-                        item.info.participants[getIndex(item)].item0
+                        item.participants[getIndex(item)].item0
                       )}
                       item1={buildFilter(
-                        item.info.participants[getIndex(item)].item1
+                        item.participants[getIndex(item)].item1
                       )}
                       item2={buildFilter(
-                        item.info.participants[getIndex(item)].item2
+                        item.participants[getIndex(item)].item2
                       )}
                       item3={buildFilter(
-                        item.info.participants[getIndex(item)].item3
+                        item.participants[getIndex(item)].item3
                       )}
                       item4={buildFilter(
-                        item.info.participants[getIndex(item)].item4
+                        item.participants[getIndex(item)].item4
                       )}
                       item5={buildFilter(
-                        item.info.participants[getIndex(item)].item5
+                        item.participants[getIndex(item)].item5
                       )}
                       item6={buildFilter(
-                        item.info.participants[getIndex(item)].item6
+                        item.participants[getIndex(item)].item6
                       )}
-                      color={getColor(
-                        item.info.participants[getIndex(item)].win
-                      )}
+                      color={getColor(item.participants[getIndex(item)].win)}
                       kda={(
-                        (item.info.participants[getIndex(item)].kills +
-                          item.info.participants[getIndex(item)].assists) /
-                        item.info.participants[getIndex(item)].deaths
+                        (item.participants[getIndex(item)].kills +
+                          item.participants[getIndex(item)].assists) /
+                        item.participants[getIndex(item)].deaths
                       ).toFixed(1)}
                       passItem={item}
-                      result={getResult(
-                        item.info.participants[getIndex(item)].win
-                      )}
+                      result={getResult(item.participants[getIndex(item)].win)}
                       farm={
-                        item.info.participants[getIndex(item)]
-                          .totalMinionsKilled
+                        item.participants[getIndex(item)].totalMinionsKilled
                       }
                       farm1={
-                        item.info.participants[getIndex(item)]
-                          .neutralMinionsKilled
+                        item.participants[getIndex(item)].neutralMinionsKilled
                       }
-                      gameLength={item.info.gameDuration}
-                      parts={item.info.participants}
+                      gameLength={item.gameDuration}
+                      parts={item.participants}
                     ></Matchitem>
                   </S.SingleMatch>
                 ))}

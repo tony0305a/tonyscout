@@ -10,6 +10,7 @@ import Matches from "../Matches/Matches";
 import Analyzer from "../Analyzer/Analyzer";
 import Graphics from "../Analyzer/Graphics";
 import Compare from "../Compare/Compare";
+import apiHeader from "../../services/apiHeader";
 
 const Profile = () => {
   const {
@@ -20,6 +21,10 @@ const Profile = () => {
     championState,
     cleanMatchData,
     matchDataState,
+    getMatches,
+    matchDataStateDb,
+    setRender,
+    cleanMatchsFromDatabase,
   } = useScout();
 
   const profileIcon = `https://ddragon.leagueoflegends.com/cdn/${version}/img/profileicon/${scoutState.profileIconId}.png`;
@@ -27,24 +32,21 @@ const Profile = () => {
   const [renderActiveMatch, setRenderActiveMatch] = useState(true);
   const [renderMatchs, setRenderMatch] = useState(false);
   useEffect(() => {
-    if(scoutState.id != undefined){
-    setRenderMatch(false);
-    async function activeMatch(id) {
-      try {
-        const match = await api.get(
-          `lol/spectator/v4/active-games/by-summoner/${id}?api_key=RGAPI-3ff69f05-592c-43e4-b1d8-b6a1b5159f56`
-        );
-        setRenderActiveMatch(true);
-      } catch (error) {
-        console.log("Sem partida ativa");
-        setRenderActiveMatch(false);
-        throw error;
+    if (scoutState.id != undefined) {
+      setRenderMatch(false);
+      async function activeMatch(id) {
+        try {
+          const match = await apiHeader.get(`active-match/${id}`);
+          setRenderActiveMatch(true);
+        } catch (error) {
+          console.log("Sem partida ativa");
+          setRenderActiveMatch(false);
+          throw error;
+        }
       }
+
+      activeMatch(scoutState.id);
     }
-  
-    activeMatch(scoutState.id);
-  }
-  
   }, [scoutState]);
 
   useEffect(() => {
@@ -54,18 +56,32 @@ const Profile = () => {
   }, [matchState]);
 
   const renderMatch = () => {
-    if(renderMatchs){
-      setRenderMatch(false)
+    if (renderMatchs) {
+      setRenderMatch(false);
     } else {
       setRenderMatch(true);
     }
-   
+    // matchDataStateDb.map((item)=>console.log(item))
+    console.log(matchState);
   };
 
-  const analisar = () => {
-    console.log(matchDataState);
+  const analisar = async () => {
+    setRender(false);
+    getMatches(scoutState.puuid, 420);
+    console.log(matchState);
+    for (var i in matchState.matches) {
+      await apiHeader.get(`/verify-id/${matchState.matches[i]}`).then((res) => {
+        if (res.data.length == 0) {
+          getMatchData(matchState.matches[i]);
+        }
+      });
+    }
   };
-
+  useEffect(() => {
+    if (matchDataStateDb.length >= 1) {
+      setRender(true);
+    }
+  }, [matchDataStateDb]);
   return (
     <S.ProfileAndMatchAndRanked>
       <S.ProfileAndMatch>
@@ -83,12 +99,12 @@ const Profile = () => {
                 ) : (
                   <></>
                 )}
-                <button onClick={analisar}>Analisar</button>
+                <button onClick={analisar}>Atualizar</button>
               </S.SummonerInfo>
               <S.Mast>
                 <Masteries />
               </S.Mast>
-              <Graphics/>
+              <Graphics />
             </>
           ) : (
             <>
@@ -97,10 +113,10 @@ const Profile = () => {
           )}
         </S.Wrapper>
         <>
-        <Compare/>
+          <Compare />
           {renderMatchs ? (
             <>
-              <ActiveMatch/>
+              <ActiveMatch />
             </>
           ) : (
             <></>

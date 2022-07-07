@@ -1,4 +1,5 @@
 import React from "react";
+import useScout from "../../hooks/riot-hook";
 import * as S from "./styled";
 
 const ActiveMatchPlayer = ({
@@ -25,11 +26,16 @@ const ActiveMatchPlayer = ({
   elo2Rank,
   elo2Pdl,
 }) => {
+  const {getSummoner, setRender} = useScout()
+  const call = () =>{
+    getSummoner(summonerName)
+    setRender(false)
+  }
   return (
     <S.Wrapper>
 
       <S.PlayerData>
-        <span>{summonerName}</span>
+        <S.Styledspan onClick={call} style={{cursor:"pointer"}} >{summonerName}</S.Styledspan>
         <img src={summonerIcon} width="56" />
       </S.PlayerData>
       <S.HeroData>

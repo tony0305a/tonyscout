@@ -53,3 +53,10 @@ justify-content:center;
 align-items:center;
 
 `;
+export const Styledspan = styled.span`
+cursor: pointer;
+&:hover{
+    color:gold;
+}
+
+`;

@@ -32,6 +32,9 @@ const useScout = () => {
     cleanRankedState,
     trackerState,
     getSummonerToTrack,
+    matchDataStateDb,
+    getMatchsFromDatabase,
+    cleanMatchsFromDatabase,
   } = useContext(RiotContext);
 
   return {
@@ -64,6 +67,9 @@ const useScout = () => {
     cleanRankedState,
     trackerState,
     getSummonerToTrack,
+    matchDataStateDb,
+    getMatchsFromDatabase,
+    cleanMatchsFromDatabase,
   };
 };
 export default useScout;

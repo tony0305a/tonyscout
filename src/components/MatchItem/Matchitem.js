@@ -13,8 +13,8 @@ import {
   Title,
   Tooltip,
   Legend,
-} from 'chart.js';
-import { Bar } from 'react-chartjs-2';
+} from "chart.js";
+import { Bar } from "react-chartjs-2";
 ChartJS.register(
   CategoryScale,
   LinearScale,
@@ -169,7 +169,7 @@ const Matchitem = ({
   var clockTime = ("" + decimalTime).replace(".", ":");
 
   const options = {
-    indexAxis: 'x',
+    indexAxis: "x",
     elements: {
       bar: {
         borderWidth: 2,
@@ -178,155 +178,152 @@ const Matchitem = ({
     responsive: true,
     plugins: {
       legend: {
-        position: 'right',
+        position: "right",
       },
       title: {
         display: false,
-        text: 'Chart.js Horizontal Bar Chart',
+        text: "Chart.js Horizontal Bar Chart",
       },
     },
   };
-  
-  const labels = []
-  const damages = []
-  const labels2 = []
-  const damages2 = []
-  for(var i = 0;i<5;i++){
-    labels.push(parts[i].summonerName)
-    damages.push(parts[i].totalDamageDealtToChampions)
+
+  const labels = [];
+  const damages = [];
+  const labels2 = [];
+  const damages2 = [];
+  for (var i = 0; i < 5; i++) {
+    labels.push(parts[i].summonerName);
+    damages.push(parts[i].totalDamageDealtToChampions);
   }
 
-  for(var i = 5;i<10;i++){
-    labels2.push(parts[i].summonerName)
-    damages2.push(parts[i].totalDamageDealtToChampions)
-  } 
-   const data = {
+  for (var i = 5; i < 10; i++) {
+    labels2.push(parts[i].summonerName);
+    damages2.push(parts[i].totalDamageDealtToChampions);
+  }
+  const data = {
     labels,
-    datasets: [ 
+    datasets: [
       {
-        label: 'Dmg',
+        label: "Dmg",
         data: damages,
-        borderColor: 'rgb(0, 0, 255)',
-        backgroundColor: 'rgba(128, 0, 128, 1)',
+        borderColor: "rgb(0, 0, 255)",
+        backgroundColor: "rgba(128, 0, 128, 1)",
       },
     ],
   };
-   const data2 = {
-    labels:labels2,
-    datasets: [ 
+  const data2 = {
+    labels: labels2,
+    datasets: [
       {
-        label: 'Dmg',
+        label: "Dmg",
         data: damages2,
-        borderColor: 'rgb(255, 0, 0)',
-        backgroundColor: 'rgba(128, 0, 128, 1)',
+        borderColor: "rgb(255, 0, 0)",
+        backgroundColor: "rgba(128, 0, 128, 1)",
       },
     ],
   };
   return (
-      <S.Wrapper style={{ backgroundColor: color }} id={id}>
-        <S.UpperLine>
-          <S.ColunmMetadata>
-            <span>{gameMode}</span>
-            <span>{role}</span>
-            <ReactTimeAgo
-              date={creationTime}
-              locale="pt-BR"
-              timeStyle="round"
-            />
-          </S.ColunmMetadata>
-          <S.ColunmChampion>
-            <S.ChampionLine>
-              <S.Champion src={champPic} width="72" />
-              <S.Line>
-                <S.SummonerSpells>
-                  <img src={SS1} width="22" height="22" />
-                  <img src={SS2} width="22" height="22" />
-                </S.SummonerSpells>
-              </S.Line>
-              <S.Line>
-                <S.Runes>
-                  <S.Line>
-                    <img src={rune1} width="24" />
-                    <img src={rune2} width="24" />
-                    <img src={rune3} width="24" />
-                    <img src={rune4} width="24" />
-                  </S.Line>
-                  <S.Line>
-                    <img src={rune5} width="24" />
-                    <img src={rune6} width="24" />
-                  </S.Line>
-                  <S.Line>
-                    <img src={rune7} width="24" />
-                    <img src={rune8} width="24" />
-                    <img src={rune9} width="24" />
-                  </S.Line>
-                </S.Runes>
-              </S.Line>
-            </S.ChampionLine>
-          </S.ColunmChampion>
-          <S.ColunmScore>
-            <span>
-              {kills}/{deaths}/{assists}
-            </span>
-            <span>{farm + farm1}:CS</span>
-          </S.ColunmScore>
-          <S.ColunmParticipants>
-            {champion.completed ? (
-              <>
-                {passItem.info.participants.map((item, index) => (
-                  <div key={index}>
-                    <MatchitemParticipants
-                      name={item.summonerName}
-                      champ={`https://ddragon.leagueoflegends.com/cdn/${version}/img/champion/${getChampName(
-                        item.championId
-                      )}`}
-                    ></MatchitemParticipants>
-                  </div>
-                ))}
-              </>
-            ) : (
-              <>
-                <p>carregando...</p>
-              </>
-            )}
-          </S.ColunmParticipants>
-        </S.UpperLine>
-        <S.LowerLine>
-          <S.ColunmMetadata>
-            <span>{result}</span>
-            <span>{clockTime}</span>
-          </S.ColunmMetadata>
-          <S.ColunmBuild>
+    <S.Wrapper style={{ backgroundColor: color }} id={id}>
+      <S.UpperLine>
+        <S.ColunmMetadata>
+          <span>{gameMode}</span>
+          <span>{role}</span>
+          <ReactTimeAgo date={creationTime} locale="pt-BR" timeStyle="round" />
+        </S.ColunmMetadata>
+        <S.ColunmChampion>
+          <S.ChampionLine>
+            <S.Champion src={champPic} width="72" />
             <S.Line>
-              <img src={item1}  />
-              <img src={item2}  />
-              <img src={item3}  />
-              <img src={item4}  />
-              <img src={item5}  />
-              <img src={item6}  />
+              <S.SummonerSpells>
+                <img src={SS1} width="22" height="22" />
+                <img src={SS2} width="22" height="22" />
+              </S.SummonerSpells>
             </S.Line>
-          </S.ColunmBuild>
-        </S.LowerLine>
-        <S.ColunmGraphs>
-            <div             
-            style={{
-              display:"flex",
-              margin: "8",
-              width: "370px",
-            }}>
+            <S.Line>
+              <S.Runes>
+                <S.Line>
+                  <img src={rune1} width="24" />
+                  <img src={rune2} width="24" />
+                  <img src={rune3} width="24" />
+                  <img src={rune4} width="24" />
+                </S.Line>
+                <S.Line>
+                  <img src={rune5} width="24" />
+                  <img src={rune6} width="24" />
+                </S.Line>
+                <S.Line>
+                  <img src={rune7} width="24" />
+                  <img src={rune8} width="24" />
+                  <img src={rune9} width="24" />
+                </S.Line>
+              </S.Runes>
+            </S.Line>
+          </S.ChampionLine>
+        </S.ColunmChampion>
+        <S.ColunmScore>
+          <span>
+            {kills}/{deaths}/{assists}
+          </span>
+          <span>{farm + farm1}:CS</span>
+        </S.ColunmScore>
+        <S.ColunmParticipants>
+          {champion.completed ? (
+            <>
+              {passItem.participants.map((item, index) => (
+                <div key={index}>
+                  <MatchitemParticipants
+                    name={item.summonerName}
+                    champ={`https://ddragon.leagueoflegends.com/cdn/${version}/img/champion/${getChampName(
+                      item.championId
+                    )}`}
+                  ></MatchitemParticipants>
+                </div>
+              ))}
+            </>
+          ) : (
+            <>
+              <p>carregando...</p>
+            </>
+          )}
+        </S.ColunmParticipants>
+      </S.UpperLine>
+      <S.LowerLine>
+        <S.ColunmMetadata>
+          <span>{result}</span>
+          <span>{clockTime}</span>
+        </S.ColunmMetadata>
+        <S.ColunmBuild>
+          <S.Line>
+            <img src={item1} />
+            <img src={item2} />
+            <img src={item3} />
+            <img src={item4} />
+            <img src={item5} />
+            <img src={item6} />
+          </S.Line>
+        </S.ColunmBuild>
+      </S.LowerLine>
+      <S.ColunmGraphs>
+        <div
+          style={{
+            display: "flex",
+            margin: "8",
+            width: "370px",
+          }}
+        >
           <Bar options={options} data={data} />
-          </div>
-          <div             
-            style={{
-              display:"flex",
-              margin: "8",
-              width: "370px",
-            }}>
+        </div>
+        <div
+          style={{
+            display: "flex",
+            margin: "8",
+            width: "370px",
+          }}
+        >
           <Bar options={options} data={data2} />
-          </div>
-          </S.ColunmGraphs>
-
-      </S.Wrapper>
+        </div>
+      </S.ColunmGraphs>
+    </S.Wrapper>
   );
 };
 export default Matchitem;

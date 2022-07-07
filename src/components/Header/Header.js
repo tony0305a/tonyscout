@@ -11,50 +11,64 @@ const Header = () => {
     version,
     getMasteries,
     scoutState,
-    championState,
     getChampionInfo,
-    rankedState,
     getRanked,
     getMatches,
     getMatchData,
-    matchDataState,
     matchState,
     setRender,
+    getMatchsFromDatabase,
+    matchDataStateDb,
     renderState,
+    cleanMatchsFromDatabase,
   } = useScout();
 
   const [searchSummoner, setSearchSummoner] = useState();
   const [champion, setChampion] = useState();
 
   const findSummoner = () => {
+    setRender(false);
     getChampionInfo();
     getVersion();
     getSummoner(searchSummoner);
-    setRender(false);
   };
   useEffect(() => {
     if (scoutState.hasUser) {
       getMasteries(scoutState.id);
       getRanked(scoutState.id);
-      getMatches(scoutState.puuid,420);
+      getMatches(scoutState.puuid, 420);
+      cleanMatchsFromDatabase();
+      getMatchsFromDatabase(scoutState.puuid);
       getChampionInfo();
     }
   }, [scoutState]);
 
   useEffect(() => {
     getVersion();
-    for (var i in matchState.matches) {
-      getMatchData(matchState.matches[i]);
-    }
     // setRender(true);console.log('render para true')
     return function cleanUp() {
-    //  console.log("cleanUp matchState");
+      //  console.log("cleanUp matchState");
       //TODO add a render false
       //     cleanMatchData()
       //   setRender(false);console.log('render para false')
     };
   }, [matchState]);
+  useEffect(() => {
+    // console.log(matchDataStateDb)
 
+    if (matchDataStateDb.length !== 0) {
+      //      setRender(true);console.log('deveria set o render pra true')
+      /*
+      for (var i in matchState.matches) {
+        getMatchData(matchState.matches[i]);console.log('pegou partidas direto da API')
+      }
+      */
+    }
+
+    return function cleanUp() {
+      setRender(false);
+    };
+  }, [matchDataStateDb]);
   return (
     <S.Wrapper>
       <span>Patch {version}</span>

@@ -14,13 +14,13 @@ import EmblemDiamond from "../../imgs/Emblem_Diamond.png";
 import EmblemMaster from "../../imgs/Emblem_Master.png";
 import EmblemGrandmaster from "../../imgs/Emblem_Grandmaster.png";
 import EmblemChallenger from "../../imgs/Emblem_Challenger.png";
-import m7 from "../../imgs/7.png"
-import m6 from "../../imgs/6.png"
-import m5 from "../../imgs/5.png"
-import m4 from "../../imgs/4.png"
-import m3 from "../../imgs/3.png"
-import m2 from "../../imgs/2.png"
-import m1 from "../../imgs/1.png"
+import m7 from "../../imgs/7.png";
+import m6 from "../../imgs/6.png";
+import m5 from "../../imgs/5.png";
+import m4 from "../../imgs/4.png";
+import m3 from "../../imgs/3.png";
+import m2 from "../../imgs/2.png";
+import m1 from "../../imgs/1.png";
 import apiHeader from "../../services/apiHeader";
 
 const ActiveMatch = () => {
@@ -31,48 +31,35 @@ const ActiveMatch = () => {
   const [summonerSpell, setSummonerSpell] = useState();
   const [runes, setRunes] = useState();
   const [activeInfo, setActiveInfo] = useState(false);
-  const [champion,setChampion] = useState();
-  const [playerInfo,setPlayerInfo] = useState()
+  const [champion, setChampion] = useState();
+  const [playerInfo, setPlayerInfo] = useState();
 
-  useEffect(()=>{
-
-      console.log('montou')
-  },[])
-
+  useEffect(() => {
+    console.log("montou");
+  }, []);
 
   useEffect(() => {
     setPartElo([]);
     async function activeMatch(id) {
       try {
-        const match = await apiHeader.get(
-          `active-match/${id}`
-        );
-        console.log(match);
+        const match = await apiHeader.get(`active-match/${id}`);
         setActiveInfo(match);
         setRenderActiveMatch(true);
       } catch (error) {
-        console.log("Sem partida ativa");
         setRenderActiveMatch(false);
         setActiveInfo();
         getChampionInfo(version);
       }
     }
 
-
-
     activeMatch(scoutState.id);
-
-
-
   }, [scoutState]);
 
   useEffect(() => {
     if (activeInfo !== undefined) {
       const getPartElo = (id) => {
         apiHeader
-          .get(
-            `ranked/${id}`
-          )
+          .get(`ranked/${id}`)
           .then((res) => setPartElo((prevState) => [...prevState, res.data]));
       };
       if (activeInfo.data !== undefined) {
@@ -97,8 +84,7 @@ const ActiveMatch = () => {
     )
       .then((response) => response.text())
       .then((x) => setChampion(JSON.parse(x)));
-      console.log(champion)
-
+    console.log(champion);
   }, [activeInfo]);
 
   const getHeroInfo = (id) => {
@@ -201,72 +187,68 @@ const ActiveMatch = () => {
     }
   };
 
-
-
-
-
   return (
     <S.Wrapper>
       <h1>Active Match</h1>
       {renderActiveMatch ? (
         <>
-        <S.Body>
-          {activeInfo.data.participants.sort().map((item) => (
-            <ActiveMatchPlayer
-              summonerName={item.summonerName}
-              summonerIcon={`https://ddragon.leagueoflegends.com/cdn/${version}/img/profileicon/${item.profileIconId}.png`}
-              championImage={`https://ddragon.leagueoflegends.com/cdn/${version}/img/champion/${getHeroInfo(
-                item.championId
-              )}`}
-              summonerSpell1={`https://ddragon.leagueoflegends.com/cdn/${version}/img/spell/${getSS1(
-                item.spell1Id
-              )}`}
-              summonerSpell2={`https://ddragon.leagueoflegends.com/cdn/${version}/img/spell/${getSS1(
-                item.spell2Id
-              )}`}
-              primaryRune1={`https://ddragon.leagueoflegends.com/cdn/img/${getRunes(
-                item.perks.perkStyle,
-                item.perks.perkIds[0]
-              )}`}
-              primaryRune2={`https://ddragon.leagueoflegends.com/cdn/img/${getRunes(
-                item.perks.perkStyle,
-                item.perks.perkIds[1]
-              )}`}
-              primaryRune3={`https://ddragon.leagueoflegends.com/cdn/img/${getRunes(
-                item.perks.perkStyle,
-                item.perks.perkIds[2]
-              )}`}
-              primaryRune4={`https://ddragon.leagueoflegends.com/cdn/img/${getRunes(
-                item.perks.perkStyle,
-                item.perks.perkIds[3]
-              )}`}
-              secondaryRune1={`https://ddragon.leagueoflegends.com/cdn/img/${getRunes(
-                item.perks.perkSubStyle,
-                item.perks.perkIds[4]
-              )}`}
-              secondaryRune2={`https://ddragon.leagueoflegends.com/cdn/img/${getRunes(
-                item.perks.perkSubStyle,
-                item.perks.perkIds[5]
-              )}`}
-              statMod1={`https://ddragon.leagueoflegends.com/cdn/img/perk-images/StatMods/${getMods(
-                item.perks.perkIds[6]
-              )}`}
-              statMod2={`https://ddragon.leagueoflegends.com/cdn/img/perk-images/StatMods/${getMods(
-                item.perks.perkIds[7]
-              )}`}
-              statMod3={`https://ddragon.leagueoflegends.com/cdn/img/perk-images/StatMods/${getMods(
-                item.perks.perkIds[8]
-              )}`}
-              elo={getElo(item.summonerId, 0)}
-              eloQueue={getEloInfo(item.summonerId, 0, "queueType")}
-              eloRank={getEloInfo(item.summonerId, 0, "rank")}
-              eloPdl={getEloInfo(item.summonerId, 0, "leaguePoints")}
-              elo2={getElo(item.summonerId, 1)}
-              elo2Queue={getEloInfo(item.summonerId, 1, "queueType")}
-              elo2Rank={getEloInfo(item.summonerId, 1, "rank")}
-              elo2Pdl={getEloInfo(item.summonerId, 1, "leaguePoints")}
-            ></ActiveMatchPlayer>
-          ))}
+          <S.Body>
+            {activeInfo.data.participants.sort().map((item) => (
+              <ActiveMatchPlayer
+                summonerName={item.summonerName}
+                summonerIcon={`https://ddragon.leagueoflegends.com/cdn/${version}/img/profileicon/${item.profileIconId}.png`}
+                championImage={`https://ddragon.leagueoflegends.com/cdn/${version}/img/champion/${getHeroInfo(
+                  item.championId
+                )}`}
+                summonerSpell1={`https://ddragon.leagueoflegends.com/cdn/${version}/img/spell/${getSS1(
+                  item.spell1Id
+                )}`}
+                summonerSpell2={`https://ddragon.leagueoflegends.com/cdn/${version}/img/spell/${getSS1(
+                  item.spell2Id
+                )}`}
+                primaryRune1={`https://ddragon.leagueoflegends.com/cdn/img/${getRunes(
+                  item.perks.perkStyle,
+                  item.perks.perkIds[0]
+                )}`}
+                primaryRune2={`https://ddragon.leagueoflegends.com/cdn/img/${getRunes(
+                  item.perks.perkStyle,
+                  item.perks.perkIds[1]
+                )}`}
+                primaryRune3={`https://ddragon.leagueoflegends.com/cdn/img/${getRunes(
+                  item.perks.perkStyle,
+                  item.perks.perkIds[2]
+                )}`}
+                primaryRune4={`https://ddragon.leagueoflegends.com/cdn/img/${getRunes(
+                  item.perks.perkStyle,
+                  item.perks.perkIds[3]
+                )}`}
+                secondaryRune1={`https://ddragon.leagueoflegends.com/cdn/img/${getRunes(
+                  item.perks.perkSubStyle,
+                  item.perks.perkIds[4]
+                )}`}
+                secondaryRune2={`https://ddragon.leagueoflegends.com/cdn/img/${getRunes(
+                  item.perks.perkSubStyle,
+                  item.perks.perkIds[5]
+                )}`}
+                statMod1={`https://ddragon.leagueoflegends.com/cdn/img/perk-images/StatMods/${getMods(
+                  item.perks.perkIds[6]
+                )}`}
+                statMod2={`https://ddragon.leagueoflegends.com/cdn/img/perk-images/StatMods/${getMods(
+                  item.perks.perkIds[7]
+                )}`}
+                statMod3={`https://ddragon.leagueoflegends.com/cdn/img/perk-images/StatMods/${getMods(
+                  item.perks.perkIds[8]
+                )}`}
+                elo={getElo(item.summonerId, 0)}
+                eloQueue={getEloInfo(item.summonerId, 0, "queueType")}
+                eloRank={getEloInfo(item.summonerId, 0, "rank")}
+                eloPdl={getEloInfo(item.summonerId, 0, "leaguePoints")}
+                elo2={getElo(item.summonerId, 1)}
+                elo2Queue={getEloInfo(item.summonerId, 1, "queueType")}
+                elo2Rank={getEloInfo(item.summonerId, 1, "rank")}
+                elo2Pdl={getEloInfo(item.summonerId, 1, "leaguePoints")}
+              ></ActiveMatchPlayer>
+            ))}
           </S.Body>
         </>
       ) : (

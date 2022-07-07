@@ -41,6 +41,7 @@ const Analyzer = () => {
     rankedState,
     graphState,
     setGraphs,
+    matchDataStateDb,
   } = useScout();
   const [graph, setGraph] = useState([]);
   const [roles, setRoles] = useState([]);
@@ -136,8 +137,8 @@ const Analyzer = () => {
     turretsTakenWithRiftHerald: 0,
   });
   const getIndex = (item) => {
-    for (var i in item.info.participants) {
-      if (item.info.participants[i].summonerId === scoutState.id) {
+    for (var i in item.participants) {
+      if (item.participants[i].summonerId === scoutState.id) {
         return i;
       }
     }
@@ -148,27 +149,24 @@ const Analyzer = () => {
     var mid = 0;
     var ad = 0;
     var sup = 0;
-    matchDataState.map((item) => {
-      if (item.info.queueId === 420) {
-        if (
-          item.info.participants[getIndex(item)].individualPosition === "TOP"
-        ) {
+    matchDataStateDb.map((item) => {
+      if (item.queueId === 420) {
+        if (item.participants[getIndex(item)].individualPosition === "TOP") {
           top += 1;
         } else if (
-          item.info.participants[getIndex(item)].individualPosition === "JUNGLE"
+          item.participants[getIndex(item)].individualPosition === "JUNGLE"
         ) {
           jungle += 1;
         } else if (
-          item.info.participants[getIndex(item)].individualPosition === "MIDDLE"
+          item.participants[getIndex(item)].individualPosition === "MIDDLE"
         ) {
           mid += 1;
         } else if (
-          item.info.participants[getIndex(item)].individualPosition === "BOTTOM"
+          item.participants[getIndex(item)].individualPosition === "BOTTOM"
         ) {
           ad += 1;
         } else if (
-          item.info.participants[getIndex(item)].individualPosition ===
-          "UTILITY"
+          item.participants[getIndex(item)].individualPosition === "UTILITY"
         ) {
           sup += 1;
         }
@@ -268,630 +266,573 @@ const Analyzer = () => {
     var neutralMinionsKilled = 0;
     var totalMinionsKilled = 0;
     var timePlayed = 0;
-    if(matchDataState != undefined){
-    matchDataState.map((item) => {
-      if (item.info.participants !== undefined) {
-        if (
-          item.info.participants[getIndex(item)].challenges !== undefined &&
-          item.info.queueId === 420
-        ) {
-          soloQ += 1;
-          soloKills += parseInt(
-            item.info.participants[getIndex(item)].challenges.soloKills
-          );
-
-          if (junglerKillsEarlyJungle !== 0) {
-            junglerKillsEarlyJungle +=
-              item.info.participants[getIndex(item)].challenges
-                .junglerKillsEarlyJungle;
-          }
-          if (item.info.participants[getIndex(item)].timePlayed) {
-            timePlayed += parseInt(
-              item.info.participants[getIndex(item)].timePlayed
-            );
-          }
-          if (item.info.participants[getIndex(item)].neutralMinionsKilled) {
-            neutralMinionsKilled += parseInt(
-              item.info.participants[getIndex(item)].neutralMinionsKilled
-            );
-          }
-          if (item.info.participants[getIndex(item)].totalMinionsKilled) {
-            totalMinionsKilled += parseInt(
-              item.info.participants[getIndex(item)].totalMinionsKilled
-            );
-          }
+    if (matchDataStateDb != undefined) {
+      matchDataStateDb.map((item) => {
+        if (item.participants !== undefined) {
           if (
-            item.info.participants[getIndex(item)].challenges.dragonTakedowns
+            item.participants[getIndex(item)].challenges !== undefined &&
+            item.queueId === 420
           ) {
-            dragonTakedowns += parseInt(
-              item.info.participants[getIndex(item)].challenges.dragonTakedowns
-            );
-          }
-          if (
-            item.info.participants[getIndex(item)].challenges
-              .riftHeraldTakedowns
-          ) {
-            riftHeraldTakedowns += parseInt(
-              item.info.participants[getIndex(item)].challenges
-                .riftHeraldTakedowns
-            );
-          }
-          if (
-            item.info.participants[getIndex(item)].challenges
-              .killAfterHiddenWithAlly
-          ) {
-            killAfterHiddenWithAlly += parseInt(
-              item.info.participants[getIndex(item)].challenges
-                .killAfterHiddenWithAlly
-            );
-          }
-          if (
-            item.info.participants[getIndex(item)].challenges
-              .killsNearEnemyTurret
-          ) {
-            killsNearEnemyTurret += parseInt(
-              item.info.participants[getIndex(item)].challenges
-                .killsNearEnemyTurret
-            );
-          }
-          if (killsOnLanersEarlyJungleAsJungler) {
-            killsOnLanersEarlyJungleAsJungler += parseInt(
-              item.info.participants[getIndex(item)].challenges
-                .killsOnLanersEarlyJungleAsJungler
-            );
-          }
-          if (
-            item.info.participants[getIndex(item)].challenges
-              .killsUnderOwnTurret
-          ) {
-            killsUnderOwnTurret += parseInt(
-              item.info.participants[getIndex(item)].challenges
-                .killsUnderOwnTurret
-            );
-          }
-          if (
-            item.info.participants[getIndex(item)].challenges
-              .laneMinionsFirst10Minutes
-          ) {
-            laneMinionsFirst10Minutes += parseInt(
-              item.info.participants[getIndex(item)].challenges
-                .laneMinionsFirst10Minutes
-            );
-          }
-          if (laningPhaseGoldExpAdvantage) {
-            laningPhaseGoldExpAdvantage += parseInt(
-              item.info.participants[getIndex(item)].challenges
-                .laningPhaseGoldExpAdvantage
-            );
-          }
-          if (maxCsAdvantageOnLaneOpponent !== 0) {
-            maxCsAdvantageOnLaneOpponent += parseInt(
-              item.info.participants[getIndex(item)].challenges
-                .maxCsAdvantageOnLaneOpponent
-            );
-          }
-
-          maxKillDeficit += parseInt(
-            item.info.participants[getIndex(item)].challenges.maxKillDeficit
-          );
-          if (maxLevelLeadLaneOpponent) {
-            maxLevelLeadLaneOpponent += parseInt(
-              item.info.participants[getIndex(item)].challenges
-                .maxLevelLeadLaneOpponent
-            );
-          }
-          if (item.info.participants[getIndex(item)].challenges.multikills) {
-            multikills += parseInt(
-              item.info.participants[getIndex(item)].challenges.multikills
-            );
-          }
-          if (
-            item.info.participants[getIndex(item)].challenges
-              .multikillsAfterAggressiveFlash
-          ) {
-            multikillsAfterAggressiveFlash += parseInt(
-              item.info.participants[getIndex(item)].challenges
-                .multikillsAfterAggressiveFlash
-            );
-          }
-          if (
-            item.info.participants[getIndex(item)].challenges.outnumberedKills
-          ) {
-            outnumberedKills += parseInt(
-              item.info.participants[getIndex(item)].challenges.outnumberedKills
-            );
-          }
-          if (
-            item.info.participants[getIndex(item)].challenges.quickFirstTurret
-          ) {
-            quickFirstTurret += parseInt(
-              item.info.participants[getIndex(item)].challenges.quickFirstTurret
-            );
-          }
-          if (
-            item.info.participants[getIndex(item)].challenges.quickSoloKills
-          ) {
-            quickSoloKills += parseInt(
-              item.info.participants[getIndex(item)].challenges.quickSoloKills
-            );
-          }
-          if (
-            item.info.participants[getIndex(item)].challenges
-              .takedownOnFirstTurret
-          ) {
-            takedownOnFirstTurret += parseInt(
-              item.info.participants[getIndex(item)].challenges
-                .takedownOnFirstTurret
-            );
-          }
-          if (
-            item.info.participants[getIndex(item)].challenges
-              .takedownsAfterGainingLevelAdvantage
-          ) {
-            takedownsAfterGainingLevelAdvantage += parseInt(
-              item.info.participants[getIndex(item)].challenges
-                .takedownsAfterGainingLevelAdvantage
-            );
-          }
-          if (
-            item.info.participants[getIndex(item)].challenges
-              .takedownsBeforeJungleMinionSpawn
-          ) {
-            takedownsBeforeJungleMinionSpawn += parseInt(
-              item.info.participants[getIndex(item)].challenges
-                .takedownsBeforeJungleMinionSpawn
-            );
-          }
-          if (
-            item.info.participants[getIndex(item)].challenges
-              .takedownsFirstXMinutes
-          ) {
-            takedownsFirstXMinutes += parseInt(
-              item.info.participants[getIndex(item)].challenges
-                .takedownsFirstXMinutes
-            );
-          }
-          turretPlatesTaken += parseInt(
-            item.info.participants[getIndex(item)].challenges.turretPlatesTaken
-          );
-
-          earlyLaningPhaseGoldExpAdvantage += parseInt(
-            item.info.participants[getIndex(item)].challenges.turretPlatesTaken
-          );
-          damagePerMinute += parseInt(
-            item.info.participants[getIndex(item)].challenges.damagePerMinute
-          );
-          damageTakenOnTeamPercentage +=
-            item.info.participants[getIndex(item)].challenges
-              .damageTakenOnTeamPercentage;
-          teamDamagePercentage +=
-            item.info.participants[getIndex(item)].challenges
-              .teamDamagePercentage;
-          totalDamageDealtToChampions += parseInt(
-            item.info.participants[getIndex(item)].totalDamageDealtToChampions
-          );
-          totalDamageTaken += parseInt(
-            item.info.participants[getIndex(item)].totalDamageTaken
-          );
-          totalHeal += parseInt(
-            item.info.participants[getIndex(item)].totalHeal
-          );
-
-          if (
-            item.info.participants[getIndex(item)].challenges
-              .enemyChampionImmobilizations !== 0
-          ) {
-            enemyChampionImmobilizations += parseInt(
-              item.info.participants[getIndex(item)].challenges
-                .enemyChampionImmobilizations
-            );
-          }
-          if (
-            item.info.participants[getIndex(item)].challenges
-              .fullTeamTakedown !== 0
-          ) {
-            fullTeamTakedown += parseInt(
-              item.info.participants[getIndex(item)].challenges.fullTeamTakedown
-            );
-          }
-          if (
-            item.info.participants[getIndex(item)].challenges
-              .highestCrowdControlScore >= 0
-          ) {
-            highestCrowdControlScore += parseFloat(
-              item.info.participants[getIndex(item)].challenges
-                .highestCrowdControlScore
-            );
-          }
-          if (
-            item.info.participants[getIndex(item)].challenges
-              .immobilizeAndKillWithAlly
-          ) {
-            immobilizeAndKillWithAlly += parseInt(
-              item.info.participants[getIndex(item)].challenges
-                .immobilizeAndKillWithAlly
-            );
-          }
-          if (
-            item.info.participants[getIndex(item)].challenges
-              .killedChampTookFullTeamDamageSurvived
-          ) {
-            killedChampTookFullTeamDamageSurvived += parseInt(
-              item.info.participants[getIndex(item)].challenges
-                .killedChampTookFullTeamDamageSurvived
-            );
-          }
-          if (
-            item.info.participants[getIndex(item)].challenges
-              .knockEnemyIntoTeamAndKill
-          ) {
-            knockEnemyIntoTeamAndKill += parseInt(
-              item.info.participants[getIndex(item)].challenges
-                .knockEnemyIntoTeamAndKill
-            );
-          }
-          if (
-            item.info.participants[getIndex(item)].challenges.pickKillWithAlly
-          ) {
-            pickKillWithAlly += parseInt(
-              item.info.participants[getIndex(item)].challenges.pickKillWithAlly
-            );
-          }
-          if (
-            item.info.participants[getIndex(item)].challenges
-              .survivedThreeImmobilizesInFight
-          ) {
-            survivedThreeImmobilizesInFight += parseInt(
-              item.info.participants[getIndex(item)].challenges
-                .survivedThreeImmobilizesInFight
-            );
-          }
-          if (
-            item.info.participants[getIndex(item)].challenges
-              .tookLargeDamageSurvived
-          ) {
-            tookLargeDamageSurvived += parseInt(
-              item.info.participants[getIndex(item)].challenges
-                .tookLargeDamageSurvived
-            );
-          }
-
-          if (
-            item.info.participants[getIndex(item)].challenges
-              .completeSupportQuestInTime
-          ) {
-            completeSupportQuestInTime += parseInt(
-              item.info.participants[getIndex(item)].challenges
-                .completeSupportQuestInTime
-            );
-          }
-          if (
-            item.info.participants[getIndex(item)].challenges
-              .controlWardTimeCoverageInRiverOrEnemyHalf >= 0
-          ) {
-            controlWardTimeCoverageInRiverOrEnemyHalf += parseFloat(
-              item.info.participants[getIndex(item)].challenges
-                .controlWardTimeCoverageInRiverOrEnemyHalf
-            );
-          }
-          if (
-            item.info.participants[getIndex(item)].challenges
-              .controlWardsPlaced
-          ) {
-            controlWardsPlaced += parseFloat(
-              item.info.participants[getIndex(item)].challenges
-                .controlWardsPlaced
-            );
-          }
-          if (
-            item.info.participants[getIndex(item)].challenges
-              .effectiveHealAndShielding
-          ) {
-            effectiveHealAndShielding += parseInt(
-              item.info.participants[getIndex(item)].challenges
-                .effectiveHealAndShielding
-            );
-          }
-          if (
-            item.info.participants[getIndex(item)].challenges
-              .killParticipation >= 0
-          ) {
-            killParticipation += parseFloat(
-              item.info.participants[getIndex(item)].challenges
-                .killParticipation
-            );
-          }
-          if (
-            item.info.participants[getIndex(item)].challenges.saveAllyFromDeath
-          ) {
-            saveAllyFromDeath += parseInt(
-              item.info.participants[getIndex(item)].challenges
-                .saveAllyFromDeath
-            );
-          }
-          if (
-            item.info.participants[getIndex(item)].challenges
-              .stealthWardsPlaced
-          ) {
-            stealthWardsPlaced += parseInt(
-              item.info.participants[getIndex(item)].challenges
-                .stealthWardsPlaced
-            );
-          }
-          if (
-            item.info.participants[getIndex(item)].challenges
-              .threeWardsOneSweeperCount
-          ) {
-            threeWardsOneSweeperCount += parseInt(
-              item.info.participants[getIndex(item)].challenges
-                .threeWardsOneSweeperCount
-            );
-          }
-          if (
-            item.info.participants[getIndex(item)].challenges
-              .visionScoreAdvantageLaneOpponent >= 0
-          ) {
-            visionScoreAdvantageLaneOpponent += parseFloat(
-              item.info.participants[getIndex(item)].challenges
-                .visionScoreAdvantageLaneOpponent
-            );
-          }
-          if (
-            item.info.participants[getIndex(item)].challenges
-              .visionScorePerMinute >= 0
-          ) {
-            visionScorePerMinute += parseFloat(
-              item.info.participants[getIndex(item)].challenges
-                .visionScorePerMinute
-            );
-          }
-          if (
-            item.info.participants[getIndex(item)].challenges
-              .visionScorePerMinute >= 0
-          ) {
-            visionScorePerMinute += parseInt(
-              item.info.participants[getIndex(item)].challenges
-                .visionScorePerMinute
-            );
-          }
-          if (item.info.participants[getIndex(item)].assists >= 0) {
-            assists += parseInt(item.info.participants[getIndex(item)].assists);
-          }
-          if (item.info.participants[getIndex(item)].visionScore >= 0) {
-            visionScore += parseInt(
-              item.info.participants[getIndex(item)].visionScore
-            );
-          }
-          if (
-            item.info.participants[getIndex(item)].challenges.soloKills
-          ) {
+            soloQ += 1;
             soloKills += parseInt(
-              item.info.participants[getIndex(item)].challenges.soloKills
+              item.participants[getIndex(item)].challenges.soloKills
             );
-          }
-          if (
-            item.info.participants[getIndex(item)].challenges
-              .soloTurretsLategame
-          ) {
-            soloTurretsLategame += parseInt(
-              item.info.participants[getIndex(item)].challenges
-                .soloTurretsLategame
-            );
-          }
-          if (
-            item.info.participants[getIndex(item)].challenges.teamBaronKills
-            
-          ) {
-            teamBaronKills += parseInt(
-              item.info.participants[getIndex(item)].challenges.teamBaronKills
-            );
-          }
-          if (
-            item.info.participants[getIndex(item)].challenges
-              .teamElderDragonKills
-          ) {
-            teamElderDragonKills += parseInt(
-              item.info.participants[getIndex(item)].challenges
-                .teamElderDragonKills
-            );
-          }
-          if (
-            item.info.participants[getIndex(item)].damageDealtToBuildings
-          ) {
-            damageDealtToBuildings += parseInt(
-              item.info.participants[getIndex(item)].damageDealtToBuildings
-            );
-          }
-          if (
-            item.info.participants[getIndex(item)].challenges
-              .alliedJungleMonsterKills
-          ) {
-            alliedJungleMonsterKills += parseInt(
-              item.info.participants[getIndex(item)].challenges
-                .alliedJungleMonsterKills
-            );
-          }
-          if (
-            item.info.participants[getIndex(item)].challenges.buffsStolen
-          ) {
-            buffsStolen += parseInt(
-              item.info.participants[getIndex(item)].challenges.buffsStolen
-            );
-          }
-          if (
-            item.info.participants[getIndex(item)].challenges
-              .enemyJungleMonsterKills
-          ) {
-            enemyJungleMonsterKills += parseInt(
-              item.info.participants[getIndex(item)].challenges
-                .enemyJungleMonsterKills
-            );
-          }
-          if (
-            item.info.participants[getIndex(item)].challenges
-              .initialBuffCount
-          ) {
-            initialBuffCount += parseInt(
-              item.info.participants[getIndex(item)].challenges.initialBuffCount
-            );
-          }
-          if (
-            item.info.participants[getIndex(item)].challenges
-              .initialCrabCount
-          ) {
-            initialCrabCount += parseInt(
-              item.info.participants[getIndex(item)].challenges.initialCrabCount
-            );
-          }
-          if (
-            item.info.participants[getIndex(item)].challenges
-              .jungleCsBefore10Minutes
-          ) {
-            jungleCsBefore10Minutes += parseInt(
-              item.info.participants[getIndex(item)].challenges
-                .jungleCsBefore10Minutes
-            );
-          }
-          if (
-            item.info.participants[getIndex(item)].challenges
-              .scuttleCrabKills
-          ) {
-            scuttleCrabKills += parseInt(
-              item.info.participants[getIndex(item)].challenges.scuttleCrabKills
-            );
-          }
-          if (
-            item.info.participants[getIndex(item)].challenges.baronTakedowns
-          ) {
-            baronTakedowns += parseInt(
-              item.info.participants[getIndex(item)].challenges.baronTakedowns
-            );
-          }
-          if (
-            item.info.participants[getIndex(item)].challenges
-              .epicMonsterKillsNearEnemyJungler
-          ) {
-            epicMonsterKillsNearEnemyJungler += parseInt(
-              item.info.participants[getIndex(item)].challenges
-                .epicMonsterKillsNearEnemyJungler
-            );
-          }
-          if (
-            item.info.participants[getIndex(item)].challenges
-              .epicMonsterKillsWithin30SecondsOfSpawn
-          ) {
-            epicMonsterKillsWithin30SecondsOfSpawn += parseInt(
-              item.info.participants[getIndex(item)].challenges
-                .epicMonsterKillsWithin30SecondsOfSpawn
-            );
-          }
-          if (
-            item.info.participants[getIndex(item)].challenges
-              .epicMonsterSteals
-          ) {
-            epicMonsterSteals += parseInt(
-              item.info.participants[getIndex(item)].challenges
-                .epicMonsterSteals
-            );
-          }
-          if (
-            item.info.participants[getIndex(item)].challenges
-              .epicMonsterStolenWithoutSmite
-          ) {
-            epicMonsterStolenWithoutSmite += parseInt(
-              item.info.participants[getIndex(item)].challenges
-                .epicMonsterStolenWithoutSmite
-            );
-          }
-          if (
-            item.info.participants[getIndex(item)].challenges
-              .junglerTakedownsNearDamagedEpicMonster
-          ) {
-            junglerTakedownsNearDamagedEpicMonster += parseInt(
-              item.info.participants[getIndex(item)].challenges
-                .junglerTakedownsNearDamagedEpicMonster
-            );
-          }
-          if (
-            item.info.participants[getIndex(item)].challenges
-              .kTurretsDestroyedBeforePlatesFall
-          ) {
-            kTurretsDestroyedBeforePlatesFall += parseInt(
-              item.info.participants[getIndex(item)].challenges
-                .kTurretsDestroyedBeforePlatesFall
-            );
-          }
-          if (
-            item.info.participants[getIndex(item)].challenges
-              .multiTurretRiftHeraldCount
-          ) {
-            multiTurretRiftHeraldCount += parseInt(
-              item.info.participants[getIndex(item)].challenges
-                .multiTurretRiftHeraldCount
-            );
-          }
-          if (
-            item.info.participants[getIndex(item)].challenges
-              .outnumberedNexusKill
-          ) {
-            outnumberedNexusKill += parseInt(
-              item.info.participants[getIndex(item)].challenges
-                .outnumberedNexusKill
-            );
-          }
-          if (
-            item.info.participants[getIndex(item)].challenges
-              .perfectDragonSoulsTaken
-          ) {
-            perfectDragonSoulsTaken += parseInt(
-              item.info.participants[getIndex(item)].challenges
-                .perfectDragonSoulsTaken
-            );
-          }
-          if (
-            item.info.participants[getIndex(item)].challenges.soloBaronKills
-          ) {
-            soloBaronKills += parseInt(
-              item.info.participants[getIndex(item)].challenges.soloBaronKills
-            );
-          }
 
-          if (
-            item.info.participants[getIndex(item)].challenges
-              .takedownOnFirstTurret
-          ) {
-            takedownOnFirstTurret += parseInt(
-              item.info.participants[getIndex(item)].challenges
-                .takedownOnFirstTurret
+            if (junglerKillsEarlyJungle !== 0) {
+              junglerKillsEarlyJungle +=
+                item.participants[getIndex(item)].challenges
+                  .junglerKillsEarlyJungle;
+            }
+            if (item.participants[getIndex(item)].timePlayed) {
+              timePlayed += parseInt(
+                item.participants[getIndex(item)].timePlayed
+              );
+            }
+            if (item.participants[getIndex(item)].neutralMinionsKilled) {
+              neutralMinionsKilled += parseInt(
+                item.participants[getIndex(item)].neutralMinionsKilled
+              );
+            }
+            if (item.participants[getIndex(item)].totalMinionsKilled) {
+              totalMinionsKilled += parseInt(
+                item.participants[getIndex(item)].totalMinionsKilled
+              );
+            }
+            if (item.participants[getIndex(item)].challenges.dragonTakedowns) {
+              dragonTakedowns += parseInt(
+                item.participants[getIndex(item)].challenges.dragonTakedowns
+              );
+            }
+            if (
+              item.participants[getIndex(item)].challenges.riftHeraldTakedowns
+            ) {
+              riftHeraldTakedowns += parseInt(
+                item.participants[getIndex(item)].challenges.riftHeraldTakedowns
+              );
+            }
+            if (
+              item.participants[getIndex(item)].challenges
+                .killAfterHiddenWithAlly
+            ) {
+              killAfterHiddenWithAlly += parseInt(
+                item.participants[getIndex(item)].challenges
+                  .killAfterHiddenWithAlly
+              );
+            }
+            if (
+              item.participants[getIndex(item)].challenges.killsNearEnemyTurret
+            ) {
+              killsNearEnemyTurret += parseInt(
+                item.participants[getIndex(item)].challenges
+                  .killsNearEnemyTurret
+              );
+            }
+            if (killsOnLanersEarlyJungleAsJungler) {
+              killsOnLanersEarlyJungleAsJungler += parseInt(
+                item.participants[getIndex(item)].challenges
+                  .killsOnLanersEarlyJungleAsJungler
+              );
+            }
+            if (
+              item.participants[getIndex(item)].challenges.killsUnderOwnTurret
+            ) {
+              killsUnderOwnTurret += parseInt(
+                item.participants[getIndex(item)].challenges.killsUnderOwnTurret
+              );
+            }
+            if (
+              item.participants[getIndex(item)].challenges
+                .laneMinionsFirst10Minutes
+            ) {
+              laneMinionsFirst10Minutes += parseInt(
+                item.participants[getIndex(item)].challenges
+                  .laneMinionsFirst10Minutes
+              );
+            }
+            if (laningPhaseGoldExpAdvantage) {
+              laningPhaseGoldExpAdvantage += parseInt(
+                item.participants[getIndex(item)].challenges
+                  .laningPhaseGoldExpAdvantage
+              );
+            }
+            if (maxCsAdvantageOnLaneOpponent !== 0) {
+              maxCsAdvantageOnLaneOpponent += parseInt(
+                item.participants[getIndex(item)].challenges
+                  .maxCsAdvantageOnLaneOpponent
+              );
+            }
+
+            maxKillDeficit += parseInt(
+              item.participants[getIndex(item)].challenges.maxKillDeficit
             );
-          }
-          if (
-            item.info.participants[getIndex(item)].challenges
-              .turretTakedowns
-          ) {
-            turretTakedowns += parseInt(
-              item.info.participants[getIndex(item)].challenges.turretTakedowns
+            if (maxLevelLeadLaneOpponent) {
+              maxLevelLeadLaneOpponent += parseInt(
+                item.participants[getIndex(item)].challenges
+                  .maxLevelLeadLaneOpponent
+              );
+            }
+            if (item.participants[getIndex(item)].challenges.multikills) {
+              multikills += parseInt(
+                item.participants[getIndex(item)].challenges.multikills
+              );
+            }
+            if (
+              item.participants[getIndex(item)].challenges
+                .multikillsAfterAggressiveFlash
+            ) {
+              multikillsAfterAggressiveFlash += parseInt(
+                item.participants[getIndex(item)].challenges
+                  .multikillsAfterAggressiveFlash
+              );
+            }
+            if (item.participants[getIndex(item)].challenges.outnumberedKills) {
+              outnumberedKills += parseInt(
+                item.participants[getIndex(item)].challenges.outnumberedKills
+              );
+            }
+            if (item.participants[getIndex(item)].challenges.quickFirstTurret) {
+              quickFirstTurret += parseInt(
+                item.participants[getIndex(item)].challenges.quickFirstTurret
+              );
+            }
+            if (item.participants[getIndex(item)].challenges.quickSoloKills) {
+              quickSoloKills += parseInt(
+                item.participants[getIndex(item)].challenges.quickSoloKills
+              );
+            }
+            if (
+              item.participants[getIndex(item)].challenges.takedownOnFirstTurret
+            ) {
+              takedownOnFirstTurret += parseInt(
+                item.participants[getIndex(item)].challenges
+                  .takedownOnFirstTurret
+              );
+            }
+            if (
+              item.participants[getIndex(item)].challenges
+                .takedownsAfterGainingLevelAdvantage
+            ) {
+              takedownsAfterGainingLevelAdvantage += parseInt(
+                item.participants[getIndex(item)].challenges
+                  .takedownsAfterGainingLevelAdvantage
+              );
+            }
+            if (
+              item.participants[getIndex(item)].challenges
+                .takedownsBeforeJungleMinionSpawn
+            ) {
+              takedownsBeforeJungleMinionSpawn += parseInt(
+                item.participants[getIndex(item)].challenges
+                  .takedownsBeforeJungleMinionSpawn
+              );
+            }
+            if (
+              item.participants[getIndex(item)].challenges
+                .takedownsFirstXMinutes
+            ) {
+              takedownsFirstXMinutes += parseInt(
+                item.participants[getIndex(item)].challenges
+                  .takedownsFirstXMinutes
+              );
+            }
+            turretPlatesTaken += parseInt(
+              item.participants[getIndex(item)].challenges.turretPlatesTaken
             );
-          }
-          if (
-            item.info.participants[getIndex(item)].challenges
-              .turretsTakenWithRiftHerald
-          ) {
-            turretsTakenWithRiftHerald += parseInt(
-              item.info.participants[getIndex(item)].challenges
+
+            earlyLaningPhaseGoldExpAdvantage += parseInt(
+              item.participants[getIndex(item)].challenges.turretPlatesTaken
+            );
+            damagePerMinute += parseInt(
+              item.participants[getIndex(item)].challenges.damagePerMinute
+            );
+            damageTakenOnTeamPercentage +=
+              item.participants[getIndex(item)].challenges
+                .damageTakenOnTeamPercentage;
+            teamDamagePercentage +=
+              item.participants[getIndex(item)].challenges.teamDamagePercentage;
+            totalDamageDealtToChampions += parseInt(
+              item.participants[getIndex(item)].totalDamageDealtToChampions
+            );
+            totalDamageTaken += parseInt(
+              item.participants[getIndex(item)].totalDamageTaken
+            );
+            totalHeal += parseInt(item.participants[getIndex(item)].totalHeal);
+
+            if (
+              item.participants[getIndex(item)].challenges
+                .enemyChampionImmobilizations !== 0
+            ) {
+              enemyChampionImmobilizations += parseInt(
+                item.participants[getIndex(item)].challenges
+                  .enemyChampionImmobilizations
+              );
+            }
+            if (
+              item.participants[getIndex(item)].challenges.fullTeamTakedown !==
+              0
+            ) {
+              fullTeamTakedown += parseInt(
+                item.participants[getIndex(item)].challenges.fullTeamTakedown
+              );
+            }
+            if (
+              item.participants[getIndex(item)].challenges
+                .highestCrowdControlScore >= 0
+            ) {
+              highestCrowdControlScore += parseFloat(
+                item.participants[getIndex(item)].challenges
+                  .highestCrowdControlScore
+              );
+            }
+            if (
+              item.participants[getIndex(item)].challenges
+                .immobilizeAndKillWithAlly
+            ) {
+              immobilizeAndKillWithAlly += parseInt(
+                item.participants[getIndex(item)].challenges
+                  .immobilizeAndKillWithAlly
+              );
+            }
+            if (
+              item.participants[getIndex(item)].challenges
+                .killedChampTookFullTeamDamageSurvived
+            ) {
+              killedChampTookFullTeamDamageSurvived += parseInt(
+                item.participants[getIndex(item)].challenges
+                  .killedChampTookFullTeamDamageSurvived
+              );
+            }
+            if (
+              item.participants[getIndex(item)].challenges
+                .knockEnemyIntoTeamAndKill
+            ) {
+              knockEnemyIntoTeamAndKill += parseInt(
+                item.participants[getIndex(item)].challenges
+                  .knockEnemyIntoTeamAndKill
+              );
+            }
+            if (item.participants[getIndex(item)].challenges.pickKillWithAlly) {
+              pickKillWithAlly += parseInt(
+                item.participants[getIndex(item)].challenges.pickKillWithAlly
+              );
+            }
+            if (
+              item.participants[getIndex(item)].challenges
+                .survivedThreeImmobilizesInFight
+            ) {
+              survivedThreeImmobilizesInFight += parseInt(
+                item.participants[getIndex(item)].challenges
+                  .survivedThreeImmobilizesInFight
+              );
+            }
+            if (
+              item.participants[getIndex(item)].challenges
+                .tookLargeDamageSurvived
+            ) {
+              tookLargeDamageSurvived += parseInt(
+                item.participants[getIndex(item)].challenges
+                  .tookLargeDamageSurvived
+              );
+            }
+
+            if (
+              item.participants[getIndex(item)].challenges
+                .completeSupportQuestInTime
+            ) {
+              completeSupportQuestInTime += parseInt(
+                item.participants[getIndex(item)].challenges
+                  .completeSupportQuestInTime
+              );
+            }
+            if (
+              item.participants[getIndex(item)].challenges
+                .controlWardTimeCoverageInRiverOrEnemyHalf >= 0
+            ) {
+              controlWardTimeCoverageInRiverOrEnemyHalf += parseFloat(
+                item.participants[getIndex(item)].challenges
+                  .controlWardTimeCoverageInRiverOrEnemyHalf
+              );
+            }
+            if (
+              item.participants[getIndex(item)].challenges.controlWardsPlaced
+            ) {
+              controlWardsPlaced += parseFloat(
+                item.participants[getIndex(item)].challenges.controlWardsPlaced
+              );
+            }
+            if (
+              item.participants[getIndex(item)].challenges
+                .effectiveHealAndShielding
+            ) {
+              effectiveHealAndShielding += parseInt(
+                item.participants[getIndex(item)].challenges
+                  .effectiveHealAndShielding
+              );
+            }
+            if (
+              item.participants[getIndex(item)].challenges.killParticipation >=
+              0
+            ) {
+              killParticipation += parseFloat(
+                item.participants[getIndex(item)].challenges.killParticipation
+              );
+            }
+            if (
+              item.participants[getIndex(item)].challenges.saveAllyFromDeath
+            ) {
+              saveAllyFromDeath += parseInt(
+                item.participants[getIndex(item)].challenges.saveAllyFromDeath
+              );
+            }
+            if (
+              item.participants[getIndex(item)].challenges.stealthWardsPlaced
+            ) {
+              stealthWardsPlaced += parseInt(
+                item.participants[getIndex(item)].challenges.stealthWardsPlaced
+              );
+            }
+            if (
+              item.participants[getIndex(item)].challenges
+                .threeWardsOneSweeperCount
+            ) {
+              threeWardsOneSweeperCount += parseInt(
+                item.participants[getIndex(item)].challenges
+                  .threeWardsOneSweeperCount
+              );
+            }
+            if (
+              item.participants[getIndex(item)].challenges
+                .visionScoreAdvantageLaneOpponent >= 0
+            ) {
+              visionScoreAdvantageLaneOpponent += parseFloat(
+                item.participants[getIndex(item)].challenges
+                  .visionScoreAdvantageLaneOpponent
+              );
+            }
+            if (
+              item.participants[getIndex(item)].challenges
+                .visionScorePerMinute >= 0
+            ) {
+              visionScorePerMinute += parseFloat(
+                item.participants[getIndex(item)].challenges
+                  .visionScorePerMinute
+              );
+            }
+            if (
+              item.participants[getIndex(item)].challenges
+                .visionScorePerMinute >= 0
+            ) {
+              visionScorePerMinute += parseInt(
+                item.participants[getIndex(item)].challenges
+                  .visionScorePerMinute
+              );
+            }
+            if (item.participants[getIndex(item)].assists >= 0) {
+              assists += parseInt(item.participants[getIndex(item)].assists);
+            }
+            if (item.participants[getIndex(item)].visionScore >= 0) {
+              visionScore += parseInt(
+                item.participants[getIndex(item)].visionScore
+              );
+            }
+            if (item.participants[getIndex(item)].challenges.soloKills) {
+              soloKills += parseInt(
+                item.participants[getIndex(item)].challenges.soloKills
+              );
+            }
+            if (
+              item.participants[getIndex(item)].challenges.soloTurretsLategame
+            ) {
+              soloTurretsLategame += parseInt(
+                item.participants[getIndex(item)].challenges.soloTurretsLategame
+              );
+            }
+            if (item.participants[getIndex(item)].challenges.teamBaronKills) {
+              teamBaronKills += parseInt(
+                item.participants[getIndex(item)].challenges.teamBaronKills
+              );
+            }
+            if (
+              item.participants[getIndex(item)].challenges.teamElderDragonKills
+            ) {
+              teamElderDragonKills += parseInt(
+                item.participants[getIndex(item)].challenges
+                  .teamElderDragonKills
+              );
+            }
+            if (item.participants[getIndex(item)].damageDealtToBuildings) {
+              damageDealtToBuildings += parseInt(
+                item.participants[getIndex(item)].damageDealtToBuildings
+              );
+            }
+            if (
+              item.participants[getIndex(item)].challenges
+                .alliedJungleMonsterKills
+            ) {
+              alliedJungleMonsterKills += parseInt(
+                item.participants[getIndex(item)].challenges
+                  .alliedJungleMonsterKills
+              );
+            }
+            if (item.participants[getIndex(item)].challenges.buffsStolen) {
+              buffsStolen += parseInt(
+                item.participants[getIndex(item)].challenges.buffsStolen
+              );
+            }
+            if (
+              item.participants[getIndex(item)].challenges
+                .enemyJungleMonsterKills
+            ) {
+              enemyJungleMonsterKills += parseInt(
+                item.participants[getIndex(item)].challenges
+                  .enemyJungleMonsterKills
+              );
+            }
+            if (item.participants[getIndex(item)].challenges.initialBuffCount) {
+              initialBuffCount += parseInt(
+                item.participants[getIndex(item)].challenges.initialBuffCount
+              );
+            }
+            if (item.participants[getIndex(item)].challenges.initialCrabCount) {
+              initialCrabCount += parseInt(
+                item.participants[getIndex(item)].challenges.initialCrabCount
+              );
+            }
+            if (
+              item.participants[getIndex(item)].challenges
+                .jungleCsBefore10Minutes
+            ) {
+              jungleCsBefore10Minutes += parseInt(
+                item.participants[getIndex(item)].challenges
+                  .jungleCsBefore10Minutes
+              );
+            }
+            if (item.participants[getIndex(item)].challenges.scuttleCrabKills) {
+              scuttleCrabKills += parseInt(
+                item.participants[getIndex(item)].challenges.scuttleCrabKills
+              );
+            }
+            if (item.participants[getIndex(item)].challenges.baronTakedowns) {
+              baronTakedowns += parseInt(
+                item.participants[getIndex(item)].challenges.baronTakedowns
+              );
+            }
+            if (
+              item.participants[getIndex(item)].challenges
+                .epicMonsterKillsNearEnemyJungler
+            ) {
+              epicMonsterKillsNearEnemyJungler += parseInt(
+                item.participants[getIndex(item)].challenges
+                  .epicMonsterKillsNearEnemyJungler
+              );
+            }
+            if (
+              item.participants[getIndex(item)].challenges
+                .epicMonsterKillsWithin30SecondsOfSpawn
+            ) {
+              epicMonsterKillsWithin30SecondsOfSpawn += parseInt(
+                item.participants[getIndex(item)].challenges
+                  .epicMonsterKillsWithin30SecondsOfSpawn
+              );
+            }
+            if (
+              item.participants[getIndex(item)].challenges.epicMonsterSteals
+            ) {
+              epicMonsterSteals += parseInt(
+                item.participants[getIndex(item)].challenges.epicMonsterSteals
+              );
+            }
+            if (
+              item.participants[getIndex(item)].challenges
+                .epicMonsterStolenWithoutSmite
+            ) {
+              epicMonsterStolenWithoutSmite += parseInt(
+                item.participants[getIndex(item)].challenges
+                  .epicMonsterStolenWithoutSmite
+              );
+            }
+            if (
+              item.participants[getIndex(item)].challenges
+                .junglerTakedownsNearDamagedEpicMonster
+            ) {
+              junglerTakedownsNearDamagedEpicMonster += parseInt(
+                item.participants[getIndex(item)].challenges
+                  .junglerTakedownsNearDamagedEpicMonster
+              );
+            }
+            if (
+              item.participants[getIndex(item)].challenges
+                .kTurretsDestroyedBeforePlatesFall
+            ) {
+              kTurretsDestroyedBeforePlatesFall += parseInt(
+                item.participants[getIndex(item)].challenges
+                  .kTurretsDestroyedBeforePlatesFall
+              );
+            }
+            if (
+              item.participants[getIndex(item)].challenges
+                .multiTurretRiftHeraldCount
+            ) {
+              multiTurretRiftHeraldCount += parseInt(
+                item.participants[getIndex(item)].challenges
+                  .multiTurretRiftHeraldCount
+              );
+            }
+            if (
+              item.participants[getIndex(item)].challenges.outnumberedNexusKill
+            ) {
+              outnumberedNexusKill += parseInt(
+                item.participants[getIndex(item)].challenges
+                  .outnumberedNexusKill
+              );
+            }
+            if (
+              item.participants[getIndex(item)].challenges
+                .perfectDragonSoulsTaken
+            ) {
+              perfectDragonSoulsTaken += parseInt(
+                item.participants[getIndex(item)].challenges
+                  .perfectDragonSoulsTaken
+              );
+            }
+            if (item.participants[getIndex(item)].challenges.soloBaronKills) {
+              soloBaronKills += parseInt(
+                item.participants[getIndex(item)].challenges.soloBaronKills
+              );
+            }
+
+            if (
+              item.participants[getIndex(item)].challenges.takedownOnFirstTurret
+            ) {
+              takedownOnFirstTurret += parseInt(
+                item.participants[getIndex(item)].challenges
+                  .takedownOnFirstTurret
+              );
+            }
+            if (item.participants[getIndex(item)].challenges.turretTakedowns) {
+              turretTakedowns += parseInt(
+                item.participants[getIndex(item)].challenges.turretTakedowns
+              );
+            }
+            if (
+              item.participants[getIndex(item)].challenges
                 .turretsTakenWithRiftHerald
-            );
-          }
-          if (item.info.participants[getIndex(item)].kills) {
-            kills += parseInt(item.info.participants[getIndex(item)].kills);
-          }
-          if (item.info.participants[getIndex(item)].deaths) {
-            deaths += parseInt(item.info.participants[getIndex(item)].deaths);
+            ) {
+              turretsTakenWithRiftHerald += parseInt(
+                item.participants[getIndex(item)].challenges
+                  .turretsTakenWithRiftHerald
+              );
+            }
+            if (item.participants[getIndex(item)].kills) {
+              kills += parseInt(item.participants[getIndex(item)].kills);
+            }
+            if (item.participants[getIndex(item)].deaths) {
+              deaths += parseInt(item.participants[getIndex(item)].deaths);
+            }
           }
         }
-      }
-    });
-  }
+      });
+    }
     if (rankedState.searchCompleted) {
       if (rankedState.ranked[0] != undefined) {
         var sq = rankedState.ranked[0];
@@ -1379,7 +1320,7 @@ const Analyzer = () => {
   useEffect(() => {
     getChallenges();
     getRoles();
-  }, [matchDataState]);
+  }, [matchDataStateDb]);
   useEffect(() => {
     setGraphs(graph);
     // console.log(graphState);
@@ -1450,14 +1391,14 @@ const Analyzer = () => {
   return (
     <S.Wrapper>
       <S.GraphRoles>
-      <div
+        <div
           style={{
             position: "relative",
             margin: "0",
             width: "200px",
           }}
         >
-        <Doughnut options={optionsRoles} data={dataRoles} />
+          <Doughnut options={optionsRoles} data={dataRoles} />
         </div>
       </S.GraphRoles>
 
