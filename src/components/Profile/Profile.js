@@ -18,13 +18,13 @@ const Profile = () => {
     version,
     getMatchData,
     matchState,
-    championState,
     cleanMatchData,
-    matchDataState,
     getMatches,
     matchDataStateDb,
     setRender,
-    cleanMatchsFromDatabase,
+    graphState,
+    cleanMatchsFromDatabase
+
   } = useScout();
 
   const profileIcon = `https://ddragon.leagueoflegends.com/cdn/${version}/img/profileicon/${scoutState.profileIconId}.png`;
@@ -79,6 +79,8 @@ const Profile = () => {
           getMatchData(matchState.matches[i]);
         }
       });
+      setRender(false)
+      setRender(true);
     }
 
   };
@@ -87,6 +89,10 @@ const Profile = () => {
       setRender(true);
     }
   }, [matchDataStateDb]);
+  const call = () =>{
+    console.log(matchDataStateDb)
+    console.log(graphState)
+  }
   return (
     <S.ProfileAndMatchAndRanked>
       <S.ProfileAndMatch>
@@ -125,7 +131,7 @@ const Profile = () => {
           )}
         </S.Wrapper>
         <>
-          <Compare />
+          <Compare/>
           {renderMatchs ? (
             <>
               <ActiveMatch />

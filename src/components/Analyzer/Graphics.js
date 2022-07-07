@@ -31,12 +31,13 @@ ChartJS.register(
 );
 
 const Graphics = () => {
-  const { graphState } = useScout();
+  const { graphState, matchDataStateDb } = useScout();
   const [renderGraph, setRenderGraph] = useState(true);
 
   useEffect(() => {
     if (!isNaN(graphState[0])) {
-      setRenderGraph(true);
+      console.log(graphState)
+        setRenderGraph(true);
     }
   }, [graphState]);
 

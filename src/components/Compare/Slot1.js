@@ -18,15 +18,13 @@ export const Slot1 = () => {
         } else {
           r = rankedState.ranked[1];
         }
-
         setSummonerElo(`${r.tier} ${r.rank}`);
-
       }
     }
   };
-  useEffect(()=>{
+  useEffect(() => {
     setSlot1Graph([thisGraph, summonerName, summonerElo]);
-  },[thisGraph])
+  }, [thisGraph]);
   return (
     <>
       <button onClick={saveHere}>Save Graph here</button>

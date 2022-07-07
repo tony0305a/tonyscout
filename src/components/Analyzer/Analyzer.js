@@ -42,6 +42,8 @@ const Analyzer = () => {
     graphState,
     setGraphs,
     matchDataStateDb,
+    matchState,
+    setRender,
   } = useScout();
   const [graph, setGraph] = useState([]);
   const [roles, setRoles] = useState([]);
@@ -266,7 +268,7 @@ const Analyzer = () => {
     var neutralMinionsKilled = 0;
     var totalMinionsKilled = 0;
     var timePlayed = 0;
-    if (matchDataStateDb != undefined) {
+    if (matchDataStateDb.length !== 0) {
       matchDataStateDb.map((item) => {
         if (item.participants !== undefined) {
           if (
@@ -1317,13 +1319,17 @@ const Analyzer = () => {
       parseInt((Objectives * 10 * eloMultiplaier).toFixed(0)),
     ]);
   };
+
   useEffect(() => {
-    getChallenges();
+    console.log(matchDataStateDb);
     getRoles();
-  }, [matchDataStateDb]);
-  useEffect(() => {
+    console.log("true");
+    getChallenges();
+    console.log("got the challanges");
+  },[matchDataStateDb]);
+  
+  useEffect(() => {  
     setGraphs(graph);
-    // console.log(graphState);
   }, [graph]);
 
   const dataTop = {
@@ -1387,46 +1393,61 @@ const Analyzer = () => {
       },
     },
   };
-
+  const call = () =>{
+      setRender(false);console.log(renderState);
+      getChallenges()
+  }
+  useEffect(()=>{
+    setRender(true)
+    getChallenges()
+  },[renderState])
   return (
-    <S.Wrapper>
-      <S.GraphRoles>
-        <div
-          style={{
-            position: "relative",
-            margin: "0",
-            width: "200px",
-          }}
-        >
-          <Doughnut options={optionsRoles} data={dataRoles} />
-        </div>
-      </S.GraphRoles>
+    <>
+      {renderState ? (
+        <>
+          <S.Wrapper>
+            <S.GraphRoles>
+              <div
+                style={{
+                  position: "relative",
+                  margin: "0",
+                  width: "200px",
+                }}
+              >
+                <Doughnut options={optionsRoles} data={dataRoles} />
+              </div>
+            </S.GraphRoles>
 
-      <S.Roles></S.Roles>
-      <S.Graph>
-        <div
-          style={{
-            position: "relative",
-            margin: "auto",
-            width: "250px",
-          }}
-        >
-          {renderState ? (
-            <>
-              {renderTop ? (
-                <>
-                  <Radar data={dataTop} options={options} />
-                </>
-              ) : (
-                <></>
-              )}
-            </>
-          ) : (
-            <></>
-          )}
-        </div>
-      </S.Graph>
-    </S.Wrapper>
+            <S.Roles></S.Roles>
+            <S.Graph>
+              <div
+                style={{
+                  position: "relative",
+                  margin: "auto",
+                  width: "250px",
+                }}
+              >
+                {renderState ? (
+                  <>
+                    {renderTop ? (
+                      <>
+                        <Radar data={dataTop} options={options} />
+                      </>
+                    ) : (
+                      <></>
+                    )}
+                  </>
+                ) : (
+                  <></>
+                )}
+              </div>
+            </S.Graph>
+          </S.Wrapper>
+        </>
+      ) : (
+        <></>
+      )}
+    </>
   );
 };
 export default Analyzer;
