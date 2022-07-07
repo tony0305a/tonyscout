@@ -83,7 +83,7 @@ const Profile = () => {
 
   };
   useEffect(() => {
-    if (matchDataStateDb.length >= 1) {
+    if (matchDataStateDb.length >= 0) {
       setRender(true);
     }
   }, [matchDataStateDb]);
