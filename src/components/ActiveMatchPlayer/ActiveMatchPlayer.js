@@ -26,8 +26,9 @@ const ActiveMatchPlayer = ({
   elo2Rank,
   elo2Pdl,
 }) => {
-  const {getSummoner, setRender} = useScout()
+  const {getSummoner, setRender, cleanMatchsFromDatabase } = useScout()
   const call = () =>{
+    cleanMatchsFromDatabase()
     getSummoner(summonerName)
     setRender(false)
   }

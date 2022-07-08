@@ -27,6 +27,7 @@ const Header = () => {
   const [champion, setChampion] = useState();
 
   const findSummoner = () => {
+    cleanMatchsFromDatabase()
     setRender(false);
     getChampionInfo();
     getVersion();
