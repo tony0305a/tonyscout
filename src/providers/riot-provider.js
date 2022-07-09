@@ -13,6 +13,7 @@ const RiotProvider = ({ children }) => {
     puuid: undefined,
     summonerLevel: undefined,
     profileIconId: undefined,
+    revisionDate:undefined
   });
   const [version, setVersion] = useState();
   const [championState, setChampionState] = useState();
@@ -51,6 +52,7 @@ const RiotProvider = ({ children }) => {
         puuid: respose.data.puuid,
         summonerLevel: respose.data.summonerLevel,
         profileIconId: respose.data.profileIconId,
+        revisionDate:respose.data.revisionDate
       })
     );
   };

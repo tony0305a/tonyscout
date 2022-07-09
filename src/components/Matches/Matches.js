@@ -6,6 +6,7 @@ import Analyzer from "../Analyzer/Analyzer";
 import Matchitem from "../MatchItem/Matchitem";
 import * as S from "./styled";
 import apiHeader from "../../services/apiHeader";
+import { ChampionAnalyzer } from "../ChampionAnalyzer/ChampionAnalyzer";
 
 const Matches = () => {
   const {

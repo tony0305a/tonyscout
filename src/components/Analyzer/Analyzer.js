@@ -1417,31 +1417,6 @@ const Analyzer = () => {
                 <Doughnut options={optionsRoles} data={dataRoles} />
               </div>
             </S.GraphRoles>
-
-            <S.Roles></S.Roles>
-            <S.Graph>
-              <div
-                style={{
-                  position: "relative",
-                  margin: "auto",
-                  width: "250px",
-                }}
-              >
-                {renderState ? (
-                  <>
-                    {renderTop ? (
-                      <>
-                        <Radar data={dataTop} options={options} />
-                      </>
-                    ) : (
-                      <></>
-                    )}
-                  </>
-                ) : (
-                  <></>
-                )}
-              </div>
-            </S.Graph>
           </S.Wrapper>
         </>
       ) : (

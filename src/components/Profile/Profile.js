@@ -12,6 +12,7 @@ import Graphics from "../Analyzer/Graphics";
 import Compare from "../Compare/Compare";
 import apiHeader from "../../services/apiHeader";
 
+
 const Profile = () => {
   const {
     scoutState,
@@ -32,6 +33,7 @@ const Profile = () => {
   const [renderActiveMatch, setRenderActiveMatch] = useState(true);
   const [renderAtt, setRenderAtt] = useState(true);
   const [renderMatchs, setRenderMatch] = useState(false);
+  const [renderCompare,setRenderCompare] = useState(false)
   useEffect(() => {
     if (scoutState.id != undefined) {
       setRenderMatch(false);
@@ -89,6 +91,15 @@ const Profile = () => {
       setRender(true);
     }
   }, [matchDataStateDb]);
+
+  const rCompare = () =>{
+    if(renderCompare){
+      setRenderCompare(false)
+    } else{
+      setRenderCompare(true)
+    }
+  }
+
   const call = () =>{
     console.log(matchDataStateDb)
     console.log(graphState)
@@ -118,6 +129,7 @@ const Profile = () => {
                 ) : (
                   <></>
                 )}
+                <button onClick={rCompare} >Compare</button>
               </S.SummonerInfo>
               <S.Mast>
                 <Masteries />
@@ -131,7 +143,7 @@ const Profile = () => {
           )}
         </S.Wrapper>
         <>
-          <Compare/>
+        {renderCompare?(<><Compare/></>):(<></>)}
           {renderMatchs ? (
             <>
               <ActiveMatch />
