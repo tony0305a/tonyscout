@@ -3,6 +3,7 @@ import { useState } from "react";
 import { version } from "styled-components";
 import useScout from "../../hooks/riot-hook";
 import * as S from "./styled";
+import {useForm} from 'react-hook-form'
 
 const Header = () => {
   const {
@@ -70,18 +71,18 @@ const Header = () => {
       setRender(false);
     };
   }, [matchDataStateDb]);
+
+  const {register, handleSubmit} = useForm()
+  const onSubmit = (data) => findSummoner(data.name)
   return (
     <S.Wrapper>
       <span>Patch {version}</span>
-      <S.Form>
-        <input
-          type="text"
-          placeholder="Pesquise o nome invocador"
+      <S.Form  onSubmit={ handleSubmit(onSubmit)}>
+
+        <input type="text" placeholder="Pesquise o nome invocador"
           onChange={(event) => setSearchSummoner(event.target.value)}
         />
-        <button type="submit" onClick={findSummoner}>
-          Pesquisar
-        </button>
+        <button type="submit">Pesquisar</button>
       </S.Form>
     </S.Wrapper>
   );

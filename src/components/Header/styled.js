@@ -12,7 +12,7 @@ span{
 
 
 `;
-export const Form = styled.div`
+export const Form = styled.form`
 display:flex;
 border:1px solid black;
 width:60%;
