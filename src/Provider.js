@@ -1,17 +1,19 @@
 import React from "react";
-import App from "./App";
+import { BrowserRouter } from "react-router-dom";
 import { ResetCSS } from "./global/resetCSS";
 import RiotProvider from "./providers/riot-provider";
+import Routes from './routes'
 
 const Provider = () => {
-
-return(
+  return (
     <>
-    <RiotProvider>
-    <ResetCSS/>
-    <App/>
-    </RiotProvider>
+      <BrowserRouter>
+        <RiotProvider>
+          <ResetCSS />
+          <Routes/>
+        </RiotProvider>
+      </BrowserRouter>
     </>
-)
-}
-export default Provider
+  );
+};
+export default Provider;

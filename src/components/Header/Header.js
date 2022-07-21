@@ -3,7 +3,9 @@ import { useState } from "react";
 import { version } from "styled-components";
 import useScout from "../../hooks/riot-hook";
 import * as S from "./styled";
-import {useForm} from 'react-hook-form'
+import { useForm } from "react-hook-form";
+import logo from "../../imgs/logo.png";
+import { useNavigate } from "react-router-dom";
 
 const Header = () => {
   const {
@@ -15,20 +17,21 @@ const Header = () => {
     getChampionInfo,
     getRanked,
     getMatches,
-    getMatchData,
     matchState,
     setRender,
     getMatchsFromDatabase,
     matchDataStateDb,
-    renderState,
     cleanMatchsFromDatabase,
+    cleanScoutState,
+    cleanMasteriesState
   } = useScout();
+  const navigate = useNavigate()
 
   const [searchSummoner, setSearchSummoner] = useState();
   const [champion, setChampion] = useState();
 
   const findSummoner = () => {
-    cleanMatchsFromDatabase()
+    cleanMatchsFromDatabase();
     setRender(false);
     getChampionInfo();
     getVersion();
@@ -72,18 +75,33 @@ const Header = () => {
     };
   }, [matchDataStateDb]);
 
-  const {register, handleSubmit} = useForm()
-  const onSubmit = (data) => findSummoner(data.name)
+  const clickLogo = () =>{
+    cleanScoutState();
+    cleanMasteriesState();
+    navigate('/')
+  }
+
+
+  const { register, handleSubmit } = useForm();
+  const onSubmit = (data) => {
+    findSummoner(data.name)};
   return (
     <S.Wrapper>
-      <span>Patch {version}</span>
-      <S.Form  onSubmit={ handleSubmit(onSubmit)}>
+      <S.Nav>
+        <img src={logo} onClick={clickLogo}  width="64" height="64" />
+      </S.Nav>
 
-        <input type="text" placeholder="Pesquise o nome invocador"
-          onChange={(event) => setSearchSummoner(event.target.value)}
-        />
-        <button type="submit">Pesquisar</button>
-      </S.Form>
+      <S.HeaderBody>
+        <span>Patch {version}</span>
+        <S.Form onSubmit={handleSubmit(onSubmit)}>
+          <input
+            type="text"
+            placeholder="Pesquise o nome invocador"
+            onChange={(event) => { navigate('/');setSearchSummoner(event.target.value)}}
+          />
+          <button type="submit">Pesquisar</button>
+        </S.Form>
+      </S.HeaderBody>
     </S.Wrapper>
   );
 };

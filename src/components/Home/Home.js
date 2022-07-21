@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import useScout from "../../hooks/riot-hook";
 import apiHeader from "../../services/apiHeader";
 import { FeaturedGames } from "../FeaturedGames/FeaturedGames";
+import Footer from "../Footer/Footer";
 import * as S from "./styled";
 export const Home = () => {
   //NfTBFDvDotprroTPB5JdywFlFMeP_lRp-FtLqlNGLvKJDP3mY2_ToNgyGQDsvlgD1HADHtZHAad6NA

@@ -3,8 +3,8 @@ import styled from "styled-components";
 export const Wrapper = styled.div`
   display: flex;
   flex-direction:column;
-  width: 100%;
-  height:580px;
+  width: 45%;
+  height:600px;
   border-radius: 8px;
   margin:8px;
   background-color: white;
@@ -20,6 +20,11 @@ h1{
 }
 @media screen and (max-width: 600px){
     width:100%;
+}
+overflow:scroll;
+&::-webkit-scrollbar{
+    display:none;
+
 }
 `;
 
