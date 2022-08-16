@@ -38,7 +38,9 @@ const GetOauthCallback = () => {
       data:qs.stringify(data)
     };
 
-    axios(opts)
+    axios(opts).then((response)=>{
+        console.log(response.data)
+    })
   }
 
   return (
