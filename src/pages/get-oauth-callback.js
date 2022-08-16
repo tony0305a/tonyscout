@@ -24,7 +24,7 @@ const GetOauthCallback = () => {
 
   return (
     <>
-      <button>test</button>
+      <span>{codeQuery}</span>
       <Footer />
     </>
   );
