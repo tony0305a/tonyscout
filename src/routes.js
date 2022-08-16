@@ -14,7 +14,7 @@ const MainRoutes = () =>{
           <Route path="/termsofservice" element={<ServiceTerms/>}/>
           <Route path="/" element={<App/>}/>
           <Route path="/account/connect/riotgames/oauth-callback" element={<OauthCallback/>}/>
-          <Route path="/oauth-callback/:query" element={<GetOauthCallback/>}/>
+          <Route path="/oauth-callback" element={<GetOauthCallback/>}/>
 
         </Routes>
     )
