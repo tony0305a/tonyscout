@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import Provider from './Provider';
 import reportWebVitals from './reportWebVitals';
+import './auth'
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
