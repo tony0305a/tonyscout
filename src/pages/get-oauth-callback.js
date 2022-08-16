@@ -1,21 +1,50 @@
 import React from "react";
 import Footer from "../components/Footer/Footer";
-import { useLocation } from "react-router-dom";
+import api from "../services/api";
+import axios from "axios";
+const GetOauthCallback = () => {
+  function test() {
+    var appBaseUrl = "https://tonyscout.vercel.app";
+    var appCallbackUrl = appBaseUrl + "/oauth-callback";
 
+    var provider = "https://auth.riotgames.com";
+    var autorizeUrl = provider + "/authorize";
+    var tokenUrl = provider + "/token";
 
-const GetOauthCallback = () =>{
+    var clientId = "tonyscount";
+    var clientSecret = "ZbqAImVYIuKWfbw11YA0Ylt9ZDDBtGZbXtRP-y0U9Ek";
 
+    var code =
+      "dWUxOjVGN2VKckZnR3ZweFZZVlNBM1BqN3cuR3o2dzQxVTl0SnJHRFFZeVJfQmJqUQ";
 
-    const search = useLocation().search
-    console.log('path',search)
-    const id = new URLSearchParams(search).get('access_token')
-    console.log(id)
+    const opts = {
+      method: "POST",
+      url: tokenUrl,
+      auth: {
+        user: clientId,
+        pass: clientSecret,
+      },
+      form: {
+        // post information as x-www-form-urlencoded
+        grant_type: "authorization_code",
+        code: code, // accessCode should be url decoded before being set here
+        redirect_uri: appCallbackUrl,
+      },
+    };
 
-    return(
-        <>
-        <p>Get oauth callback</p>
-        <Footer/>
-        </>
-    )
-}
-export default GetOauthCallback
+    axios
+      .request(opts)
+      .then((response) => {
+        console.log(response.data);
+      })
+      .catch((error) => console.log(error));
+  }
+
+  return (
+    <>
+      <button onClick={test}>test</button>
+      <Footer />
+    </>
+  );
+};
+export default GetOauthCallback;
