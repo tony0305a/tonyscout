@@ -94,7 +94,7 @@ const RiotProvider = ({ children }) => {
   };
 
   const getRanked = (encryptedSummonerId) => {
-    apiHeader.get(`ranked/${encryptedSummonerId}`).then((respone) =>
+    apiHeader.get(`summoner/ranked/${encryptedSummonerId}`).then((respone) =>
       setRankedState({
         searchCompleted: true,
         ranked: respone.data,
@@ -103,7 +103,7 @@ const RiotProvider = ({ children }) => {
   };
 
   const getMatches = (puuid, queueId) => {
-    apiHeader.get(`matchs-ids/${puuid}/${queueId}`).then((response) =>
+    apiHeader.get(`match/ids/${puuid}/${queueId}`).then((response) =>
       setMatchState({
         searchCompleted: true,
         matches: response.data,
@@ -113,7 +113,7 @@ const RiotProvider = ({ children }) => {
 
   const getMatchData = (id) => {
     apiHeader
-      .get(`matchs-info/${id}`)
+      .get(`match/info/${id}`)
       .then((response) =>
         setMatchDataStateDb((prevState) => [...prevState, response.data])
       );
@@ -121,12 +121,12 @@ const RiotProvider = ({ children }) => {
 
   const getMatchsFromDatabase = (puuid) => {
     apiHeader
-      .get(`/matchs/${puuid}`)
+      .get(`match/db/${puuid}`)
       .then((res) => {
         var check = res.data;
         if (check.length === 0) {
           setMatchDataStateDb([]);
-        }
+        } 
         res.data.map((item) => {
           setMatchDataStateDb((prevState) => [...prevState, item.alldata]);
         });

@@ -83,8 +83,12 @@ const Header = () => {
 
 
   const { register, handleSubmit } = useForm();
-  const onSubmit = (data) => {
-    findSummoner(data.name)};
+  
+  const onSubmit = (data) => {  
+    console.log(searchSummoner)
+    setRender(false)
+    navigate(`/${searchSummoner}`)
+  };
   return (
     <S.Wrapper>
       <S.Nav>
@@ -97,7 +101,8 @@ const Header = () => {
           <input
             type="text"
             placeholder="Pesquise o nome invocador"
-            onChange={(event) => { navigate('/');setSearchSummoner(event.target.value)}}
+            {...register("name")}
+            onChange={(event) => {setSearchSummoner(event.target.value)}}
           />
           <button type="submit">Pesquisar</button>
         </S.Form>

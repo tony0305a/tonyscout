@@ -132,31 +132,32 @@ export const LowerLine = styled.div`
 `;
 
 export const MatchParticipantsWrapper = styled.div`
-  display: flex;
-  height: 10px;
-  margin: 8px;
-  justify-content: center;
-  align-items: center;
-  span {
-    font-size: 12px;
-    width: 78px;
-    cursor: pointer;
-    margin-left: 2px;
-    overflow:hidden;
-    &:hover {
-      color: purple;
-    }
-  }
-  @media screen and (max-width: 600px) {
-    margin: 8px;
-    height: 8px;
-    span {
-      font-size: 10px;
-      width: 40px;
-      overflow: hidden;
-    }
-  }
+display:flex;
+justify-content:center;
+align-items:center;
+width:100%;
 `;
 export const ColunmGraphs = styled.div`
 display:flex;
+`;
+export const Blueside = styled.div`
+display:flex;
+flex-direction:column;
+span{
+  margin:4px;
+}
+`;
+export const Teams = styled.div`
+display:flex;
+align-items:flex-start;
+width:100%;
+a{
+  width:102px;
+  margin:4px;
+}
+span{
+  width:100%;
+  font-size:12px;
+  margin:8px;
+}
 `;

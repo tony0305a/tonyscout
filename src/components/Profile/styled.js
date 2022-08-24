@@ -4,7 +4,7 @@ export const Wrapper = styled.div`
 margin:8px;
 display:flex;
 align-items:center;
-justify-content:space-around;
+justify-content:flex-start;
 border:1px solid #ccc;
 background-color:white;
 border-radius:8px;
@@ -23,7 +23,6 @@ display:flex;
 flex-direction:column;
 justify-content:center;
 align-items:center;
-width:30%;
 
 span{
     display:flex;

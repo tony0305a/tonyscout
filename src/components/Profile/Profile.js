@@ -39,7 +39,7 @@ const Profile = () => {
       setRenderMatch(false);
       async function activeMatch(id) {
         try {
-          const match = await apiHeader.get(`active-match/${id}`);
+          const match = await apiHeader.get(`match/active/${id}`);
           setRenderActiveMatch(true);
         } catch (error) {
           console.log("Sem partida ativa");
@@ -72,18 +72,6 @@ const Profile = () => {
   };
 
   const analisar = async () => {
-    setRender(false);
-    setRenderAtt(false);
-    getMatches(scoutState.puuid, 420);
-    for (var i in matchState.matches) {
-      await apiHeader.get(`/verify-id/${matchState.matches[i]}`).then((res) => {
-        if (res.data.length == 0) {
-          getMatchData(matchState.matches[i]);
-        }
-      });
-      setRender(false)
-      setRender(true);
-    }
 
   };
   useEffect(() => {

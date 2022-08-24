@@ -12,13 +12,13 @@ const OauthCallback = () =>{
     +"?redirect_uri="+appCallbackUrl
     +"&client_id="+clientId
     +"&response_type=code"
-    +"&scope=openid";
+    +"&scope=openid+offline_access";
+    const link2 =  `https://auth.riotgames.com/authorize?client_id=${clientId}&redirect_uri=${appCallbackUrl}&response_type=code&scope=openid+cpid`
 
 
     return(
         <>
         <p>oauth callback</p>
-        <a href={link}>Sing In</a>
         <Footer/>
         </>
     )

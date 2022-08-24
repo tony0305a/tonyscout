@@ -42,7 +42,7 @@ const ActiveMatch = () => {
     setPartElo([]);
     async function activeMatch(id) {
       try {
-        const match = await apiHeader.get(`active-match/${id}`);
+        const match = await apiHeader.get(`match/active/${id}`);
         setActiveInfo(match);
         setRenderActiveMatch(true);
       } catch (error) {

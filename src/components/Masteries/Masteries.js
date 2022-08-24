@@ -28,10 +28,6 @@ const Masteries = () => {
             }
         }
     }
-
-
-
-
     return(
         <S.Wrapper>
         {masteriesState.hasSearch?(<> {masteriesState.maestrias.map((item,index)=>(

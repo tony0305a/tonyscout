@@ -5,6 +5,7 @@ import ServiceTerms from "./pages/terms-of-service";
 import App from "./App";
 import OauthCallback from "./pages/oauth-callback";
 import GetOauthCallback from "./pages/get-oauth-callback";
+import Summoner from "./pages/summoner";
 
 
 const MainRoutes = () =>{
@@ -15,7 +16,7 @@ const MainRoutes = () =>{
           <Route path="/" element={<App/>}/>
           <Route path="/account/connect/riotgames/oauth-callback" element={<OauthCallback/>}/>
           <Route path="/oauth-callback" element={<GetOauthCallback/>}/>
-
+            <Route path="/:summonerName" element={<Summoner/>} />
         </Routes>
     )
 }

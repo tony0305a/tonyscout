@@ -25,16 +25,36 @@ const Matches = () => {
   const [summonerSpell, setSummonerSpell] = useState();
   const [runes, setRunes] = useState();
   const [matchDataDb, setMatchDataDb] = useState([]);
-
+  const [matchIds, setMatchIds] = useState([]);
+  const [matchs, setMatchs] = useState([]);
   useEffect(() => {
     //mount
     getVersion();
+    const getMatchIds = async () => {
+      const response = await apiHeader.get(`match/ids/${scoutState.puuid}/420`);
+      setMatchIds(response.data);
+    };
+
+    getMatchIds();
+
+    console.log(matchState);
     //unmount
     return function CleanUp() {
       getVersion();
     };
   }, []);
-
+  useEffect(() => {
+    const getMatchInfo = async () => {
+      for (var i in matchIds) {
+        var response = await apiHeader.get(`match/info/${matchIds[i]}`);
+        setMatchs((prevState) => [...prevState, response.data]);
+      }
+    };
+    getMatchInfo();
+  }, [matchState]);
+  useEffect(() => {
+    console.log(matchs);
+  }, [matchs]);
   useEffect(() => {
     if (version != undefined) {
       fetch(

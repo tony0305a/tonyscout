@@ -35,14 +35,11 @@ ChartJS.register(
 
 const Analyzer = () => {
   const {
-    matchDataState,
     scoutState,
     renderState,
     rankedState,
-    graphState,
     setGraphs,
     matchDataStateDb,
-    matchState,
     setRender,
   } = useScout();
   const [graph, setGraph] = useState([]);
